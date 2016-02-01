@@ -9,9 +9,7 @@
 @import UIKit;
 #import "ITAppDelegate.h"
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([ITAppDelegate class]));
-    }
+    @autoreleasepool { return UIApplicationMain(argc, argv, nil, NSStringFromClass([ITAppDelegate class])); }
 }

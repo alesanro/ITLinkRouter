@@ -9,11 +9,13 @@
 #import "ITLinkChain.h"
 #import "ITLinkEntity.h"
 
+
 @interface ITLinkChain ()
 
 @property (nonatomic, strong) NSMutableArray<ITLinkEntity *> *internalEntities;
 
 @end
+
 
 @implementation ITLinkChain
 @dynamic entities;
@@ -52,15 +54,6 @@
     ITLinkEntity *const removeEntity = [self.internalEntities lastObject];
     [self.internalEntities removeLastObject];
     return removeEntity;
-}
-
-- (ITLinkChain *)intersectionAtStartWithChain:(ITLinkChain *)otherLinkChain
-{
-    const NSRange intersectionRange = [self intersectionRangeWithChain:otherLinkChain];
-    if (intersectionRange.location != 0) {
-        return nil;
-    }
-    return [self subchainWithRange:intersectionRange];
 }
 
 - (NSRange)intersectionRangeWithChain:(ITLinkChain *)otherLinkChain
@@ -106,6 +99,21 @@
 
     return intersectionRange;
 }
+
+- (ITLinkChain *)intersectionWithChain:(ITLinkChain *)otherLinkChain
+{
+    return [self subchainWithRange:[self intersectionRangeWithChain:otherLinkChain]];
+}
+
+- (ITLinkChain *)intersectionAtStartWithChain:(ITLinkChain *)otherLinkChain
+{
+    const NSRange intersectionRange = [self intersectionRangeWithChain:otherLinkChain];
+    if (intersectionRange.location != 0) {
+        return nil;
+    }
+    return [self subchainWithRange:intersectionRange];
+}
+
 
 - (ITLinkChain *)subchainWithRange:(NSRange)range
 {

@@ -9,16 +9,18 @@
 #import "ITViewController.h"
 @import ITLinkRouter;
 
+
 @interface ITViewController ()
 
 @end
+
 
 @implementation ITViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -46,8 +48,8 @@
         [viewControllers addObject:vc];
     }
 
-    [viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.navigationController pushViewController:obj animated:(idx + 1 == controllersCapacity)];
+    [viewControllers enumerateObjectsUsingBlock:^(UIViewController *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
+      [self.navigationController pushViewController:obj animated:(idx + 1 == controllersCapacity)];
     }];
 }
 

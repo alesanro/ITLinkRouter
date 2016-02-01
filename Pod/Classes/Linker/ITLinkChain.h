@@ -10,6 +10,7 @@
 
 @class ITLinkEntity;
 
+
 @interface ITLinkChain : NSObject
 
 /**

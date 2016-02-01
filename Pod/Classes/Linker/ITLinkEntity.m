@@ -8,6 +8,7 @@
 
 #import "ITLinkEntity.h"
 
+
 @implementation ITLinkEntity
 
 - (instancetype)initWithModule:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments

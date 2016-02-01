@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface ITLinkEntity : NSObject
 
 /**
@@ -38,7 +39,7 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 
-+ (instancetype)new NS_UNAVAILABLE;
++ (instancetype) new NS_UNAVAILABLE;
 
 #pragma mark - Override
 
