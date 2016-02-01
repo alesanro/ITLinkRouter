@@ -17,7 +17,7 @@
     if (self) {
         _moduleName = [moduleName copy];
         _linkSelector = linkSelector;
-        _arguments = [_arguments copy];
+        _arguments = [arguments copy];
     }
     return self;
 }

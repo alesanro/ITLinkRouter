@@ -24,7 +24,7 @@
 {
     self = [super init];
     if (self) {
-        _internalEntities = internalEntities ? [internalEntities mutableCopy] : [NSMutableArray array];
+        _internalEntities = internalEntities.count ? [internalEntities mutableCopy] : [NSMutableArray array];
     }
     return self;
 }
