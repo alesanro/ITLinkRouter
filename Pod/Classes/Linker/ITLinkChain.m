@@ -150,4 +150,19 @@
     return equal;
 }
 
+- (NSString *)debugDescription
+{
+    NSMutableString *description = [NSMutableString stringWithFormat:@"LinkChain (%@): [\n", [super debugDescription]];
+    [self.internalEntities enumerateObjectsUsingBlock:^(ITLinkEntity *obj, NSUInteger idx, BOOL *stop) {
+        [description appendFormat:@"\t%@", [obj debugDescription]];
+        if (idx + 1 != self.internalEntities.count) {
+            [description appendFormat:@"\n\t\t\t|"];
+            [description appendFormat:@"\n\t\t\tV"];
+            [description appendFormat:@"\n"];
+        }
+    }];
+    [description appendString:@"\n]"];
+    return description;
+}
+
 @end

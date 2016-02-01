@@ -95,4 +95,6 @@
 
 - (BOOL)isEqual:(id)object;
 
+- (NSString *)debugDescription;
+
 @end

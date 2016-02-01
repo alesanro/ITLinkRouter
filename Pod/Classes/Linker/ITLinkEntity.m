@@ -48,4 +48,9 @@
     return YES;
 }
 
+- (NSString *)debugDescription
+{
+    return [NSString stringWithFormat:@"[Module: %@; link: %@, args: {%@}]", self.moduleName, NSStringFromSelector(self.linkSelector), [self.arguments componentsJoinedByString:@"; "]];
+}
+
 @end
