@@ -3,6 +3,8 @@ use_frameworks!
 
 target 'ITLinkRouter_Example', :exclusive => true do
   pod 'ITLinkRouter', :path => '../'
+
+  pod 'ViperMcFlurry'
 end
 
 target 'ITLinkRouter_Tests', :exclusive => true do
