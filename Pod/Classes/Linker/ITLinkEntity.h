@@ -7,6 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ITAnimatableTransition.h"
+#import "ITUnwindableTransition.h"
+
+OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 
 
 @interface ITLinkEntity : NSObject <NSCopying>
@@ -14,17 +18,22 @@
 /**
  *  Name of module
  */
-@property (copy, nonatomic, readonly) NSString *moduleName;
+@property (nonatomic, readonly) NSString *moduleName;
 
 /**
  *  Selector for the next transition
  */
-@property (assign, nonatomic, readonly) SEL linkSelector;
+@property (nonatomic, readonly) SEL linkSelector;
 
 /**
  *  List of arguments for a transition
  */
-@property (copy, nonatomic, readonly) NSArray *arguments;
+@property (nonatomic, readonly) NSArray *arguments;
+
+/**
+ *  Object which is used to perform transition
+ */
+@property (strong, nonatomic) NSObject<ITAnimatableTransition, ITUnwindableTransition> *router;
 
 /**
  *  Initialize entity with

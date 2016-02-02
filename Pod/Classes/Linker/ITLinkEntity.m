@@ -8,6 +8,17 @@
 
 #import "ITLinkEntity.h"
 
+NSString *ITModuleNameFromClass(Class className)
+{
+    NSString *const classString = NSStringFromClass(className);
+    const NSRange moduleNameRange = [classString rangeOfString:@"module" options:NSCaseInsensitiveSearch];
+    if (moduleNameRange.location != NSNotFound) {
+        const NSInteger fullnameLength = moduleNameRange.location + moduleNameRange.length;
+        return [classString substringWithRange:NSMakeRange(0, fullnameLength)];
+    }
+    return classString;
+}
+
 
 @implementation ITLinkEntity
 
@@ -27,6 +38,7 @@
 - (id)copyWithZone:(NSZone *)zone
 {
     ITLinkEntity *const copyInstance = [[ITLinkEntity alloc] initWithModule:_moduleName link:_linkSelector arguments:[[NSArray alloc] initWithArray:_arguments copyItems:YES]];
+    copyInstance.router = self.router;
     return copyInstance;
 }
 

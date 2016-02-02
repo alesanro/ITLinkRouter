@@ -6,6 +6,8 @@
 //  Copyright © 2016 Alex Rudyak. All rights reserved.
 //
 
+#import "ITSupportClassStructure.h"
+
 SpecBegin(ITLinkChainTests);
 
 __block ITLinkChain *linkChain;
@@ -14,10 +16,10 @@ describe(@"Sign in module chain", ^{
     __block ITLinkEntity *entity1, *entity2, *entity3, *entity4, *testEntity1, *testEntity2;
 
     beforeAll(^{
-        entity1 = [[ITLinkEntity alloc] initWithModule:@"RootModule" link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
-        entity2 = [[ITLinkEntity alloc] initWithModule:@"LoginModule" link:@selector(navigateSignInWithUser:password:) arguments:@[ @"Alex", @"123" ]];
-        entity3 = [[ITLinkEntity alloc] initWithModule:@"FeedModule" link:@selector(openProfile) arguments:nil];
-        entity4 = [[ITLinkEntity alloc] initWithModule:@"ProfileModule" link:@selector(editNumber:) arguments:@[ @"375293334455" ]];
+        entity1 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
+        entity2 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITLoginModuleRouter class]) link:@selector(navigateToSignInWithUser:password:) arguments:@[ @"Alex", @"123" ]];
+        entity3 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
+        entity4 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITProfileModuleRouter class]) link:@selector(editNumber:) arguments:@[ @"375293334455" ]];
         testEntity1 = [[ITLinkEntity alloc] initWithModule:@"TestModule1" link:@selector(testLinkToModule2) arguments:nil];
         testEntity2 = [[ITLinkEntity alloc] initWithModule:@"TestModule2" link:@selector(testLinkToModule3) arguments:nil];
     });

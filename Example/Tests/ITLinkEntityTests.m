@@ -47,8 +47,14 @@ describe(@"Entity Initialization", ^{
     });
 
     it(@"should have proper instance after copying", ^{
+        linkEntity = [[ITLinkEntity alloc] initWithModule:NSStringFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
+        linkEntity.router = [NSObject new];
         ITLinkEntity *const copiedEntity = [linkEntity copy];
         expect(copiedEntity).equal(linkEntity);
+        expect(copiedEntity.moduleName).equal(linkEntity.moduleName);
+        expect(copiedEntity.linkSelector).equal(linkEntity.linkSelector);
+        expect(copiedEntity.arguments).haveCountOf(linkEntity.arguments.count);
+        expect(copiedEntity.router).equal(linkEntity.router);
     });
 });
 
