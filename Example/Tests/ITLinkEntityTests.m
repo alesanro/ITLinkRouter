@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alex Rudyak. All rights reserved.
 //
 
-@import ITLinkRouter;
-
 
 @interface _TestModule : NSObject
 

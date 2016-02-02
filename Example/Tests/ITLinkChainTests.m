@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alex Rudyak. All rights reserved.
 //
 
-@import ITLinkRouter;
-
 SpecBegin(ITLinkChainTests);
 
 __block ITLinkChain *linkChain;
