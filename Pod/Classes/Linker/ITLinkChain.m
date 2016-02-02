@@ -19,6 +19,8 @@
 
 @implementation ITLinkChain
 @dynamic entities;
+@dynamic rootEntity;
+@dynamic lastEntity;
 
 - (instancetype)initWithEntities:(NSArray<ITLinkEntity *> *)internalEntities
 {
@@ -41,6 +43,21 @@
     return [NSArray arrayWithArray:self.internalEntities];
 }
 
+- (ITLinkEntity *)rootEntity
+{
+    return self.internalEntities.firstObject;
+}
+
+- (ITLinkEntity *)lastEntity
+{
+    return self.internalEntities.lastObject;
+}
+
+- (NSInteger)length
+{
+    return self.internalEntities.count;
+}
+
 #pragma mark - Public
 
 - (ITLinkChain *)appendEntity:(ITLinkEntity *)entity
@@ -51,8 +68,17 @@
 
 - (ITLinkEntity *)popEntity
 {
-    ITLinkEntity *const removeEntity = [self.internalEntities lastObject];
+    ITLinkEntity *const removeEntity = self.internalEntities.lastObject;
     [self.internalEntities removeLastObject];
+    return removeEntity;
+}
+
+- (ITLinkEntity *)shiftEntity
+{
+    ITLinkEntity *const removeEntity = self.internalEntities.firstObject;
+    if (self.internalEntities.count) {
+        [self.internalEntities removeObjectAtIndex:0];
+    }
     return removeEntity;
 }
 
@@ -81,7 +107,12 @@
             }
 
             if (hasIntersection) {
-                ITLinkEntity *const nextEntity = self.internalEntities[selfIdx + intersectionRange.length];
+                const NSInteger nextIdx = selfIdx + intersectionRange.length;
+                if (self.internalEntities.count >= nextIdx) {
+                    *otherStop = YES;
+                }
+
+                ITLinkEntity *const nextEntity = self.internalEntities[nextIdx];
                 if ([otherEntity isEqual:nextEntity]) {
                     intersectionRange.length++;
                 } else {
@@ -108,17 +139,28 @@
 - (ITLinkChain *)intersectionAtStartWithChain:(ITLinkChain *)otherLinkChain
 {
     const NSRange intersectionRange = [self intersectionRangeWithChain:otherLinkChain];
-    if (intersectionRange.location != 0) {
-        return nil;
+    const NSRange reverseIntersectionRange = [otherLinkChain intersectionRangeWithChain:self];
+    if (intersectionRange.location == 0 && NSEqualRanges(intersectionRange, reverseIntersectionRange)) {
+        return [self subchainWithRange:intersectionRange];
     }
-    return [self subchainWithRange:intersectionRange];
-}
 
+    return [ITLinkChain new];
+}
 
 - (ITLinkChain *)subchainWithRange:(NSRange)range
 {
-    NSArray *const subentities = [self.internalEntities subarrayWithRange:range];
+    const NSRange entitiesRange = NSMakeRange(0, self.internalEntities.count);
+    const NSRange rangeIntersection = NSIntersectionRange(range, entitiesRange);
+    NSArray *const subentities = [self.internalEntities subarrayWithRange:rangeIntersection];
     return [[ITLinkChain alloc] initWithEntities:subentities];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    ITLinkChain *const copyInstance = [[ITLinkChain alloc] initWithEntities:[[NSArray alloc] initWithArray:self.internalEntities copyItems:YES]];
+    return copyInstance;
 }
 
 #pragma mark - Override
@@ -153,7 +195,7 @@
 - (NSString *)debugDescription
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"LinkChain (%@): [\n", [super debugDescription]];
-    [self.internalEntities enumerateObjectsUsingBlock:^(ITLinkEntity *obj, NSUInteger idx, BOOL *stop) {
+    [self.internalEntities enumerateObjectsUsingBlock:^(ITLinkEntity *const obj, NSUInteger idx, BOOL *stop) {
         [description appendFormat:@"\t%@", [obj debugDescription]];
         if (idx + 1 != self.internalEntities.count) {
             [description appendFormat:@"\n\t\t\t|"];

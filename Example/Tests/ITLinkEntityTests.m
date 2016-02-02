@@ -8,12 +8,14 @@
 
 @import ITLinkRouter;
 
+
 @interface _TestModule : NSObject
 
 - (void)testRoute;
 - (void)testRoute:(NSString *)route param1:(NSString *)param1 param2:(NSString *)param2;
 
 @end
+
 
 @implementation _TestModule
 
@@ -23,7 +25,7 @@
 @end
 
 
-SpecBegin(ITLinkEntityTests)
+SpecBegin(ITLinkEntityTests);
 
 __block ITLinkEntity *linkEntity;
 
@@ -44,6 +46,11 @@ describe(@"Entity Initialization", ^{
         expect(linkEntity.moduleName).equal(NSStringFromClass([_TestModule class]));
         expect(linkEntity.linkSelector).equal(@selector(testRoute));
         expect(linkEntity.arguments).to.beNil();
+    });
+
+    it(@"should have proper instance after copying", ^{
+        ITLinkEntity *const copiedEntity = [linkEntity copy];
+        expect(copiedEntity).equal(linkEntity);
     });
 });
 

@@ -22,6 +22,14 @@
     return self;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    ITLinkEntity *const copyInstance = [[ITLinkEntity alloc] initWithModule:_moduleName link:_linkSelector arguments:[[NSArray alloc] initWithArray:_arguments copyItems:YES]];
+    return copyInstance;
+}
+
 #pragma mark - Override
 
 - (BOOL)isEqual:(id)object

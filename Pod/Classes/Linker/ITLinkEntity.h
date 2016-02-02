@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ITLinkEntity : NSObject
+@interface ITLinkEntity : NSObject <NSCopying>
 
 /**
  *  Name of module

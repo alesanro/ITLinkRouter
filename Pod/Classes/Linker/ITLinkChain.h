@@ -11,7 +11,7 @@
 @class ITLinkEntity;
 
 
-@interface ITLinkChain : NSObject
+@interface ITLinkChain : NSObject <NSCopying>
 
 /**
  *  List of link entities
@@ -22,6 +22,16 @@
  *  First (root) entity in the list of link entities
  */
 @property (nonatomic, readonly) ITLinkEntity *rootEntity;
+
+/**
+ *  Last entity in the list of link entities
+ */
+@property (nonatomic, readonly) ITLinkEntity *lastEntity;
+
+/**
+ *  Length of the chain
+ */
+@property (nonatomic, readonly) NSInteger length;
 
 /**
  *  Initialize chain with link entities
@@ -51,6 +61,13 @@
 - (ITLinkEntity *)popEntity;
 
 /**
+ *  Remove first entity from the list of link entities
+ *
+ *  @return removed link entity
+ */
+- (ITLinkEntity *)shiftEntity;
+
+/**
  *  Find first intersection range (greed algorithm) between two link chains.
  *
  *  @param otherLinkChain other chain to compare
@@ -78,7 +95,7 @@
  *  @param otherLinkChain other chain to compare
  *
  *  @return new chain object which contains only common entities.
- *          @a nil if no matches were found
+ *          Retur empty chain (with zero length) if no matches were found
  */
 - (ITLinkChain *)intersectionAtStartWithChain:(ITLinkChain *)otherLinkChain;
 
