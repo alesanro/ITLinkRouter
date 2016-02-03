@@ -1,25 +1,25 @@
 //
-//  ITModuleNavigatorController.m
+//  ITLinkNavigationController.m
 //  Pods
 //
 //  Created by Alex Rudyak on 2/1/16.
 //
 //
 
-#import "ITModuleNavigatorController.h"
+#import "ITLinkNavigationController.h"
 #import "ITLinkAction.h"
 #import "ITLinkChain.h"
 #import "ITConstants.h"
 
 
-@interface ITModuleNavigatorController ()
+@interface ITLinkNavigationController ()
 
 @property (copy, nonatomic) ITLinkChain *linkChain;
 
 @end
 
 
-@implementation ITModuleNavigatorController
+@implementation ITLinkNavigationController
 @dynamic rootEntity;
 @dynamic activeEntity;
 @dynamic navigationChain;

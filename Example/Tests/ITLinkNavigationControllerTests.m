@@ -1,5 +1,5 @@
 //
-//  ITModuleNavigatorControllerTests.m
+//  ITLinkNavigationControllerTests.m
 //  ITLinkRouter
 //
 //  Created by Alex Rudyak on 2/2/16.
@@ -8,9 +8,9 @@
 
 #import "ITSupportClassStructure.h"
 
-SpecBegin(ITModuleNavigationControllerTests);
+SpecBegin(ITLinkNavigationControllerTests);
 
-__block ITModuleNavigatorController *moduleNavigator;
+__block ITLinkNavigationController *moduleNavigator;
 __block ITLinkChain *defaultChain;
 __block ITLinkAction *entity1, *entity2;
 
@@ -29,7 +29,7 @@ beforeEach(^{
     entity2.router = entity2Router;
 
     defaultChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity2]];
-    moduleNavigator = [[ITModuleNavigatorController alloc] initWithChain:defaultChain];
+    moduleNavigator = [[ITLinkNavigationController alloc] initWithChain:defaultChain];
 });
 
 afterAll(^{

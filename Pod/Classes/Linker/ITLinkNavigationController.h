@@ -1,5 +1,5 @@
 //
-//  ITModuleNavigatorController.h
+//  ITLinkNavigationController.h
 //  Pods
 //
 //  Created by Alex Rudyak on 2/1/16.
@@ -20,7 +20,7 @@
  *  application-based navigation and perform `navigateToNewChain:` method 
  *  to go right to the destination screen.
  */
-@interface ITModuleNavigatorController : NSObject
+@interface ITLinkNavigationController : NSObject
 
 /**
  *  First (root) module link
@@ -44,7 +44,7 @@
  *
  *  @param entity root entity
  *
- *  @return instance of ITModuleNavigatorController class
+ *  @return instance of ITLinkNavigationController class
  */
 - (instancetype)initWithRootEntity:(ITLinkNode *)entity;
 
@@ -53,7 +53,7 @@
  *
  *  @param chain navigation chain
  *
- *  @return instance of ITModuleNavigatorController class
+ *  @return instance of ITLinkNavigationController class
  */
 - (instancetype)initWithChain:(ITLinkChain *)chain NS_DESIGNATED_INITIALIZER;
 

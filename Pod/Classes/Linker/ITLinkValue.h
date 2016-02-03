@@ -11,4 +11,8 @@
 
 @interface ITLinkValue : ITLinkNode
 
+#pragma mark - Override
+
+- (BOOL)isEqual:(id)object;
+
 @end

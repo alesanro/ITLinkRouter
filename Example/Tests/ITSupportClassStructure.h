@@ -12,7 +12,7 @@
 @interface _ITBasicRouter : NSObject <ITUnwindableTransition>
 
 @property (nonatomic, getter=isAnimatable) BOOL animatable;
-@property (nonatomic, strong) ITModuleNavigatorController *moduleNavigator;
+@property (nonatomic, strong) ITLinkNavigationController *moduleNavigator;
 
 @end
 

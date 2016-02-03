@@ -7,6 +7,9 @@
 //
 
 
+#import "ITSupportClassStructure.h"
+
+
 @interface _TestModule : NSObject
 
 - (void)testRoute;
@@ -65,21 +68,21 @@ describe(@"equality should work", ^{
         expect(otherLink).to.equal(linkEntity);
     });
 
-    it(@"to YES between instances of different classes but inside common hierarchical tree", ^{
+    it(@"to NO between instances of different classes of common hierarchical tree", ^{
         linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:@[@"bob"]];
         ITLinkNode *linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
-        expect(linkEntity).to.equal(linkValue);
-        expect(linkValue).to.equal(linkEntity);
+        expect(linkEntity).toNot.equal(linkValue);
+        expect(linkValue).toNot.equal(linkEntity);
 
         linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:param1:param2:) arguments:@[@"bob"]];
         linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
-        expect(linkEntity).to.equal(linkValue);
-        expect(linkValue).to.equal(linkEntity);
+        expect(linkEntity).toNot.equal(linkValue);
+        expect(linkValue).toNot.equal(linkEntity);
 
         linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
         linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
-        expect(linkEntity).to.equal(linkValue);
-        expect(linkValue).to.equal(linkEntity);
+        expect(linkEntity).toNot.equal(linkValue);
+        expect(linkValue).toNot.equal(linkEntity);
     });
 
     it(@"to NO between instances of the same class", ^{
@@ -99,11 +102,81 @@ describe(@"equality should work", ^{
         expect(otherLink).toNot.equal(linkEntity);
     });
 
-    it(@"to NO between instances of different classes but inside common hierarchical tree", ^{
+    it(@"to NO between instances of different classes of common hierarchical tree", ^{
         linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:@[@"bob"]];
         ITLinkNode *linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([NSObject class])];
         expect(linkEntity).toNot.equal(linkValue);
         expect(linkValue).toNot.equal(linkEntity);
+    });
+});
+
+describe(@"similarity should work", ^{
+    it(@"to YES between instances of the same class", ^{
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:@[@"bob"]];
+        ITLinkNode *otherLink = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:@[@"tom"]];
+        expect([linkEntity isSimilar:otherLink]).to.beTruthy();
+        expect([otherLink isSimilar:linkEntity]).to.beTruthy();
+
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:param1:param2:) arguments:@[@"bob"]];
+        otherLink = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
+        expect([linkEntity isSimilar:otherLink]).to.beTruthy();
+        expect([otherLink isSimilar:linkEntity]).to.beTruthy();
+
+        linkEntity = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
+        ITLinkNode *secondLink = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
+        expect([otherLink isSimilar:secondLink]).to.beTruthy();
+        expect([secondLink isSimilar:secondLink]).to.beTruthy();
+    });
+
+    it(@"to YES between instances of different classes of common hierarchical tree", ^{
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:@[@"bob"]];
+        ITLinkNode *linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
+        expect([linkEntity isSimilar:linkValue]).to.beTruthy();
+        expect([linkValue isSimilar:linkEntity]).to.beTruthy();
+
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:param1:param2:) arguments:@[@"bob"]];
+        linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
+        expect([linkEntity isSimilar:linkValue]).to.beTruthy();
+        expect([linkValue isSimilar:linkEntity]).to.beTruthy();
+
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
+        linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
+        expect([linkEntity isSimilar:linkValue]).to.beTruthy();
+        expect([linkValue isSimilar:linkEntity]).to.beTruthy();
+    });
+
+    it(@"to NO between instances of the same class", ^{
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:@[@"bob"]];
+        ITLinkNode *otherLink = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(testRoute) arguments:@[@"tom"]];
+        expect([linkEntity isSimilar:otherLink]).to.beFalsy();
+        expect([otherLink isSimilar:linkEntity]).to.beFalsy();
+
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:param1:param2:) arguments:@[@"bob"]];
+        otherLink = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(testRoute) arguments:nil];
+        expect([linkEntity isSimilar:otherLink]).to.beFalsy();
+        expect([otherLink isSimilar:linkEntity]).to.beFalsy();
+
+        otherLink = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_TestModule class])];
+        ITLinkNode *secondLink = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class])];
+        expect([otherLink isSimilar:secondLink]).to.beFalsy();
+        expect([secondLink isSimilar:otherLink]).to.beFalsy();
+    });
+
+    it(@"to NO between instances of different classes of common hierarchical tree", ^{
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:@[@"bob"]];
+        ITLinkNode *linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class])];
+        expect([linkEntity isSimilar:linkValue]).to.beFalsy();
+        expect([linkValue isSimilar:linkEntity]).to.beFalsy();
+
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:param1:param2:) arguments:@[@"bob"]];
+        linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class])];
+        expect([linkEntity isSimilar:linkValue]).to.beFalsy();
+        expect([linkValue isSimilar:linkEntity]).to.beFalsy();
+
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
+        linkValue = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class])];
+        expect([linkEntity isSimilar:linkValue]).to.beFalsy();
+        expect([linkValue isSimilar:linkEntity]).to.beFalsy();
     });
 });
 

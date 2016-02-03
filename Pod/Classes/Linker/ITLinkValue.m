@@ -11,4 +11,17 @@
 
 @implementation ITLinkValue
 
+- (BOOL)isEqual:(id)object
+{
+    if (![super isEqual:object]) {
+        return NO;
+    }
+
+    if (![object isKindOfClass:[ITLinkValue class]]) {
+        return NO;
+    }
+
+    return YES;
+}
+
 @end

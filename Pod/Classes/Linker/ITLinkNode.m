@@ -45,7 +45,7 @@ NSString *ITModuleNameFromClass(Class className)
         return YES;
     }
 
-    if (![object isKindOfClass:[self class]]) {
+    if (![object isKindOfClass:[ITLinkNode class]]) {
         return NO;
     }
 
