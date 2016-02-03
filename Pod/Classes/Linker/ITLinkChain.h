@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class ITLinkEntity;
+@class ITLinkNode;
 
 
 @interface ITLinkChain : NSObject <NSCopying>
@@ -16,17 +16,17 @@
 /**
  *  List of link entities
  */
-@property (copy, nonatomic, readonly) NSArray<ITLinkEntity *> *entities;
+@property (copy, nonatomic, readonly) NSArray<ITLinkNode *> *entities;
 
 /**
  *  First (root) entity in the list of link entities
  */
-@property (nonatomic, readonly) ITLinkEntity *rootEntity;
+@property (nonatomic, readonly) ITLinkNode *rootEntity;
 
 /**
  *  Last entity in the list of link entities
  */
-@property (nonatomic, readonly) ITLinkEntity *lastEntity;
+@property (nonatomic, readonly) ITLinkNode *lastEntity;
 
 /**
  *  Length of the chain
@@ -40,7 +40,7 @@
  *
  *  @return instance of ITLinkChain class
  */
-- (instancetype)initWithEntities:(NSArray<ITLinkEntity *> *)linkEntities NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithEntities:(NSArray<ITLinkNode *> *)linkEntities NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Public
 
@@ -51,21 +51,21 @@
  *
  *  @return reference to 'self' to make available chained operations
  */
-- (ITLinkChain *)appendEntity:(ITLinkEntity *)entity;
+- (ITLinkChain *)appendEntity:(ITLinkNode *)entity;
 
 /**
  *  Remove last entity from the list of link entities
  *
  *  @return removed link entity
  */
-- (ITLinkEntity *)popEntity;
+- (ITLinkNode *)popEntity;
 
 /**
  *  Remove first entity from the list of link entities
  *
  *  @return removed link entity
  */
-- (ITLinkEntity *)shiftEntity;
+- (ITLinkNode *)shiftEntity;
 
 /**
  *  Find first intersection range (greed algorithm) between two link chains.

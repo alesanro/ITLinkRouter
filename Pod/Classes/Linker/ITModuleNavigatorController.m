@@ -7,7 +7,7 @@
 //
 
 #import "ITModuleNavigatorController.h"
-#import "ITLinkEntity.h"
+#import "ITLinkAction.h"
 #import "ITLinkChain.h"
 #import "ITConstants.h"
 
@@ -33,19 +33,19 @@
     return self;
 }
 
-- (instancetype)initWithRootEntity:(ITLinkEntity *)entity
+- (instancetype)initWithRootEntity:(ITLinkAction *)entity
 {
     return [self initWithChain:[[ITLinkChain alloc] initWithEntities:@[ entity ]]];
 }
 
 #pragma Accessors
 
-- (ITLinkEntity *)rootEntity
+- (ITLinkAction *)rootEntity
 {
     return self.linkChain.rootEntity;
 }
 
-- (ITLinkEntity *)activeEntity
+- (ITLinkAction *)activeEntity
 {
     return self.linkChain.lastEntity;
 }
@@ -57,7 +57,7 @@
 
 #pragma mark - Public
 
-- (void)pushLink:(ITLinkEntity *)link
+- (void)pushLink:(ITLinkAction *)link withResultValue:(ITLinkAction *)valueEntity
 {
     if (!link) {
         @throw [NSException exceptionWithName:ITNavigationInvalidArgument reason:@"Link should not be nil when pushLink: is performing" userInfo:nil];
@@ -71,7 +71,7 @@
 
 - (void)popLink
 {
-    __unused ITLinkEntity *const popedLinkEntity = [self.linkChain popEntity];
+    __unused ITLinkAction *const popedLinkEntity = [self.linkChain popEntity];
 }
 
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		567352261C5F932E00F65A31 /* ITLinkEntityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352251C5F932E00F65A31 /* ITLinkEntityTests.m */; };
+		561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 561F10781C624C8300DC6575 /* ITLinkActionTests.m */; };
+		567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352251C5F932E00F65A31 /* ITLinkValueTests.m */; };
 		567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352281C5FA8B800F65A31 /* ITLinkChainTests.m */; };
 		56B36F6F1C60B01900D323E0 /* ITModuleNavigatorControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F6E1C60B01900D323E0 /* ITModuleNavigatorControllerTests.m */; };
 		56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */; };
@@ -41,8 +42,9 @@
 /* Begin PBXFileReference section */
 		3BC599563147B7D540F13948 /* Pods-ITLinkRouter_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ITLinkRouter_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ITLinkRouter_Tests/Pods-ITLinkRouter_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5463FF7BCEA8BFCDD8CFF107 /* Pods-ITLinkRouter_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ITLinkRouter_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ITLinkRouter_Tests/Pods-ITLinkRouter_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		567352251C5F932E00F65A31 /* ITLinkEntityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkEntityTests.m; sourceTree = "<group>"; };
-		567352281C5FA8B800F65A31 /* ITLinkChainTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkChainTests.m; sourceTree = "<group>"; };
+		561F10781C624C8300DC6575 /* ITLinkActionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkActionTests.m; sourceTree = "<group>"; };
+		567352251C5F932E00F65A31 /* ITLinkValueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkValueTests.m; sourceTree = "<group>"; };
+		567352281C5FA8B800F65A31 /* ITLinkChainTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ITLinkChainTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		56B36F6E1C60B01900D323E0 /* ITModuleNavigatorControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITModuleNavigatorControllerTests.m; sourceTree = "<group>"; };
 		56B36F751C60D35500D323E0 /* ITSupportClassStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITSupportClassStructure.h; sourceTree = "<group>"; };
 		56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITSupportClassStructure.m; sourceTree = "<group>"; };
@@ -175,9 +177,10 @@
 			isa = PBXGroup;
 			children = (
 				6003F5B6195388D20070C39A /* Supporting Files */,
-				567352251C5F932E00F65A31 /* ITLinkEntityTests.m */,
+				567352251C5F932E00F65A31 /* ITLinkValueTests.m */,
 				567352281C5FA8B800F65A31 /* ITLinkChainTests.m */,
 				56B36F6E1C60B01900D323E0 /* ITModuleNavigatorControllerTests.m */,
+				561F10781C624C8300DC6575 /* ITLinkActionTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -413,8 +416,9 @@
 			files = (
 				567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */,
 				56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */,
-				567352261C5F932E00F65A31 /* ITLinkEntityTests.m in Sources */,
+				567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */,
 				56B36F6F1C60B01900D323E0 /* ITModuleNavigatorControllerTests.m in Sources */,
+				561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

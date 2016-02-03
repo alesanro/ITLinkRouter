@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class ITLinkEntity;
+@class ITLinkNode;
 @class ITLinkChain;
 
 /**
- *  @author Alex Rudyak <alesanro\@instinctools.ru>
- *
  *  This navigator controller responsible for managing navigation between
- *  modules withing VIPER application architecture. It used to keep track
+ *  modules withing VIPER application architecture pattern. It used to keep track
  *  currently loaded modules, their hierarchy and transitions. It also very
  *  helpful for experiencing Deep Linking approach and allows to embed it
  *  easily. Use ITLinkChain to transform external URLs to internal 
@@ -27,27 +25,28 @@
 /**
  *  First (root) module link
  */
-@property (nonatomic, readonly) ITLinkEntity *rootEntity;
+@property (nonatomic, readonly) ITLinkNode *rootEntity;
 
 /**
- *  The latest link that was performed for transition
+ *  The latest link that was performed for transition. It always should be 
+ *  of ITLinkActionTypeValue type.
  */
-@property (nonatomic, readonly) ITLinkEntity *activeEntity;
+@property (nonatomic, readonly) ITLinkNode *activeEntity;
 
 /**
  *  Navigation chain which describes current stack of module navigations.
- *  Returns copy of a chain, so it can be freely modified
+ *  Returns copy of a chain, so it can be freely modified.
  */
 @property (nonatomic, readonly) ITLinkChain *navigationChain;
 
 /**
- *  Initialize instance with root entity. Creates new navigation chain
+ *  Initialize instance with root entity. Creates new navigation chain.
  *
  *  @param entity root entity
  *
  *  @return instance of ITModuleNavigatorController class
  */
-- (instancetype)initWithRootEntity:(ITLinkEntity *)entity;
+- (instancetype)initWithRootEntity:(ITLinkNode *)entity;
 
 /**
  *  Initialize instance with predefined chain.
@@ -70,7 +69,7 @@
  *
  *  @param link link which was execuded right away
  */
-- (void)pushLink:(ITLinkEntity *)link;
+- (void)pushLink:(ITLinkNode *)link withResultValue:(ITLinkNode *)valueEntity;
 
 /**
  *  Remove active link from the navigation chain.

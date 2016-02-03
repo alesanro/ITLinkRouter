@@ -12,16 +12,17 @@ SpecBegin(ITLinkChainTests);
 
 __block ITLinkChain *linkChain;
 
-describe(@"Sign in module chain", ^{
-    __block ITLinkEntity *entity1, *entity2, *entity3, *entity4, *testEntity1, *testEntity2;
+describe(@"action-typed link chain", ^{
+    __block ITLinkNode *entity1, *entity2, *entity3, *entity4, *testEntity1, *testEntity2;
+    __block ITLinkNode *valueEntity1, *valueEntity2;
 
     beforeAll(^{
-        entity1 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
-        entity2 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITLoginModuleRouter class]) link:@selector(navigateToSignInWithUser:password:) arguments:@[ @"Alex", @"123" ]];
-        entity3 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
-        entity4 = [[ITLinkEntity alloc] initWithModule:ITModuleNameFromClass([_ITProfileModuleRouter class]) link:@selector(editNumber:) arguments:@[ @"375293334455" ]];
-        testEntity1 = [[ITLinkEntity alloc] initWithModule:@"TestModule1" link:@selector(testLinkToModule2) arguments:nil];
-        testEntity2 = [[ITLinkEntity alloc] initWithModule:@"TestModule2" link:@selector(testLinkToModule3) arguments:nil];
+        entity1 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
+        entity2 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITLoginModuleRouter class]) link:@selector(navigateToSignInWithUser:password:) arguments:@[ @"Alex", @"123" ]];
+        entity3 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
+        entity4 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITProfileModuleRouter class]) link:@selector(editNumber:) arguments:@[ @"375293334455" ]];
+        testEntity1 = [[ITLinkAction alloc] initWithModuleName:@"TestModule1" link:@selector(testLinkToModule2) arguments:nil];
+        testEntity2 = [[ITLinkAction alloc] initWithModuleName:@"TestModule2" link:@selector(testLinkToModule3) arguments:nil];
     });
 
     beforeEach(^{
@@ -34,7 +35,7 @@ describe(@"Sign in module chain", ^{
     });
 
     it(@"can append new entities", ^{
-        ITLinkEntity *entity = testEntity1;
+        ITLinkNode *entity = testEntity1;
         const NSInteger prevCount = linkChain.length;
         [linkChain appendEntity:entity];
         expect(linkChain.length).equal(prevCount + 1);
@@ -147,6 +148,7 @@ describe(@"Sign in module chain", ^{
     it(@"should have proper copied instance", ^{
         ITLinkChain *copiedChain = [linkChain copy];
         expect(copiedChain).equal(linkChain);
+        expect(linkChain).equal(copiedChain);
     });
 
 });
