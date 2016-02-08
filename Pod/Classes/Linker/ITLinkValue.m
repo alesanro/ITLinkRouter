@@ -7,9 +7,34 @@
 //
 
 #import "ITLinkValue.h"
-
+#import "ITLinkNode-Private.h"
 
 @implementation ITLinkValue
+
+- (instancetype)initWithModuleName:(NSString *)moduleName
+{
+    return [self initWithModuleName:moduleName router:nil];
+}
+
+- (instancetype)initWithModuleName:(NSString *)moduleName router:(NSObject<ITAnimatableTransition, ITUnwindableTransition> *)router
+{
+    return [super initWithModuleName:moduleName router:router];
+}
+
+- (ITLinkNode *)flatten
+{
+    return [self copy];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    ITLinkValue *copyInstance = [[ITLinkValue alloc] initWithModuleName:self.moduleName router:self.router];
+    return copyInstance;
+}
+
+#pragma mark - Override
 
 - (BOOL)isEqual:(id)object
 {

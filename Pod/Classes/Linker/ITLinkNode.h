@@ -14,7 +14,6 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 
 #define ROUTER_TYPE NSObject<ITAnimatableTransition, ITUnwindableTransition> *
 
-
 @interface ITLinkNode : NSObject <NSCopying>
 
 /**
@@ -26,10 +25,6 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  *  Object which is used to perform transition
  */
 @property (strong, nonatomic) ROUTER_TYPE router;
-
-- (instancetype)initWithModuleName:(NSString *)moduleName;
-
-- (instancetype)initWithModuleName:(NSString *)moduleName router:(ROUTER_TYPE)router NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -44,6 +39,8 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  */
 - (BOOL)isSimilar:(ITLinkNode *)object;
 
+- (ITLinkNode *)flatten;
+
 #pragma mark - Override
 
 - (BOOL)isEqual:(id)object;
@@ -51,7 +48,6 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 - (NSString *)debugDescription;
 
 @end
-
 
 @interface ITLinkNode (ITCluster)
 
@@ -62,5 +58,7 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName;
 
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName router:(ROUTER_TYPE)router;
+
++ (instancetype)linkActionWithNode:(ITLinkNode *)node link:(SEL)linkSelector arguments:(NSArray *)arguments;
 
 @end

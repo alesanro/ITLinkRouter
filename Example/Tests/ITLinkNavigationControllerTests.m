@@ -12,7 +12,7 @@ SpecBegin(ITLinkNavigationControllerTests);
 
 __block ITLinkNavigationController *moduleNavigator;
 __block ITLinkChain *defaultChain;
-__block ITLinkAction *entity1, *entity2;
+__block ITLinkNode *entity1, *entity2;
 
 beforeEach(^{
     entity1 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
@@ -54,7 +54,7 @@ describe(@"checking properties after initialization", ^{
 
 describe(@"checking push manipulation", ^{
     it(@"with valid link should add new entity", ^{
-        ITLinkAction *const nextEntity = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
+        ITLinkNode *const nextEntity = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
         const NSInteger prevChainLength = moduleNavigator.navigationChain.length;
         [moduleNavigator pushLink:nextEntity withResultValue:nil];
         expect(moduleNavigator.activeEntity).equal(nextEntity);
@@ -71,7 +71,7 @@ describe(@"checking push manipulation", ^{
 
 describe(@"checking pop manipulation", ^{
     it(@"with non-empty navigation chain should proceed", ^{
-        ITLinkAction *const prevActiveEntity = moduleNavigator.activeEntity;
+        ITLinkNode *const prevActiveEntity = moduleNavigator.activeEntity;
         const NSInteger prevChainLength = moduleNavigator.navigationChain.length;
         [moduleNavigator popLink];
         expect(moduleNavigator.activeEntity).toNot.equal(prevActiveEntity);
@@ -89,13 +89,13 @@ describe(@"performing navigation by link chain", ^{
     });
 
     it(@"with the same route should reload only last item", ^{
-        ITLinkAction *const entity4 = [[ITLinkAction alloc] initWithModuleName:entity2.moduleName link:entity2.linkSelector arguments:@[@"Robin", @"abc"]];
+        ITLinkNode *const entity4 = [ITLinkNode linkActionWithAction:(id)entity2 arguments:@[@"Robin", @"abc"]];
         _ITLoginModuleRouter *entity4Router = OCMClassMock([_ITLoginModuleRouter class]);
         OCMStub([entity4Router navigateToSignInWithUser:[OCMArg any] password:[OCMArg any]]);
         entity4.router = entity4Router;
 
         ITLinkChain *const sameChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity4]];
-        ITLinkAction *const prevLastLink = defaultChain.lastEntity;
+        ITLinkNode *const prevLastLink = defaultChain.lastEntity;
         [moduleNavigator navigateToNewChain:sameChain];
         OCMVerify([prevLastLink.router unwind]);
         OCMVerify([(_ITLoginModuleRouter *)entity4.router navigateToSignInWithUser:[OCMArg any] password:[OCMArg any]]);
@@ -113,6 +113,5 @@ describe(@"performing navigation by link chain", ^{
 
     });
 });
-
 
 SpecEnd

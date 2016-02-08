@@ -7,6 +7,7 @@
 //
 
 #import "ITLinkNode.h"
+#import "ITLinkNode-Private.h"
 #import "ITLinkValue.h"
 #import "ITLinkAction.h"
 
@@ -20,7 +21,6 @@ NSString *ITModuleNameFromClass(Class className)
     }
     return classString;
 }
-
 
 @implementation ITLinkNode
 
@@ -54,6 +54,11 @@ NSString *ITModuleNameFromClass(Class className)
     }
 
     return NO;
+}
+
+- (ITLinkNode *)flatten
+{
+    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
 }
 
 #pragma mark - Override
@@ -91,7 +96,6 @@ NSString *ITModuleNameFromClass(Class className)
 
 @end
 
-
 @implementation ITLinkNode (ITCluster)
 
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName
@@ -112,6 +116,11 @@ NSString *ITModuleNameFromClass(Class className)
 + (instancetype)linkActionWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments router:(NSObject<ITAnimatableTransition, ITUnwindableTransition> *)router
 {
     return [[ITLinkAction alloc] initWithModuleName:moduleName link:linkSelector arguments:arguments router:router];
+}
+
++ (instancetype)linkActionWithNode:(ITLinkNode *)node link:(SEL)linkSelector arguments:(NSArray *)arguments
+{
+    return [[ITLinkAction alloc] initWithModuleName:node.moduleName link:linkSelector arguments:arguments router:node.router];
 }
 
 @end

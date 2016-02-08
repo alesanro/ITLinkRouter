@@ -6,9 +6,7 @@
 //  Copyright © 2016 Alex Rudyak. All rights reserved.
 //
 
-
 #import "ITSupportClassStructure.h"
-
 
 @interface _TestModule : NSObject
 
@@ -17,17 +15,20 @@
 
 @end
 
-
 @implementation _TestModule
 
-- (void)testRoute {}
-- (void)testRoute:(NSString *)route param1:(NSString *)param1 param2:(NSString *)param2 {}
+- (void)testRoute
+{
+}
+- (void)testRoute:(NSString *)route param1:(NSString *)param1 param2:(NSString *)param2
+{
+}
 
 @end
 
 SpecBegin(ITLinkActionTests);
 
-__block ITLinkAction *linkEntity;
+__block ITLinkNode *linkEntity;
 
 afterEach(^{
     linkEntity = nil;
@@ -36,27 +37,38 @@ afterEach(^{
 describe(@"Entity Initialization", ^{
     it(@"should inititialize with empty arguments" , ^{
         linkEntity = [[ITLinkAction alloc] initWithModuleName:nil link:0 arguments:nil];
-        expect(linkEntity.moduleName).to.beNil();
-        expect(linkEntity.linkSelector).to.beNull();
-        expect(linkEntity.arguments).to.beNil();
+        ITLinkAction *linkAction = (ITLinkAction *)linkEntity;
+        expect(linkAction.moduleName).to.beNil();
+        expect(linkAction.linkSelector).to.beNull();
+        expect(linkAction.arguments).to.beNil();
     });
 
     it(@"should initialize with non-empty arguments", ^{
         linkEntity = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
-        expect(linkEntity.moduleName).equal(NSStringFromClass([_TestModule class]));
-        expect(linkEntity.linkSelector).equal(@selector(testRoute));
-        expect(linkEntity.arguments).to.beNil();
+        ITLinkAction *linkAction = (ITLinkAction *)linkEntity;
+        expect(linkAction.moduleName).equal(NSStringFromClass([_TestModule class]));
+        expect(linkAction.linkSelector).equal(@selector(testRoute));
+        expect(linkAction.arguments).to.beNil();
     });
 
     it(@"should have proper instance after copying", ^{
         linkEntity = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
         linkEntity.router = OCMProtocolMock(@protocol(ITUnwindableTransition));
+        ITLinkAction *linkAction = (ITLinkAction *)linkEntity;
         ITLinkAction *const copiedEntity = [linkEntity copy];
         expect(copiedEntity).equal(linkEntity);
-        expect(copiedEntity.moduleName).equal(linkEntity.moduleName);
-        expect(copiedEntity.linkSelector).equal(linkEntity.linkSelector);
-        expect(copiedEntity.arguments).haveCountOf(linkEntity.arguments.count);
-        expect(copiedEntity.router).equal(linkEntity.router);
+        expect(copiedEntity.moduleName).equal(linkAction.moduleName);
+        expect(copiedEntity.linkSelector).equal(linkAction.linkSelector);
+        expect(copiedEntity.arguments).haveCountOf(linkAction.arguments.count);
+        expect(copiedEntity.router).equal(linkAction.router);
+    });
+
+    it(@"should return value for flatten", ^{
+        linkEntity = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
+        ITLinkNode *flattenNode = [linkEntity flatten];
+        expect([flattenNode class]).to.equal([ITLinkValue class]);
+        ITLinkNode *linkValue = [[ITLinkValue alloc] initWithModuleName:linkEntity.moduleName];
+        expect(flattenNode).to.equal(linkValue);
     });
 });
 

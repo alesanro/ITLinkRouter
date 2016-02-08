@@ -7,7 +7,7 @@
 //
 
 #import "ITLinkAction.h"
-
+#import "ITLinkNode-Private.h"
 
 @implementation ITLinkAction
 
@@ -24,6 +24,11 @@
         _arguments = [arguments copy];
     }
     return self;
+}
+
+- (ITLinkNode *)flatten
+{
+    return [ITLinkNode linkValueWithModuleName:self.moduleName router:self.router];
 }
 
 #pragma mark - NSCopying
@@ -60,6 +65,15 @@
 - (NSString *)debugDescription
 {
     return [NSString stringWithFormat:@"[%@ with module: %@; link: %@, args: {%@}, router: %@]", NSStringFromClass([self class]), self.moduleName, NSStringFromSelector(self.linkSelector), [self.arguments componentsJoinedByString:@"; "], self.router];
+}
+
+@end
+
+@implementation ITLinkNode (ITPartialBuilder)
+
++ (instancetype)linkActionWithAction:(ITLinkAction *)actionLink arguments:(NSArray *)arguments
+{
+    return [ITLinkNode linkActionWithNode:actionLink link:actionLink.linkSelector arguments:arguments];
 }
 
 @end
