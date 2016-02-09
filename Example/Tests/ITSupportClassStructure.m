@@ -8,11 +8,13 @@
 
 #import "ITSupportClassStructure.h"
 
-
 @implementation _ITBasicRouter
 
-@end
+- (void)unwind
+{
+}
 
+@end
 
 @implementation _ITRootModuleRouter
 
@@ -34,12 +36,7 @@
     [self.moduleNavigator pushLink:link withResultValue:[ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITLoginModuleRouter class]) router:[_ITLoginModuleRouter new]]];
 }
 
-- (void)unwind
-{
-}
-
 @end
-
 
 @implementation _ITLoginModuleRouter
 
@@ -56,12 +53,7 @@
     [self.moduleNavigator pushLink:link withResultValue:nil];
 }
 
-- (void)unwind
-{
-}
-
 @end
-
 
 @implementation _ITFeedModuleRouter
 
@@ -72,12 +64,7 @@
     [self.moduleNavigator pushLink:link withResultValue:nil];
 }
 
-- (void)unwind
-{
-}
-
 @end
-
 
 @implementation _ITProfileModuleRouter
 
@@ -86,10 +73,6 @@
     ITLinkAction *const link = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([self class]) link:_cmd arguments:@[ telephoneNumber ]];
     link.router = self;
     [self.moduleNavigator pushLink:link withResultValue:nil];
-}
-
-- (void)unwind
-{
 }
 
 @end

@@ -35,7 +35,7 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  *
  *  @param object other node object
  *
- *  @return YES if both objects have equal moduleName, otherwise NO
+ *  @return YES if both objects have equal moduleName, NO otherwise
  */
 - (BOOL)isSimilar:(ITLinkNode *)object;
 
@@ -80,6 +80,8 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  */
 @interface ITLinkNode (ITCluster)
 
++ (instancetype)linkActionWithNode:(ITLinkNode *)node link:(SEL)linkSelector arguments:(NSArray *)arguments;
+
 + (instancetype)linkActionWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments;
 
 + (instancetype)linkActionWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments router:(ROUTER_TYPE)router;
@@ -87,8 +89,6 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName;
 
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName router:(ROUTER_TYPE)router;
-
-+ (instancetype)linkActionWithNode:(ITLinkNode *)node link:(SEL)linkSelector arguments:(NSArray *)arguments;
 
 /**
  *  Check if node is action type
