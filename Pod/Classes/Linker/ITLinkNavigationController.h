@@ -40,7 +40,8 @@
 @property (nonatomic, readonly) ITLinkChain *navigationChain;
 
 /**
- *  Initialize instance with root entity. Creates new navigation chain.
+ *  Initialize instance with root entity (if not a link value then it will be 
+ *  flattened)
  *
  *  @param entity root entity
  *
@@ -49,7 +50,8 @@
 - (instancetype)initWithRootEntity:(ITLinkNode *)entity;
 
 /**
- *  Initialize instance with predefined chain.
+ *  Initialize instance with predefined chain. The last link will be
+ *  aligned to its flatten version.
  *
  *  @param chain navigation chain
  *
@@ -77,6 +79,12 @@
  */
 - (void)popLink;
 
+/**
+ *  Perform navigation through new navigation chain. To actually navigate that chain
+ *  should contain instersection at the beginning of it
+ *
+ *  @param updatedChain chain to navigate
+ */
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain;
 
 @end

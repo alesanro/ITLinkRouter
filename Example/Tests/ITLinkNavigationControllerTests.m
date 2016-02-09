@@ -16,20 +16,17 @@ __block ITLinkNode *entity1, *entity2;
 
 beforeEach(^{
     entity1 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
-    _ITRootModuleRouter *const entity1Router = OCMClassMock([_ITRootModuleRouter class]);
-    OCMStub([entity1Router navigateToLogin:[OCMArg any]]);
-    OCMStub([entity1Router unwind]);
+    _ITRootModuleRouter *const entity1Router = [[_ITRootModuleRouter alloc] init];
     entity1.router = entity1Router;
 
     entity2 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITLoginModuleRouter class]) link:@selector(navigateToSignInWithUser:password:) arguments:@[ @"Alex", @"123" ]];
-    _ITLoginModuleRouter *const entity2Router = OCMClassMock([_ITLoginModuleRouter class]);
-    OCMStub([entity2Router navigateToSignInWithUser:[OCMArg any] password:[OCMArg any]]);
-    OCMStub([entity2Router navigateToSignUp]);
-    OCMStub([entity2Router unwind]);
+    _ITLoginModuleRouter *const entity2Router = [[_ITLoginModuleRouter alloc] init];
     entity2.router = entity2Router;
 
     defaultChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity2]];
     moduleNavigator = [[ITLinkNavigationController alloc] initWithChain:defaultChain];
+    [((_ITBasicRouter *)entity1.router) setModuleNavigator:moduleNavigator];
+    [((_ITBasicRouter *)entity2.router) setModuleNavigator:moduleNavigator];
 });
 
 afterAll(^{
@@ -46,6 +43,7 @@ describe(@"initializatin stage", ^{
 describe(@"checking properties after initialization", ^{
     it(@"should not to be nil", ^{
         expect(moduleNavigator.activeEntity).notTo.beNil();
+        expect([ITLinkNode isValue:moduleNavigator.activeEntity]).to.beTruthy();
         expect(moduleNavigator.rootEntity).notTo.beNil();
         expect(moduleNavigator.rootEntity).equal(entity1);
         expect(moduleNavigator.navigationChain).notTo.beNil();
@@ -54,9 +52,15 @@ describe(@"checking properties after initialization", ^{
 
 describe(@"checking push manipulation", ^{
     it(@"with valid link should add new entity", ^{
-        ITLinkNode *const nextEntity = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
+        ITLinkNode *const nextEntity = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class])];
+        _ITFeedModuleRouter *router = [_ITFeedModuleRouter new];
+        router.moduleNavigator = moduleNavigator;
+        [nextEntity setRouter:router];
+
+        ITLinkNode *const actionEntity = [ITLinkNode linkActionWithNode:moduleNavigator.activeEntity link:@selector(navigateToSignInWithUser:password:) arguments:@[@"Alex", @"123"]];
+
         const NSInteger prevChainLength = moduleNavigator.navigationChain.length;
-        [moduleNavigator pushLink:nextEntity withResultValue:nil];
+        [moduleNavigator pushLink:actionEntity withResultValue:nextEntity];
         expect(moduleNavigator.activeEntity).equal(nextEntity);
         expect(moduleNavigator.navigationChain.lastEntity).equal(nextEntity);
         expect(moduleNavigator.navigationChain.length).equal(prevChainLength + 1);
@@ -65,7 +69,21 @@ describe(@"checking push manipulation", ^{
     it(@"with empty link should throw exception", ^{
         expect(^{
             [moduleNavigator pushLink:nil withResultValue:nil];
-        }).to.raise(ITNavigationInvalidArgument);
+        }).to.raise(NSInternalInconsistencyException);
+
+        ITLinkNode *const actionEntity = [ITLinkNode linkActionWithNode:moduleNavigator.activeEntity link:@selector(navigateToSignInWithUser:password:) arguments:@[@"Alex", @"123"]];
+        expect(^{
+            [moduleNavigator pushLink:actionEntity withResultValue:nil];
+        }).to.raise(NSInternalInconsistencyException);
+
+
+        _ITProfileModuleRouter *const profileRouter = [_ITProfileModuleRouter new];
+        profileRouter.moduleNavigator = moduleNavigator;
+        ITLinkNode *const wrongEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass(profileRouter.class) link:@selector(editNumber:) arguments:@[@"1234567890"] router:profileRouter];
+        ITLinkNode *const nextEntity = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class])];
+        expect(^{
+            [moduleNavigator pushLink:wrongEntity withResultValue:nextEntity];
+        }).to.raise(ITNavigationInvalidLinkSimilarity);
     });
 });
 
@@ -90,28 +108,75 @@ describe(@"performing navigation by link chain", ^{
 
     it(@"with the same route should reload only last item", ^{
         ITLinkNode *const entity4 = [ITLinkNode linkActionWithAction:(id)entity2 arguments:@[@"Robin", @"abc"]];
-        _ITLoginModuleRouter *entity4Router = OCMClassMock([_ITLoginModuleRouter class]);
-        OCMStub([entity4Router navigateToSignInWithUser:[OCMArg any] password:[OCMArg any]]);
-        entity4.router = entity4Router;
-
-        ITLinkChain *const sameChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity4]];
-        ITLinkNode *const prevLastLink = defaultChain.lastEntity;
+        ITLinkChain *const sameChain = [[ITLinkChain alloc] initWithEntities:@[entity1, [entity4 flatten]]];
+        ITLinkNavigationController *navigationController = OCMPartialMock(moduleNavigator);
+        [OCMReject(navigationController) popLink];
+        [OCMReject(navigationController) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
         [moduleNavigator navigateToNewChain:sameChain];
-        OCMVerify([prevLastLink.router unwind]);
-        OCMVerify([(_ITLoginModuleRouter *)entity4.router navigateToSignInWithUser:[OCMArg any] password:[OCMArg any]]);
-    });
-
-    it(@"with some common root route should navigate back and forth", ^{
-        
     });
 
     it(@"with empty destination chain controller should do nothing", ^{
+        ITLinkChain *const emptyDestination = [[ITLinkChain alloc] initWithEntities:nil];
+        ITLinkNavigationController *navigationController = OCMPartialMock(moduleNavigator);
+        [OCMReject(navigationController) popLink];
+        [OCMReject(navigationController) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
+        [navigationController navigateToNewChain:emptyDestination];
 
+        navigationController = OCMPartialMock([[ITLinkNavigationController alloc] initWithChain:emptyDestination]);
+        [OCMReject(navigationController) popLink];
+        [OCMReject(navigationController) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
+        [navigationController navigateToNewChain:defaultChain];
     });
 
     it(@"with having no common part (root) should do nothing", ^{
-
+        ITLinkNode *const singleNode = [ITLinkNode linkValueWithModuleName:@"OtherModule"];
+        ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[singleNode]];
+        ITLinkNavigationController *navigationController = OCMPartialMock(moduleNavigator);
+        [OCMReject(navigationController) popLink];
+        [OCMReject(navigationController) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
+        [navigationController navigateToNewChain:otherChain];
     });
+
+    context(@"with some common root route should", ^{
+        describe(@"navigate back and forward", ^{
+            it(@"when one link back and one forward", ^{
+
+            });
+
+            it(@"when more then one back and one forward", ^{
+
+            });
+
+            it(@"when one link back and more then one forward", ^{
+
+            });
+
+            it(@"when more then one back and forward", ^{
+
+            });
+        });
+
+        describe(@"navigate back", ^{
+            it(@"when one link", ^{
+
+            });
+
+            it(@"when more then one link back", ^{
+
+            });
+        });
+
+        describe(@"navigate forward", ^{
+            it(@"when one link forward", ^{
+
+            });
+
+            it(@"when more then one link forward", ^{
+
+            });
+        });
+    });
+
 });
 
 SpecEnd
