@@ -9,3 +9,5 @@
 #import "ITExceptions.h"
 
 NSString *const ITNavigationInvalidArgument = @"ITNavigationInvalidArgument";
+NSString *const ITNavigationInvalidLinkSimilarity = @"ITInvalidLinkSimilarity";
+NSString *const ITNavigationInvalidNavigationType = @"ITInvalidNavigationType";

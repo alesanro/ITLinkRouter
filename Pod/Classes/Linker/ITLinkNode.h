@@ -75,6 +75,9 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 
 @end
 
+/**
+ *  Link builder category
+ */
 @interface ITLinkNode (ITCluster)
 
 + (instancetype)linkActionWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments;
@@ -86,5 +89,23 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName router:(ROUTER_TYPE)router;
 
 + (instancetype)linkActionWithNode:(ITLinkNode *)node link:(SEL)linkSelector arguments:(NSArray *)arguments;
+
+/**
+ *  Check if node is action type
+ *
+ *  @param node instance of node
+ *
+ *  @return YES if instance is Action; NO otherwise
+ */
++ (BOOL)isAction:(ITLinkNode *)node;
+
+/**
+ *  Check if node is value type
+ *
+ *  @param node instance of node
+ *
+ *  @return YES if istance if Value; NO otherwise
+ */
++ (BOOL)isValue:(ITLinkNode *)node;
 
 @end

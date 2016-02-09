@@ -10,6 +10,7 @@
 		561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 561F10781C624C8300DC6575 /* ITLinkActionTests.m */; };
 		567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352251C5F932E00F65A31 /* ITLinkValueTests.m */; };
 		567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352281C5FA8B800F65A31 /* ITLinkChainTests.m */; };
+		5680D91A1C6A1E80006EB379 /* ITLinkNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5680D9191C6A1E80006EB379 /* ITLinkNodeTests.m */; };
 		56B36F6F1C60B01900D323E0 /* ITLinkNavigationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */; };
 		56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -45,6 +46,7 @@
 		561F10781C624C8300DC6575 /* ITLinkActionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkActionTests.m; sourceTree = "<group>"; };
 		567352251C5F932E00F65A31 /* ITLinkValueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkValueTests.m; sourceTree = "<group>"; };
 		567352281C5FA8B800F65A31 /* ITLinkChainTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ITLinkChainTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5680D9191C6A1E80006EB379 /* ITLinkNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkNodeTests.m; sourceTree = "<group>"; };
 		56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkNavigationControllerTests.m; sourceTree = "<group>"; };
 		56B36F751C60D35500D323E0 /* ITSupportClassStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITSupportClassStructure.h; sourceTree = "<group>"; };
 		56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITSupportClassStructure.m; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				567352281C5FA8B800F65A31 /* ITLinkChainTests.m */,
 				56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */,
 				561F10781C624C8300DC6575 /* ITLinkActionTests.m */,
+				5680D9191C6A1E80006EB379 /* ITLinkNodeTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 			files = (
 				567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */,
 				56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */,
+				5680D91A1C6A1E80006EB379 /* ITLinkNodeTests.m in Sources */,
 				567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */,
 				56B36F6F1C60B01900D323E0 /* ITLinkNavigationControllerTests.m in Sources */,
 				561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */,

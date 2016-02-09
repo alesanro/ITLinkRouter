@@ -9,3 +9,5 @@
 #import <Foundation/Foundation.h>
 
 OBJC_EXPORT NSString *const ITNavigationInvalidArgument;
+OBJC_EXPORT NSString *const ITNavigationInvalidLinkSimilarity;
+OBJC_EXPORT NSString *const ITNavigationInvalidNavigationType;
