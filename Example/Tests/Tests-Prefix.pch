@@ -7,4 +7,6 @@
 #import <OCMock/OCMock.h>
 @import ITLinkRouter;
 
+#define OCMReject(obj) ([((OCMockObject *)obj) reject])
+
 #endif
