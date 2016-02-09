@@ -24,11 +24,6 @@ NSString *ITModuleNameFromClass(Class className)
 
 @implementation ITLinkNode
 
-- (instancetype)initWithModuleName:(NSString *)moduleName
-{
-    return [self initWithModuleName:moduleName router:nil];
-}
-
 - (instancetype)initWithModuleName:(NSString *)moduleName router:(NSObject<ITAnimatableTransition, ITUnwindableTransition> *)router
 {
     self = [super init];

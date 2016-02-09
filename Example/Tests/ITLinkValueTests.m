@@ -16,6 +16,7 @@ describe(@"instantiation ", ^{
         expect(node.moduleName).toNot.beEmpty();
         expect(node.moduleName).to.equal(@"Module");
         expect(node.router).to.beNil();
+        expect([node debugDescription]).notTo.beEmpty();
     });
 
     it(@"flatten should return an equal instance", ^{

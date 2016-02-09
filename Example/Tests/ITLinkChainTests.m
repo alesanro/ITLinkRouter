@@ -31,6 +31,7 @@ describe(@"action-typed link chain", ^{
     it(@"properties will be in valid state", ^{
         expect(linkChain.length).equal(linkChain.entities.count);
         expect(linkChain.rootEntity.moduleName).equal(entity1.moduleName);
+        expect([linkChain debugDescription]).notTo.beEmpty();
     });
 
     it(@"can append new entities", ^{
@@ -64,7 +65,7 @@ describe(@"action-typed link chain", ^{
 
     context(@"can find intersection", ^{
         it(@"with having actual intersection", ^{
-            ITLinkChain *otherChain = [[ITLinkChain alloc] initWithEntities:@[entity4, entity1, entity2]];
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity4, entity1, entity2]];
             const NSRange intersenctionRange = [linkChain intersectionRangeWithChain:otherChain];
             expect([NSValue valueWithRange:intersenctionRange]).equal([NSValue valueWithRange:NSMakeRange(0, 2)]);
             const NSRange reverseIntersectionRange = [otherChain intersectionRangeWithChain:linkChain];
@@ -72,20 +73,37 @@ describe(@"action-typed link chain", ^{
         });
 
         it(@"with having no intersection", ^{
-            ITLinkChain *firstChain = [[ITLinkChain alloc] initWithEntities:@[entity2, entity3]];
-            ITLinkChain *secondChain = [[ITLinkChain alloc] initWithEntities:@[entity4, entity1, testEntity1]];
+            ITLinkChain *const firstChain = [[ITLinkChain alloc] initWithEntities:@[entity2, entity3]];
+            ITLinkChain *const secondChain = [[ITLinkChain alloc] initWithEntities:@[entity4, entity1, testEntity1]];
             const NSRange intersectionRange = [firstChain intersectionRangeWithChain:secondChain];
             expect(intersectionRange.location).equal(NSNotFound);
             const NSRange reverseIntersectionRange = [secondChain intersectionRangeWithChain:firstChain];
             expect(reverseIntersectionRange.location).equal(NSNotFound);
+
+            ITLinkChain *const emptyChain = [[ITLinkChain alloc] initWithEntities:nil];
+            NSRange emptyIntersection = [firstChain intersectionRangeWithChain:emptyChain];
+            expect(emptyIntersection.location).equal(NSNotFound);
+            emptyIntersection = [emptyChain intersectionRangeWithChain:firstChain];
+            expect(emptyIntersection.location).equal(NSNotFound);
         });
 
         it(@"with having intersection started from the beginning", ^{
-            ITLinkChain *otherChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity2, entity3]];
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity2, entity3]];
             const NSRange intersectionRange = [linkChain intersectionRangeWithChain:otherChain];
             const NSRange reverseInteractionRange = [otherChain intersectionRangeWithChain:linkChain];
             expect([NSValue valueWithRange:intersectionRange]).equal([NSValue valueWithRange:reverseInteractionRange]);
             expect(intersectionRange.location).equal(0);
+        });
+
+        it(@"and return chain object", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity2, entity4]];
+            ITLinkChain *const foundIntersectedChain = [otherChain intersectionWithChain:linkChain];
+            const NSRange foundIntersectionRange = [otherChain intersectionRangeWithChain:linkChain];
+            expect(foundIntersectedChain.length).to.equal(foundIntersectionRange.length);
+
+            ITLinkChain *const revertIntersectedChain = [linkChain intersectionWithChain:otherChain];
+            const NSRange revertIntersectedRange = [linkChain intersectionRangeWithChain:otherChain];
+            expect(revertIntersectedChain.length).to.equal(revertIntersectedRange.length);
         });
     });
 
@@ -265,6 +283,12 @@ describe(@"value-typed link chain", ^{
             expect(intersectionRange.location).equal(NSNotFound);
             const NSRange reverseIntersectionRange = [secondChain intersectionRangeWithChain:firstChain];
             expect(reverseIntersectionRange.location).equal(NSNotFound);
+
+            ITLinkChain *emptyChain = [[ITLinkChain alloc] initWithEntities:nil];
+            NSRange emptyIntersection = [firstChain intersectionRangeWithChain:emptyChain];
+            expect(emptyIntersection.location).equal(NSNotFound);
+            emptyIntersection = [emptyChain intersectionRangeWithChain:firstChain];
+            expect(emptyIntersection.location).equal(NSNotFound);
         });
 
         it(@"with having intersection started from the beginning", ^{
@@ -384,6 +408,16 @@ describe(@"value-typed link chain", ^{
         expect(linkChain).equal(copiedChain);
     });
 
+    it(@"should not be comparable with any other classes except itself", ^{
+        NSDictionary *otherObject = [NSDictionary dictionary];
+        expect(otherObject).toNot.equal(linkChain);
+        expect(linkChain).toNot.equal(otherObject);
+    });
+
+    it(@"should be equal to itself", ^{
+        expect([linkChain isEqual:linkChain]).to.beTruthy();
+    });
+
 });
 
 describe(@"mixed-typed link chain", ^{
@@ -416,11 +450,17 @@ describe(@"mixed-typed link chain", ^{
 
         it(@"with having no intersection", ^{
             ITLinkChain *firstChain = [[ITLinkChain alloc] initWithEntities:@[entity2, entity3]];
-            ITLinkChain *secondChain = [[ITLinkChain alloc] initWithEntities:@[entity4, valueEntity1, valueEntity2]];
+            ITLinkChain *secondChain = [[ITLinkChain alloc] initWithEntities:@[entity4, entity1, testEntity1]];
             const NSRange intersectionRange = [firstChain intersectionRangeWithChain:secondChain];
             expect(intersectionRange.location).equal(NSNotFound);
             const NSRange reverseIntersectionRange = [secondChain intersectionRangeWithChain:firstChain];
             expect(reverseIntersectionRange.location).equal(NSNotFound);
+
+            ITLinkChain *emptyChain = [[ITLinkChain alloc] initWithEntities:nil];
+            NSRange emptyIntersection = [firstChain intersectionRangeWithChain:emptyChain];
+            expect(emptyIntersection.location).equal(NSNotFound);
+            emptyIntersection = [emptyChain intersectionRangeWithChain:firstChain];
+            expect(emptyIntersection.location).equal(NSNotFound);
         });
 
         it(@"with having intersection started from the beginning", ^{

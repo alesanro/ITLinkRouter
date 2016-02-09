@@ -57,6 +57,7 @@ describe(@"Entity Initialization", ^{
         expect(linkAction.moduleName).to.beNil();
         expect(linkAction.linkSelector).to.beNull();
         expect(linkAction.arguments).to.beNil();
+        expect([linkAction debugDescription]).notTo.beEmpty();
     });
 
     it(@"should initialize with non-empty arguments", ^{

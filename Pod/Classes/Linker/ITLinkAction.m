@@ -101,9 +101,6 @@ static NSUInteger ITSelectorNumberOfArguments(SEL selector)
     if (self.linkSelector != otherObj.linkSelector) {
         return NO;
     }
-    if (self.arguments.count != otherObj.arguments.count) {
-        return NO;
-    }
 
     return YES;
 }

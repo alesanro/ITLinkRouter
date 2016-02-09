@@ -10,8 +10,6 @@
 
 @interface ITLinkNode ()
 
-- (instancetype)initWithModuleName:(NSString *)moduleName;
-
 - (instancetype)initWithModuleName:(NSString *)moduleName router:(ROUTER_TYPE)router NS_DESIGNATED_INITIALIZER;
 
 @end
