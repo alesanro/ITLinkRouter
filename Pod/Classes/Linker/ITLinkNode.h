@@ -39,6 +39,14 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  */
 - (BOOL)isSimilar:(ITLinkNode *)object;
 
+/**
+ *  Flattening node by returning the most simple instance of
+ *  ITLinkNode hierarchy. 
+ *
+ *  Should be overrided in children classes
+ *
+ *  @return instance of the simple link node
+ */
 - (ITLinkNode *)flatten;
 
 #pragma mark - Override

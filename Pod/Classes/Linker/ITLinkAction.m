@@ -9,6 +9,17 @@
 #import "ITLinkAction.h"
 #import "ITLinkNode-Private.h"
 
+static NSUInteger ITSelectorNumberOfArguments(SEL selector)
+{
+    NSUInteger numberOfArgumentsInSelector = 0;
+    if (selector) {
+        NSString *const analyzedString = NSStringFromSelector(selector);
+        NSRegularExpression *const expression = [NSRegularExpression regularExpressionWithPattern:@":" options:NSRegularExpressionCaseInsensitive error:nil];
+        numberOfArgumentsInSelector = [expression numberOfMatchesInString:analyzedString options:NSMatchingReportProgress range:NSMakeRange(0, analyzedString.length)];
+    }
+    return numberOfArgumentsInSelector;
+}
+
 @implementation ITLinkAction
 
 - (instancetype)initWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments
@@ -20,6 +31,8 @@
 {
     self = [super initWithModuleName:moduleName router:router];
     if (self) {
+        NSAssert(ITSelectorNumberOfArguments(linkSelector) == arguments.count, @"Selector's number of arguments should be equal to passed number of arguments");
+
         _linkSelector = linkSelector;
         _arguments = [arguments copy];
     }
