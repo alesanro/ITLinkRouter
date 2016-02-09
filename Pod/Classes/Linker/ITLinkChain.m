@@ -9,13 +9,11 @@
 #import "ITLinkChain.h"
 #import "ITLinkNode.h"
 
-
 @interface ITLinkChain ()
 
 @property (nonatomic, strong) NSMutableArray<ITLinkNode *> *internalEntities;
 
 @end
-
 
 @implementation ITLinkChain
 @dynamic entities;
@@ -108,8 +106,9 @@
 
             if (hasIntersection) {
                 const NSInteger nextIdx = selfIdx + intersectionRange.length;
-                if (self.internalEntities.count >= nextIdx) {
+                if (self.internalEntities.count <= nextIdx) {
                     *otherStop = YES;
+                    return;
                 }
 
                 ITLinkNode *const nextEntity = self.internalEntities[nextIdx];
@@ -153,6 +152,16 @@
     const NSRange rangeIntersection = NSIntersectionRange(range, entitiesRange);
     NSArray *const subentities = [self.internalEntities subarrayWithRange:rangeIntersection];
     return [[ITLinkChain alloc] initWithEntities:subentities];
+}
+
+- (ITLinkChain *)subtractIntersectedChain:(ITLinkChain *)otherChain
+{
+    const NSRange entitiesRange = NSMakeRange(0, self.internalEntities.count);
+    const NSRange intersectedRange = [self intersectionRangeWithChain:otherChain];
+    const NSRange rangeIntersection = NSIntersectionRange(entitiesRange, intersectedRange);
+    ITLinkChain *const updatedChain = [self copy];
+    [updatedChain.internalEntities removeObjectsInRange:rangeIntersection];
+    return updatedChain;
 }
 
 #pragma mark - NSCopying

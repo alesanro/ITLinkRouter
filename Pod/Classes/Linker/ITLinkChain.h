@@ -10,7 +10,6 @@
 
 @class ITLinkNode;
 
-
 @interface ITLinkChain : NSObject <NSCopying>
 
 /**
@@ -107,6 +106,16 @@
  *  @return new object with subset of link entities
  */
 - (ITLinkChain *)subchainWithRange:(NSRange)range;
+
+/**
+ *  Subtract from current the current chain other chain. Result will not be nil
+ *  in case when both chains have non-nil intersection.
+ *
+ *  @param otherChain subtracted chain
+ *
+ *  @return chain without common elements with another chain
+ */
+- (ITLinkChain *)subtractIntersectedChain:(ITLinkChain *)otherChain;
 
 #pragma mark - Override
 

@@ -144,6 +144,53 @@ describe(@"action-typed link chain", ^{
         });
     });
 
+    context(@"can subtract chain from each other", ^{
+        it(@"with non-emtpy resulted chain for found intersection at the beginning", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity2, entity4, entity3]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 2);
+            expect(linkChain.rootEntity).notTo.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).to.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with non-emtpy resulted chain for found intersection in the middle", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity2, entity3]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 2);
+            expect(linkChain.rootEntity).to.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).to.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with non-emtpy resulted chain for found intersection at the end", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity4, testEntity1]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 1);
+            expect(linkChain.rootEntity).to.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).notTo.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with the equal chain for not found intersection", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[testEntity1, testEntity2]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).to.equal(linkChain);
+        });
+
+        it(@"with the empty chain when itself copy was passed", ^{
+            ITLinkChain *const otherChain = [linkChain copy];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).notTo.equal(linkChain);
+            expect(subtractedChain.length).to.equal(0);
+        });
+    });
+
     it(@"should have proper copied instance", ^{
         ITLinkChain *copiedChain = [linkChain copy];
         expect(copiedChain).equal(linkChain);
@@ -284,6 +331,53 @@ describe(@"value-typed link chain", ^{
         });
     });
 
+    context(@"can subtract chain from each other", ^{
+        it(@"with non-emtpy resulted chain for found intersection at the beginning", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity2, entity4, entity3]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 2);
+            expect(linkChain.rootEntity).notTo.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).to.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with non-emtpy resulted chain for found intersection in the middle", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity2, entity3]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 2);
+            expect(linkChain.rootEntity).to.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).to.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with non-emtpy resulted chain for found intersection at the end", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity4, testEntity1]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 1);
+            expect(linkChain.rootEntity).to.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).notTo.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with the equal chain for not found intersection", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[testEntity1, testEntity2]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).to.equal(linkChain);
+        });
+
+        it(@"with the empty chain when itself copy was passed", ^{
+            ITLinkChain *const otherChain = [linkChain copy];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).notTo.equal(linkChain);
+            expect(subtractedChain.length).to.equal(0);
+        });
+    });
+
     it(@"should have proper copied instance", ^{
         ITLinkChain *copiedChain = [linkChain copy];
         expect(copiedChain).equal(linkChain);
@@ -350,6 +444,53 @@ describe(@"mixed-typed link chain", ^{
             ITLinkChain *const resultChain = [linkChain intersectionAtStartWithChain:otherChain];
             expect(resultChain.length).equal(otherChain.length);
             expect(resultChain.rootEntity).equal(linkChain.rootEntity);
+        });
+    });
+
+    context(@"can subtract chain from each other", ^{
+        it(@"with non-emtpy resulted chain for found intersection at the beginning", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[valueEntity1, entity1, entity4, entity3]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 2);
+            expect(linkChain.rootEntity).notTo.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).to.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with non-emtpy resulted chain for found intersection in the middle", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity1]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 1);
+            expect(linkChain.rootEntity).to.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).to.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with non-emtpy resulted chain for found intersection at the end", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity2, testEntity1]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).toNot.equal(linkChain);
+            expect(subtractedChain.length).equal(linkChain.length - 1);
+            expect(linkChain.rootEntity).to.equal(subtractedChain.rootEntity);
+            expect(linkChain.lastEntity).notTo.equal(subtractedChain.lastEntity);
+        });
+
+        it(@"with the equal chain for not found intersection", ^{
+            ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[testEntity1, testEntity2]];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).to.equal(linkChain);
+        });
+
+        it(@"with the empty chain when itself copy was passed", ^{
+            ITLinkChain *const otherChain = [linkChain copy];
+            ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+            expect(subtractedChain).notTo.beNil();
+            expect(subtractedChain).notTo.equal(linkChain);
+            expect(subtractedChain.length).to.equal(0);
         });
     });
 });
