@@ -61,6 +61,16 @@ NSString *ITModuleNameFromClass(Class className)
     @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
 }
 
+- (NSInvocation *)forwardModuleInvocation
+{
+    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
+}
+
+- (NSInvocation *)backwardModuleInvocation
+{
+    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
+}
+
 #pragma mark - Override
 
 - (BOOL)isEqual:(id)object

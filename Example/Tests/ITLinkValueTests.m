@@ -24,6 +24,12 @@ describe(@"instantiation ", ^{
         expect([flattenNode class]).to.equal([node class]);
         expect(node).to.equal(flattenNode);
     });
+
+    it(@"should return nil for module invocation objects", ^{
+        ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:@"Module"];
+        expect([node forwardModuleInvocation]).to.beNil();
+        expect([node backwardModuleInvocation]).to.beNil();
+    });
 });
 
 describe(@"function ITModuleNameFromClass", ^{

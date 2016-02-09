@@ -44,6 +44,39 @@ static NSUInteger ITSelectorNumberOfArguments(SEL selector)
     return [ITLinkNode linkValueWithModuleName:self.moduleName router:self.router];
 }
 
+- (NSInvocation *)forwardModuleInvocation
+{
+    if (![self.router respondsToSelector:self.linkSelector]) {
+        NSLog(@"[WARNING] Link's Action router (%@) doesn't support selector %@ and cannot perform forward transition", self, NSStringFromSelector(self.linkSelector));
+        return nil;
+    }
+
+    NSMethodSignature *const signature = [self.router methodSignatureForSelector:self.linkSelector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    [invocation setTarget:self.router];
+    [invocation setSelector:self.linkSelector];
+    [self.arguments enumerateObjectsUsingBlock:^(id arg, NSUInteger idx, BOOL *stop) {
+        // !!!: +2 because of the first argument is reserved for a target, the second is for a selector.
+        [invocation setArgument:(__bridge void *)(arg) atIndex:idx + 2];
+    }];
+    return invocation;
+}
+
+- (NSInvocation *)backwardModuleInvocation
+{
+    const SEL backLinkSelector = @selector(unwind);
+    if (![self.router respondsToSelector:backLinkSelector]) {
+        NSLog(@"[WARNING] Link's Action router (%@) doesn't support selector %@ and cannot perform backward transition", self, NSStringFromSelector(backLinkSelector));
+        return nil;
+    }
+
+    NSMethodSignature *const signature = [self.router methodSignatureForSelector:backLinkSelector];
+    NSInvocation *const invocation = [NSInvocation invocationWithMethodSignature:signature];
+    [invocation setTarget:self.router];
+    [invocation setSelector:backLinkSelector];
+    return invocation;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone

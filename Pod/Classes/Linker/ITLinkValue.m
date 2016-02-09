@@ -26,6 +26,16 @@
     return [self copy];
 }
 
+- (NSInvocation *)forwardModuleInvocation
+{
+    return nil;
+}
+
+- (NSInvocation *)backwardModuleInvocation
+{
+    return nil;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone

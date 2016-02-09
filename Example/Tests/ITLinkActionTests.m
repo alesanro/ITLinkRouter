@@ -8,8 +8,9 @@
 
 #import "ITSupportClassStructure.h"
 
-@interface _TestModule : NSObject
+@interface _TestModule : NSObject <ITAnimatableTransition, ITUnwindableTransition>
 
+@property (nonatomic, getter=isAnimatable) BOOL animatable;
 - (void)testRoute;
 - (void)testRoute:(NSString *)route;
 - (void)testRoute:(NSString *)route param1:(NSString *)param1;
@@ -18,6 +19,10 @@
 @end
 
 @implementation _TestModule
+
+- (void)unwind
+{
+}
 
 - (void)testRoute
 {
@@ -190,6 +195,34 @@ describe(@"similarity should work", ^{
         linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
         expect([linkEntity isSimilar:linkValue]).to.beFalsy();
         expect([linkValue isSimilar:linkEntity]).to.beFalsy();
+    });
+});
+
+describe(@"module invocations", ^{
+    it(@"should return nil for node without router", ^{
+        ITLinkNode *node = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:) arguments:@[@"bob"]];
+        expect([node forwardModuleInvocation]).to.beNil();
+        expect([node backwardModuleInvocation]).to.beNil();
+    });
+
+    it(@"should return non-nil for node with router", ^{
+        _TestModule *const router = [_TestModule new];
+        ITLinkNode *node = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:) arguments:@[@"bob"] router:router];
+        NSInvocation *const forwardInvocation = [node forwardModuleInvocation];
+        expect(forwardInvocation).notTo.beNil();
+        expect(forwardInvocation.target).to.equal(router);
+        expect(forwardInvocation.selector).toNot.beNil();
+
+        NSInvocation *backInvocation = [node backwardModuleInvocation];
+        expect(backInvocation).notTo.beNil();
+        expect(backInvocation.target).to.equal(router);
+        expect(backInvocation.selector).toNot.beNil();
+
+        [forwardInvocation invoke];
+        OCMVerify([router testRoute:[OCMArg any]]);
+
+        [backInvocation invoke];
+        OCMVerify([router unwind]);
     });
 });
 

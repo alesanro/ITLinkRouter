@@ -49,6 +49,24 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  */
 - (ITLinkNode *)flatten;
 
+/**
+ *  Return invocation object for router to perform forward transition
+ *
+ *  Should be overrided in children classes
+ *
+ *  @return instance of NSInvocation class
+ */
+- (NSInvocation *)forwardModuleInvocation;
+
+/**
+ *  Return invocation object for router to perform back transition
+ *
+ *  Should be overrided in children classes
+ *
+ *  @return instance of NSInvocation class
+ */
+- (NSInvocation *)backwardModuleInvocation;
+
 #pragma mark - Override
 
 - (BOOL)isEqual:(id)object;
