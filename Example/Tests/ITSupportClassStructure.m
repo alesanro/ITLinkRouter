@@ -31,9 +31,10 @@
 {
     assert(self.moduleNavigator);
 
-    ITLinkAction *const link = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([self class]) link:_cmd arguments:@[ destination ]];
-    link.router = self;
-    [self.moduleNavigator pushLink:link withResultValue:[ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITLoginModuleRouter class]) router:[_ITLoginModuleRouter new]]];
+    ITLinkNode *const link = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass(self.class) link:_cmd arguments:@[ destination ] router:self];
+    _ITLoginModuleRouter *const destinationRouter = [_ITLoginModuleRouter new];
+    destinationRouter.moduleNavigator = self.moduleNavigator;
+    [self.moduleNavigator pushLink:link withResultValue:[ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(destinationRouter.class) router:destinationRouter]];
 }
 
 @end
@@ -42,15 +43,18 @@
 
 - (void)navigateToSignInWithUser:(NSString *)username password:(NSString *)password
 {
-    ITLinkAction *const link = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([self class]) link:_cmd arguments:@[ username, password ]];
-    [self.moduleNavigator pushLink:link withResultValue:nil];
+    ITLinkNode *const link = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass(self.class) link:_cmd arguments:@[ username, password ]];
+    _ITFeedModuleRouter *const destinationRouter = [_ITFeedModuleRouter new];
+    destinationRouter.moduleNavigator = self.moduleNavigator;
+    [self.moduleNavigator pushLink:link withResultValue:[ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(destinationRouter.class) router:destinationRouter]];
 }
 
 - (void)navigateToSignUp
 {
-    ITLinkAction *const link = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([self class]) link:_cmd arguments:nil];
-    link.router = self;
-    [self.moduleNavigator pushLink:link withResultValue:nil];
+    ITLinkNode *const link = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass(self.class) link:_cmd arguments:nil router:self];
+    _ITProfileModuleRouter *const destinationRouter = [_ITProfileModuleRouter new];
+    destinationRouter.moduleNavigator = self.moduleNavigator;
+    [self.moduleNavigator pushLink:link withResultValue:[ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(destinationRouter.class) router:destinationRouter]];
 }
 
 @end
@@ -59,9 +63,10 @@
 
 - (void)openProfile
 {
-    ITLinkAction *const link = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([self class]) link:_cmd arguments:nil];
-    link.router = self;
-    [self.moduleNavigator pushLink:link withResultValue:nil];
+    ITLinkNode *const link = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass(self.class) link:_cmd arguments:nil router:self];
+    _ITProfileModuleRouter *const destinationRouter = [_ITProfileModuleRouter new];
+    destinationRouter.moduleNavigator = self.moduleNavigator;
+    [self.moduleNavigator pushLink:link withResultValue:[ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(destinationRouter.class) router:destinationRouter]];
 }
 
 @end
@@ -70,9 +75,9 @@
 
 - (void)editNumber:(NSString *)telephoneNumber
 {
-    ITLinkAction *const link = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([self class]) link:_cmd arguments:@[ telephoneNumber ]];
-    link.router = self;
-    [self.moduleNavigator pushLink:link withResultValue:nil];
+    ITLinkNode *const link = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass(self.class) link:_cmd arguments:@[ telephoneNumber ] router:self];
+    NSObject *const destinationRouter = [NSObject new];
+    [self.moduleNavigator pushLink:link withResultValue:[ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(destinationRouter.class)]];
 }
 
 @end
