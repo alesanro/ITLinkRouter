@@ -28,12 +28,25 @@
 
 - (NSInvocation *)forwardModuleInvocation
 {
+#ifdef DEBUG
+    NSLog(@"[WARNING] Link's Value router (%@) doesn't support forward transition", self);
+#endif
     return nil;
 }
 
 - (NSInvocation *)backwardModuleInvocation
 {
-    return nil;
+    const SEL backLinkSelector = @selector(unwind);
+    if (![self.router respondsToSelector:backLinkSelector]) {
+        NSLog(@"[WARNING] Link's Value router (%@) doesn't support selector %@ and cannot perform backward transition", self, NSStringFromSelector(backLinkSelector));
+        return nil;
+    }
+
+    NSMethodSignature *const signature = [self.router methodSignatureForSelector:backLinkSelector];
+    NSInvocation *const invocation = [NSInvocation invocationWithMethodSignature:signature];
+    [invocation setTarget:self.router];
+    [invocation setSelector:backLinkSelector];
+    return invocation;
 }
 
 #pragma mark - NSCopying

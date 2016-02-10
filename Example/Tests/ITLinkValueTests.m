@@ -26,10 +26,25 @@ describe(@"instantiation ", ^{
         expect(node).to.equal(flattenNode);
     });
 
-    it(@"should return nil for module invocation objects", ^{
+    it(@"should return nil for module invocation objects without router", ^{
         ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:@"Module"];
         expect([node forwardModuleInvocation]).to.beNil();
         expect([node backwardModuleInvocation]).to.beNil();
+    });
+
+    it(@"should return non-nil module invocation object with router", ^{
+        _ITRootModuleRouter *const router = [_ITRootModuleRouter new];
+        ITLinkNode *node = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(router.class) router:router];
+
+        NSInvocation *const forwardInvocation = [node forwardModuleInvocation];
+        expect(forwardInvocation).to.beNil();
+
+        NSInvocation *const backInvocation = [node backwardModuleInvocation];
+        expect(backInvocation).notTo.beNil();
+        expect(backInvocation.target).to.equal(router);
+        expect(backInvocation.selector).toNot.beNil();
+        [backInvocation invoke];
+        OCMVerify([router unwind]);
     });
 });
 

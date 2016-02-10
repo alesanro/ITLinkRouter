@@ -213,17 +213,11 @@ describe(@"module invocations", ^{
         expect(forwardInvocation).notTo.beNil();
         expect(forwardInvocation.target).to.equal(router);
         expect(forwardInvocation.selector).toNot.beNil();
-
-        NSInvocation *backInvocation = [node backwardModuleInvocation];
-        expect(backInvocation).notTo.beNil();
-        expect(backInvocation.target).to.equal(router);
-        expect(backInvocation.selector).toNot.beNil();
-
         [forwardInvocation invoke];
         OCMVerify([router testRoute:[OCMArg any]]);
 
-        [backInvocation invoke];
-        OCMVerify([router unwind]);
+        NSInvocation *backInvocation = [node backwardModuleInvocation];
+        expect(backInvocation).to.beNil();
     });
 });
 

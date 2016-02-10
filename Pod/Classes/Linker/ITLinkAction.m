@@ -47,7 +47,9 @@ static NSUInteger ITSelectorNumberOfArguments(SEL selector)
 - (NSInvocation *)forwardModuleInvocation
 {
     if (![self.router respondsToSelector:self.linkSelector]) {
+#ifdef DEBUG
         NSLog(@"[WARNING] Link's Action router (%@) doesn't support selector %@ and cannot perform forward transition", self, NSStringFromSelector(self.linkSelector));
+#endif
         return nil;
     }
 
@@ -64,17 +66,10 @@ static NSUInteger ITSelectorNumberOfArguments(SEL selector)
 
 - (NSInvocation *)backwardModuleInvocation
 {
-    const SEL backLinkSelector = @selector(unwind);
-    if (![self.router respondsToSelector:backLinkSelector]) {
-        NSLog(@"[WARNING] Link's Action router (%@) doesn't support selector %@ and cannot perform backward transition", self, NSStringFromSelector(backLinkSelector));
-        return nil;
-    }
-
-    NSMethodSignature *const signature = [self.router methodSignatureForSelector:backLinkSelector];
-    NSInvocation *const invocation = [NSInvocation invocationWithMethodSignature:signature];
-    [invocation setTarget:self.router];
-    [invocation setSelector:backLinkSelector];
-    return invocation;
+#ifdef DEBUG
+    NSLog(@"[WARNING] Link's Action (%@) doesn't support backward transition", self);
+#endif
+    return nil;
 }
 
 #pragma mark - NSCopying
