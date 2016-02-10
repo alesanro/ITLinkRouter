@@ -150,8 +150,8 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
     return ^(ITLinkNavigationType navigationType, ITLinkNode *currentNode) {
         __strong typeof(weakSelf) const strongSelf = weakSelf;
         if (navigationType == ITLinkNavigationTypeBack) {
-            if (backChain.length == 1) {
-                const BOOL needStartForwardTransition = forwardChain.length && ![forwardChain.rootEntity isEqual:currentNode];
+            if (!backChain.length) {
+                const BOOL needStartForwardTransition = forwardChain.length && ![forwardChain.rootEntity isSimilar:currentNode];
                 if (needStartForwardTransition) {
                     [forwardChain.rootEntity setRouter:currentNode.router];
                     [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
@@ -160,11 +160,10 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
                 strongSelf.navigationBlock = nil;
                 return;
             } else {
-                [backChain.lastEntity setRouter:currentNode.router];
-                [[[backChain popEntity] backwardModuleInvocation] invoke];
+                [[[[backChain popEntity] flatten] backwardModuleInvocation] invoke];
             }
         } else if (navigationType == ITLinkNavigationTypeForward) {
-            const BOOL needContinueForwardTransition = forwardChain.length && ![forwardChain.rootEntity isEqual:currentNode];
+            const BOOL needContinueForwardTransition = forwardChain.length && ![forwardChain.rootEntity isSimilar:currentNode];
             if (needContinueForwardTransition) {
                 [forwardChain.rootEntity setRouter:currentNode.router];
                 [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
