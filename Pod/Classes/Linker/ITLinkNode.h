@@ -28,6 +28,7 @@
 
 /**
  *  Link node factory category
+ *  
  */
 @interface ITLinkNode (ITClusterFactory)
 
@@ -40,23 +41,5 @@
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName;
 
 + (instancetype)linkValueWithModuleName:(NSString *)moduleName router:(ROUTER_TYPE)router;
-
-/**
- *  Check if node is action type
- *
- *  @param node instance of node
- *
- *  @return YES if instance is Action; NO otherwise
- */
-+ (BOOL)isAction:(id<ITLinkNode>)node;
-
-/**
- *  Check if node is value type
- *
- *  @param node instance of node
- *
- *  @return YES if istance if Value; NO otherwise
- */
-+ (BOOL)isValue:(id<ITLinkNode>)node;
 
 @end

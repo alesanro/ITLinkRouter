@@ -27,17 +27,6 @@ describe(@"cluster methods", ^{
         expect(node).to.beMemberOf([ITLinkValue class]);
     });
 
-    it(@"should define proper types", ^{
-        ITLinkNode *node;
-        node = [ITLinkNode linkValueWithModuleName:@"Module"];
-        expect([ITLinkNode isValue:node]).to.beTruthy();
-        expect([ITLinkNode isAction:node]).to.beFalsy();
-
-        node = [ITLinkNode linkActionWithNode:node link:nil arguments:nil];
-        expect([ITLinkNode isAction:node]).to.beTruthy();
-        expect([ITLinkNode isValue:node]).to.beFalsy();
-    });
-
     it(@"should not be similar with other classes except ITLinkNode hierarchy", ^{
         ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:@"Module"];
         expect([node isSimilar:(id)[NSDictionary dictionary]]).to.beFalsy();

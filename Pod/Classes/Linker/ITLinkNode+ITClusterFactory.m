@@ -37,14 +37,4 @@
     return [[ITLinkAction alloc] initWithModuleName:node.moduleName link:linkSelector arguments:arguments router:node.router];
 }
 
-+ (BOOL)isValue:(ITLinkNode *)node
-{
-    return [node isMemberOfClass:[ITLinkValue class]];
-}
-
-+ (BOOL)isAction:(ITLinkNode *)node
-{
-    return [node isMemberOfClass:[ITLinkAction class]];
-}
-
 @end
