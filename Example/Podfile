@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'ITLinkRouter_Example', :exclusive => true do
   pod 'ITLinkRouter', :path => '../'
+  pod 'ITLinkRouter/Core', :path => '../'
 
   pod 'ViperMcFlurry'
   pod 'SpaceCommander', :git => 'https://github.com/alesanro/spacecommander.git'
