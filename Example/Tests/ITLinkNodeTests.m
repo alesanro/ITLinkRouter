@@ -13,14 +13,8 @@ describe(@"instance methods", ^{
 
 describe(@"cluster methods", ^{
     it(@"should create proper instances", ^{
-        ITLinkNode *node;
+        __block ITLinkNode *node;
         node = [ITLinkNode linkActionWithModuleName:@"Module" link:nil arguments:nil];
-        expect(node).to.beMemberOf([ITLinkAction class]);
-
-        node = [ITLinkNode linkActionWithAction:(ITLinkAction *)node arguments:nil];
-        expect(node).to.beMemberOf([ITLinkAction class]);
-
-        node = [ITLinkNode linkActionWithNode:node link:nil arguments:nil];
         expect(node).to.beMemberOf([ITLinkAction class]);
 
         node = [ITLinkNode linkActionWithModuleName:@"Module" link:nil arguments:nil router:nil];

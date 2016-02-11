@@ -44,9 +44,3 @@
 - (NSString *)debugDescription;
 
 @end
-
-@interface ITLinkNode (ITPartialBuilder)
-
-+ (instancetype)linkActionWithAction:(ITLinkAction *)actionLink arguments:(NSArray *)arguments;
-
-@end

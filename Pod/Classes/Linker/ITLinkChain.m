@@ -7,7 +7,6 @@
 //
 
 #import "ITLinkChain.h"
-#import "ITLinkNode.h"
 
 @interface ITLinkChain ()
 

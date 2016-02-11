@@ -7,7 +7,6 @@
 //
 
 #import "ITLinkNavigationController.h"
-#import "ITLinkNode.h"
 #import "ITLinkChain.h"
 #import "ITConstants.h"
 
@@ -70,9 +69,9 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
 
 - (void)pushLink:(id<ITLinkNode>)link withResultValue:(id<ITLinkNode>)valueEntity
 {
-    NSAssert(link, @"[LinkNavigation] Pushed Link should not be nil!");
-    NSAssert(valueEntity, @"[LinkNavigation] Result Link Value should not be nil!");
-    NSAssert([ITLinkNode isAction:link], @"[LinkNavigation] Pushed Link should be an action");
+    NSParameterAssert(link);
+    NSParameterAssert(valueEntity);
+    NSParameterAssert(![link isEqual:[link flatten]]);
 
     self.navigationInProgress = YES;
     if (![link isSimilar:self.linkChain.lastEntity]) {

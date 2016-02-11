@@ -8,6 +8,7 @@
 
 #import "ITExceptions.h"
 
-NSString *const ITNavigationInvalidArgument = @"ITNavigationInvalidArgument";
-NSString *const ITNavigationInvalidLinkSimilarity = @"ITInvalidLinkSimilarity";
-NSString *const ITNavigationInvalidNavigationType = @"ITInvalidNavigationType";
+NSString *const ITNavigationInvalidArgument = @"ITNavigationInvalidArgumentException";
+NSString *const ITNavigationInvalidLinkSimilarity = @"ITInvalidLinkSimilarityException";
+NSString *const ITNavigationInvalidNavigationType = @"ITInvalidNavigationTypeException";
+NSString *const ITUnimplementedMethod = @"ITUnimplementedMethodException";

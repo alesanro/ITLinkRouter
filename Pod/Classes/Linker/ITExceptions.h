@@ -11,3 +11,4 @@
 OBJC_EXPORT NSString *const ITNavigationInvalidArgument;
 OBJC_EXPORT NSString *const ITNavigationInvalidLinkSimilarity;
 OBJC_EXPORT NSString *const ITNavigationInvalidNavigationType;
+OBJC_EXPORT NSString *const ITUnimplementedMethod;

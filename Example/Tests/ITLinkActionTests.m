@@ -51,15 +51,6 @@ afterEach(^{
 });
 
 describe(@"Entity Initialization", ^{
-    it(@"should inititialize with empty arguments" , ^{
-        linkEntity = [[ITLinkAction alloc] initWithModuleName:nil link:0 arguments:nil];
-        ITLinkAction *linkAction = (ITLinkAction *)linkEntity;
-        expect(linkAction.moduleName).to.beNil();
-        expect(linkAction.linkSelector).to.beNull();
-        expect(linkAction.arguments).to.beNil();
-        expect([linkAction debugDescription]).notTo.beEmpty();
-    });
-
     it(@"should initialize with non-empty arguments", ^{
         linkEntity = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute) arguments:nil];
         ITLinkAction *linkAction = (ITLinkAction *)linkEntity;

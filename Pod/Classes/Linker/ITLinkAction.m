@@ -106,12 +106,3 @@ static NSUInteger ITSelectorNumberOfArguments(SEL selector)
 }
 
 @end
-
-@implementation ITLinkNode (ITPartialBuilder)
-
-+ (instancetype)linkActionWithAction:(ITLinkAction *)actionLink arguments:(NSArray *)arguments
-{
-    return [ITLinkNode linkActionWithNode:actionLink link:actionLink.linkSelector arguments:arguments];
-}
-
-@end

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ITLinkNodeProtocol.h"
 
-@protocol ITLinkNode;
 @class ITLinkChain;
 
 /**

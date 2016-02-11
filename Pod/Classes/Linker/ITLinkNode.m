@@ -7,9 +7,10 @@
 //
 
 #import "ITLinkNode.h"
+#import "ITExceptions.h"
 #import "ITLinkNode-Private.h"
-#import "ITLinkValue.h"
-#import "ITLinkAction.h"
+
+static NSString *const kITImplementMethodInChildsMessage = @"Childs should implement this method by itself";
 
 NSString *ITModuleNameFromClass(Class className)
 {
@@ -23,9 +24,13 @@ NSString *ITModuleNameFromClass(Class className)
 }
 
 @implementation ITLinkNode
+@synthesize moduleName = _moduleName;
+@synthesize router = _router;
 
 - (instancetype)initWithModuleName:(NSString *)moduleName router:(NSObject<ITAnimatableTransition, ITUnwindableTransition> *)router
 {
+    NSParameterAssert(moduleName.length);
+
     self = [super init];
     if (self) {
         _moduleName = [moduleName copy];
@@ -51,34 +56,33 @@ NSString *ITModuleNameFromClass(Class className)
     return NO;
 }
 
-- (ITLinkNode *)flatten
+- (id<ITLinkNode>)flatten
 {
-    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
+    @throw [NSException exceptionWithName:ITUnimplementedMethod reason:kITImplementMethodInChildsMessage userInfo:nil];
 }
 
 - (NSInvocation *)forwardModuleInvocation
 {
-    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
+    @throw [NSException exceptionWithName:ITUnimplementedMethod reason:kITImplementMethodInChildsMessage userInfo:nil];
 }
 
 - (NSInvocation *)backwardModuleInvocation
 {
-    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
+    @throw [NSException exceptionWithName:ITUnimplementedMethod reason:kITImplementMethodInChildsMessage userInfo:nil];
 }
 
 #pragma mark - Override
 
-- (BOOL)isEqual:(id)object
+- (BOOL)isEqual:(id<ITLinkNode>)otherObj
 {
-    if (![object isKindOfClass:[ITLinkNode class]]) {
+    if (![otherObj isKindOfClass:[ITLinkNode class]]) {
         return NO;
     }
 
-    if (self == object) {
+    if (self == otherObj) {
         return YES;
     }
 
-    ITLinkNode *otherObj = (ITLinkNode *)object;
     if (![self.moduleName isEqualToString:otherObj.moduleName]) {
         return NO;
     }
@@ -95,46 +99,7 @@ NSString *ITModuleNameFromClass(Class className)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
-}
-
-@end
-
-@implementation ITLinkNode (ITCluster)
-
-+ (instancetype)linkValueWithModuleName:(NSString *)moduleName
-{
-    return [[ITLinkValue alloc] initWithModuleName:moduleName];
-}
-
-+ (instancetype)linkValueWithModuleName:(NSString *)moduleName router:(NSObject<ITAnimatableTransition, ITUnwindableTransition> *)router
-{
-    return [[ITLinkValue alloc] initWithModuleName:moduleName router:router];
-}
-
-+ (instancetype)linkActionWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments
-{
-    return [[ITLinkAction alloc] initWithModuleName:moduleName link:linkSelector arguments:arguments];
-}
-
-+ (instancetype)linkActionWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments router:(NSObject<ITAnimatableTransition, ITUnwindableTransition> *)router
-{
-    return [[ITLinkAction alloc] initWithModuleName:moduleName link:linkSelector arguments:arguments router:router];
-}
-
-+ (instancetype)linkActionWithNode:(ITLinkNode *)node link:(SEL)linkSelector arguments:(NSArray *)arguments
-{
-    return [[ITLinkAction alloc] initWithModuleName:node.moduleName link:linkSelector arguments:arguments router:node.router];
-}
-
-+ (BOOL)isValue:(ITLinkNode *)node
-{
-    return [node isMemberOfClass:[ITLinkValue class]];
-}
-
-+ (BOOL)isAction:(ITLinkNode *)node
-{
-    return [node isMemberOfClass:[ITLinkAction class]];
+    @throw [NSException exceptionWithName:ITUnimplementedMethod reason:kITImplementMethodInChildsMessage userInfo:nil];
 }
 
 @end

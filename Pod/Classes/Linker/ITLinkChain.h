@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@protocol ITLinkNode;
+#import "ITLinkNodeProtocol.h"
 
 @interface ITLinkChain : NSObject <NSCopying>
 
