@@ -17,6 +17,11 @@ typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
 
 typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode);
 
+static BOOL ITHasValue(id<ITLinkNode> node)
+{
+    return [node isEqual:[node flatten]];
+}
+
 @interface ITLinkNavigationController ()
 
 @property (copy, nonatomic) ITLinkChain *linkChain;
@@ -71,13 +76,15 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
 {
     NSParameterAssert(link);
     NSParameterAssert(valueEntity);
-    NSParameterAssert(![link isEqual:[link flatten]]);
+    NSParameterAssert(!ITHasValue(link));
 
     self.navigationInProgress = YES;
     if (![link isSimilar:self.linkChain.lastEntity]) {
-        @throw [NSException exceptionWithName:ITNavigationInvalidLinkSimilarity reason:@"Last chain element and link should be similar" userInfo:@{ @"CurrentChainKey" : self.linkChain,
-                                                                                                                                                    @"PassedLinkKey" : link,
-                                                                                                                                                    @"NavigatinContextKey" : self }];
+        @throw [NSException exceptionWithName:ITNavigationInvalidLinkSimilarity reason:@"Last chain element and link should be similar" userInfo:@{
+            @"CurrentChainKey" : self.linkChain,
+            @"PassedLinkKey" : link,
+            @"NavigatinContextKey" : self
+        }];
         return;
     }
 
@@ -126,7 +133,7 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
 
     ITLinkChain *const backNavigationChain = [self.linkChain subtractIntersectedChain:commonChain];
     ITLinkChain *const forwardNavigationChain = [updatedChain subtractIntersectedChain:commonChain];
-    while (forwardNavigationChain.lastEntity && [ITLinkNode isValue:forwardNavigationChain.lastEntity]) {
+    while (forwardNavigationChain.lastEntity && ITHasValue(forwardNavigationChain.lastEntity)) {
         [forwardNavigationChain popEntity];
     }
     self.navigationBlock = [[self _generateNavigationBlockWithBackChain:backNavigationChain forwardChain:forwardNavigationChain] copy];
@@ -149,7 +156,7 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
 - (ITSequentialNavigationBlock)_generateNavigationBlockWithBackChain:(ITLinkChain *)backChain forwardChain:(ITLinkChain *)forwardChain
 {
     __weak typeof(self) const weakSelf = self;
-    return ^(ITLinkNavigationType navigationType, ITLinkNode *currentNode) {
+    return ^(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode) {
         __strong typeof(weakSelf) const strongSelf = weakSelf;
         if (navigationType == ITLinkNavigationTypeBack) {
             if (backChain.length <= 1) {

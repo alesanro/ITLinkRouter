@@ -65,7 +65,7 @@ describe(@"initializatin stage", ^{
 describe(@"checking properties after initialization", ^{
     it(@"should not to be nil", ^{
         expect(moduleNavigator.activeEntity).notTo.beNil();
-        expect([ITLinkNode isValue:moduleNavigator.activeEntity]).to.beTruthy();
+        expect([moduleNavigator.activeEntity isEqual:[moduleNavigator.activeEntity flatten]]).to.beTruthy();
         expect(moduleNavigator.rootEntity).notTo.beNil();
         expect(moduleNavigator.rootEntity).equal(entity1);
         expect(moduleNavigator.navigationChain).notTo.beNil();
