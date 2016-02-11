@@ -8,6 +8,18 @@
 
 #import "ITSupportClassStructure.h"
 
+@interface _ITRootModuleRouter : NSObject
+@end
+
+@implementation _ITRootModuleRouter
+@end
+
+@interface _ITBasicRouter : NSObject
+@end
+
+@implementation _ITBasicRouter
+@end
+
 SpecBegin(ITLinkValueTests);
 
 describe(@"instantiation ", ^{
@@ -33,7 +45,8 @@ describe(@"instantiation ", ^{
     });
 
     it(@"should return non-nil module invocation object with router", ^{
-        _ITRootModuleRouter *const router = [_ITRootModuleRouter new];
+        _TestArrayModuleNameBuilder *const builder = [_TestArrayModuleNameBuilder builderWithNames:@[@"RootModule"]];
+        _TestModuleRouter *const router = [[_TestModuleRouter alloc] initWithBuildable:builder completion:nil];
         ITLinkNode *node = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(router.class) router:router];
 
         NSInvocation *const forwardInvocation = [node forwardModuleInvocation];

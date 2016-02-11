@@ -16,12 +16,13 @@ describe(@"action-typed link chain", ^{
     __block ITLinkNode *entity1, *entity2, *entity3, *entity4, *testEntity1, *testEntity2;
 
     beforeAll(^{
-        entity1 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
-        entity2 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITLoginModuleRouter class]) link:@selector(navigateToSignInWithUser:password:) arguments:@[ @"Alex", @"123" ]];
-        entity3 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
-        entity4 = [[ITLinkAction alloc] initWithModuleName:ITModuleNameFromClass([_ITProfileModuleRouter class]) link:@selector(editNumber:) arguments:@[ @"375293334455" ]];
-        testEntity1 = [[ITLinkAction alloc] initWithModuleName:@"TestModule1" link:@selector(testLinkToModule2) arguments:nil];
-        testEntity2 = [[ITLinkAction alloc] initWithModuleName:@"TestModule2" link:@selector(testLinkToModule3) arguments:nil];
+        _TestArrayModuleNameBuilder *const namesBuilder = [_TestArrayModuleNameBuilder builderWithNames:@[@"RootModule", @"LoginModule", @"FeedModule", @"ProfileModule", @"Test1Module", @"Test2Module"]];
+        entity1 = [[ITLinkAction alloc] initWithModuleName:[namesBuilder getNextName] link:@selector(navigateToA:) arguments:@[ @"Password" ]];
+        entity2 = [[ITLinkAction alloc] initWithModuleName:[namesBuilder getNextName] link:@selector(navigateToB:) arguments:@[ @"Bob" ]];
+        entity3 = [[ITLinkAction alloc] initWithModuleName:[namesBuilder getNextName] link:@selector(navigateToC) arguments:nil];
+        entity4 = [[ITLinkAction alloc] initWithModuleName:[namesBuilder getNextName] link:@selector(navigateToB:) arguments:@[ @"375293334455" ]];
+        testEntity1 = [[ITLinkAction alloc] initWithModuleName:[namesBuilder getNextName] link:@selector(navigateToB) arguments:nil];
+        testEntity2 = [[ITLinkAction alloc] initWithModuleName:[namesBuilder getNextName] link:@selector(navigateToC) arguments:nil];
     });
 
     beforeEach(^{
@@ -221,12 +222,13 @@ describe(@"value-typed link chain", ^{
     __block ITLinkNode *entity1, *entity2, *entity3, *entity4, *testEntity1, *testEntity2;
 
     beforeAll(^{
-        entity1 = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class])];
-        entity2 = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITLoginModuleRouter class])];
-        entity3 = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class])];
-        entity4 = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITProfileModuleRouter class])];
-        testEntity1 = [ITLinkNode linkValueWithModuleName:@"TestModule1"];
-        testEntity2 = [ITLinkNode linkValueWithModuleName:@"TestModule2"];
+        _TestArrayModuleNameBuilder *const builder = [_TestArrayModuleNameBuilder builderWithNames:@[@"RootModule", @"LoginModule", @"Feed1Module", @"Feed2Module", @"ProfileModule", @"Test1Module", @"Test2Module"]];
+        entity1 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        entity2 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        entity3 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        entity4 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        testEntity1 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        testEntity2 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
     });
 
     beforeEach(^{
@@ -425,14 +427,15 @@ describe(@"mixed-typed link chain", ^{
     __block ITLinkNode *valueEntity1, *valueEntity2;
 
     beforeAll(^{
-        entity1 = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_ITRootModuleRouter class]) link:@selector(navigateToLogin:) arguments:@[ @"Password" ]];
-        entity2 = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_ITLoginModuleRouter class]) link:@selector(navigateToSignInWithUser:password:) arguments:@[ @"Alex", @"123" ]];
-        entity3 = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class]) link:@selector(openProfile) arguments:nil];
-        entity4 = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_ITProfileModuleRouter class]) link:@selector(editNumber:) arguments:@[ @"375293334455" ]];
-        testEntity1 = [ITLinkNode linkValueWithModuleName:@"TestModule1"];
-        testEntity2 = [ITLinkNode linkValueWithModuleName:@"TestModule2"];
-        valueEntity1 = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITFeedModuleRouter class])];
-        valueEntity2 = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass([_ITProfileModuleRouter class])];
+        _TestArrayModuleNameBuilder *const builder = [_TestArrayModuleNameBuilder builderWithNames:@[@"RootModule", @"LoginModule", @"FeedModule", @"FeedModule", @"ProfileModule", @"Test1Module", @"Test2Module", @"FeedModule", @"ProfileModule"]];
+        entity1 = [ITLinkNode linkActionWithModuleName:[builder getNextName] link:@selector(navigateToA:) arguments:@[ @"Password" ]];
+        entity2 = [ITLinkNode linkActionWithModuleName:[builder getNextName] link:@selector(navigateToB:) arguments:@[ @"Bob" ]];
+        entity3 = [ITLinkNode linkActionWithModuleName:[builder getNextName] link:@selector(navigateToC) arguments:nil];
+        entity4 = [ITLinkNode linkActionWithModuleName:[builder getNextName] link:@selector(navigateToA:) arguments:@[ @"375293334455" ]];
+        testEntity1 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        testEntity2 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        valueEntity1 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
+        valueEntity2 = [ITLinkNode linkValueWithModuleName:[builder getNextName]];
     });
 
     beforeEach(^{
