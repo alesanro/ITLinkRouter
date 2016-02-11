@@ -95,8 +95,7 @@ NSString *ITModuleNameFromClass(Class className)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    ITLinkNode *copyInstance = [[ITLinkNode alloc] initWithModuleName:_moduleName router:_router];
-    return copyInstance;
+    @throw [NSException exceptionWithName:@"ITUnimplementedMethod" reason:@"Childs should implement this method by itself" userInfo:nil];
 }
 
 @end
