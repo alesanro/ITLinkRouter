@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class ITLinkNode;
+@protocol ITLinkNode;
 @class ITLinkChain;
 
 /**
@@ -25,13 +25,13 @@
 /**
  *  First (root) module link
  */
-@property (nonatomic, readonly) ITLinkNode *rootEntity;
+@property (nonatomic, readonly) id<ITLinkNode> rootEntity;
 
 /**
  *  The latest link that was performed for transition. It always should be 
  *  of ITLinkActionTypeValue type.
  */
-@property (nonatomic, readonly) ITLinkNode *activeEntity;
+@property (nonatomic, readonly) id<ITLinkNode> activeEntity;
 
 /**
  *  Navigation chain which describes current stack of module navigations.
@@ -47,7 +47,7 @@
  *
  *  @return instance of ITLinkNavigationController class
  */
-- (instancetype)initWithRootEntity:(ITLinkNode *)entity;
+- (instancetype)initWithRootEntity:(id<ITLinkNode>)entity;
 
 /**
  *  Initialize instance with predefined chain. The last link will be
@@ -71,7 +71,7 @@
  *
  *  @param link link which was execuded right away
  */
-- (void)pushLink:(ITLinkNode *)link withResultValue:(ITLinkNode *)valueEntity;
+- (void)pushLink:(id<ITLinkNode>)link withResultValue:(id<ITLinkNode>)valueEntity;
 
 /**
  *  Remove active link from the navigation chain.

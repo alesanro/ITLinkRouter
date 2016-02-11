@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
     ITLinkNavigationTypeBack
 };
 
-typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType, ITLinkNode *currentNode);
+typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode);
 
 @interface ITLinkNavigationController ()
 
@@ -37,26 +37,26 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
     if (self) {
         _linkChain = [chain copy];
         if (_linkChain.length) {
-            ITLinkNode *const flattenLastEntity = [[_linkChain popEntity] flatten];
+            id<ITLinkNode> const flattenLastEntity = [[_linkChain popEntity] flatten];
             [_linkChain appendEntity:flattenLastEntity];
         }
     }
     return self;
 }
 
-- (instancetype)initWithRootEntity:(ITLinkNode *)entity
+- (instancetype)initWithRootEntity:(id<ITLinkNode>)entity
 {
     return [self initWithChain:[[ITLinkChain alloc] initWithEntities:@[ [entity flatten] ]]];
 }
 
 #pragma Accessors
 
-- (ITLinkNode *)rootEntity
+- (id<ITLinkNode>)rootEntity
 {
     return self.linkChain.rootEntity;
 }
 
-- (ITLinkNode *)activeEntity
+- (id<ITLinkNode>)activeEntity
 {
     return self.linkChain.lastEntity;
 }
@@ -68,7 +68,7 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
 
 #pragma mark - Public
 
-- (void)pushLink:(ITLinkNode *)link withResultValue:(ITLinkNode *)valueEntity
+- (void)pushLink:(id<ITLinkNode>)link withResultValue:(id<ITLinkNode>)valueEntity
 {
     NSAssert(link, @"[LinkNavigation] Pushed Link should not be nil!");
     NSAssert(valueEntity, @"[LinkNavigation] Result Link Value should not be nil!");
@@ -82,7 +82,7 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
         return;
     }
 
-    ITLinkNode *const valueNode = [self.linkChain popEntity];
+    id<ITLinkNode> const valueNode = [self.linkChain popEntity];
     [link setRouter:link.router ?: valueNode.router];
     [self.linkChain appendEntity:link];
     [self.linkChain appendEntity:[valueEntity flatten]];
@@ -97,7 +97,7 @@ typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType,
 - (void)popLink
 {
     self.navigationInProgress = YES;
-    __unused ITLinkNode *const popedLinkEntity = [self.linkChain popEntity];
+    __unused id<ITLinkNode> const popedLinkEntity = [self.linkChain popEntity];
     [self.linkChain appendEntity:[[self.linkChain popEntity] flatten]];
 
     if (self.navigationBlock) {

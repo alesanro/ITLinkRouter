@@ -14,7 +14,7 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
 
 #define ROUTER_TYPE NSObject<ITAnimatableTransition, ITUnwindableTransition> *
 
-@interface ITLinkNode : NSObject <NSCopying>
+@protocol ITLinkNode <NSObject, NSCopying>
 
 /**
  *  Name of module
@@ -26,10 +26,6 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  */
 @property (strong, nonatomic) ROUTER_TYPE router;
 
-- (instancetype)init NS_UNAVAILABLE;
-
-+ (instancetype) new NS_UNAVAILABLE;
-
 /**
  *  Define if NOT equal objects has the same module name
  *
@@ -37,17 +33,17 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  *
  *  @return YES if both objects have equal moduleName, NO otherwise
  */
-- (BOOL)isSimilar:(ITLinkNode *)object;
+- (BOOL)isSimilar:(id<ITLinkNode>)object;
 
 /**
  *  Flattening node by returning the most simple instance of
- *  ITLinkNode hierarchy. 
+ *  ITLinkNode hierarchy.
  *
  *  Should be overrided in children classes
  *
  *  @return instance of the simple link node
  */
-- (ITLinkNode *)flatten;
+- (id<ITLinkNode>)flatten;
 
 /**
  *  Return invocation object for router to perform forward transition
@@ -67,6 +63,18 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  */
 - (NSInvocation *)backwardModuleInvocation;
 
+@end
+
+@interface ITLinkNode : NSObject <ITLinkNode>
+
+@property (copy, nonatomic, readonly) NSString *moduleName;
+
+@property (strong, nonatomic) ROUTER_TYPE router;
+
+- (instancetype)init NS_UNAVAILABLE;
+
++ (instancetype) new NS_UNAVAILABLE;
+
 #pragma mark - Override
 
 - (BOOL)isEqual:(id)object;
@@ -80,7 +88,7 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  */
 @interface ITLinkNode (ITCluster)
 
-+ (instancetype)linkActionWithNode:(ITLinkNode *)node link:(SEL)linkSelector arguments:(NSArray *)arguments;
++ (instancetype)linkActionWithNode:(id<ITLinkNode>)node link:(SEL)linkSelector arguments:(NSArray *)arguments;
 
 + (instancetype)linkActionWithModuleName:(NSString *)moduleName link:(SEL)linkSelector arguments:(NSArray *)arguments;
 
@@ -97,7 +105,7 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  *
  *  @return YES if instance is Action; NO otherwise
  */
-+ (BOOL)isAction:(ITLinkNode *)node;
++ (BOOL)isAction:(id<ITLinkNode>)node;
 
 /**
  *  Check if node is value type
@@ -106,6 +114,6 @@ OBJC_EXPORT NSString *ITModuleNameFromClass(Class className);
  *
  *  @return YES if istance if Value; NO otherwise
  */
-+ (BOOL)isValue:(ITLinkNode *)node;
++ (BOOL)isValue:(id<ITLinkNode>)node;
 
 @end

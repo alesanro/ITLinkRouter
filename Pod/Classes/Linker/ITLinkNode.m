@@ -34,7 +34,7 @@ NSString *ITModuleNameFromClass(Class className)
     return self;
 }
 
-- (BOOL)isSimilar:(ITLinkNode *)object
+- (BOOL)isSimilar:(id<ITLinkNode>)object
 {
     if ([self isEqual:object]) {
         return YES;

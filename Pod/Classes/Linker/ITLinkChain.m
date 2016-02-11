@@ -11,7 +11,7 @@
 
 @interface ITLinkChain ()
 
-@property (nonatomic, strong) NSMutableArray<ITLinkNode *> *internalEntities;
+@property (nonatomic, strong) NSMutableArray<id<ITLinkNode>> *internalEntities;
 
 @end
 
@@ -20,11 +20,11 @@
 @dynamic rootEntity;
 @dynamic lastEntity;
 
-- (instancetype)initWithEntities:(NSArray<ITLinkNode *> *)internalEntities
+- (instancetype)initWithEntities:(NSArray<id<ITLinkNode>> *)linkEntities
 {
     self = [super init];
     if (self) {
-        _internalEntities = internalEntities.count ? [internalEntities mutableCopy] : [NSMutableArray array];
+        _internalEntities = linkEntities.count ? [linkEntities mutableCopy] : [NSMutableArray array];
     }
     return self;
 }
@@ -36,17 +36,17 @@
 
 #pragma mark - Accessors
 
-- (NSArray<ITLinkNode *> *)entities
+- (NSArray<id<ITLinkNode>> *)entities
 {
     return [NSArray arrayWithArray:self.internalEntities];
 }
 
-- (ITLinkNode *)rootEntity
+- (id<ITLinkNode>)rootEntity
 {
     return self.internalEntities.firstObject;
 }
 
-- (ITLinkNode *)lastEntity
+- (id<ITLinkNode>)lastEntity
 {
     return self.internalEntities.lastObject;
 }
@@ -58,22 +58,22 @@
 
 #pragma mark - Public
 
-- (ITLinkChain *)appendEntity:(ITLinkNode *)entity
+- (ITLinkChain *)appendEntity:(id<ITLinkNode>)entity
 {
     [self.internalEntities addObject:entity];
     return self;
 }
 
-- (ITLinkNode *)popEntity
+- (id<ITLinkNode>)popEntity
 {
-    ITLinkNode *const removeEntity = self.internalEntities.lastObject;
+    id<ITLinkNode> const removeEntity = self.internalEntities.lastObject;
     [self.internalEntities removeLastObject];
     return removeEntity;
 }
 
-- (ITLinkNode *)shiftEntity
+- (id<ITLinkNode>)shiftEntity
 {
-    ITLinkNode *const removeEntity = self.internalEntities.firstObject;
+    id<ITLinkNode> const removeEntity = self.internalEntities.firstObject;
     if (self.internalEntities.count) {
         [self.internalEntities removeObjectAtIndex:0];
     }
@@ -95,9 +95,9 @@
     }
 
     __block NSRange intersectionRange;
-    [self.internalEntities enumerateObjectsUsingBlock:^(ITLinkNode *const selfEntity, NSUInteger selfIdx, BOOL *selfStop) {
+    [self.internalEntities enumerateObjectsUsingBlock:^(id<ITLinkNode> const selfEntity, NSUInteger selfIdx, BOOL *selfStop) {
         __block BOOL hasIntersection = NO;
-        [otherLinkChain.internalEntities enumerateObjectsUsingBlock:^(ITLinkNode *const otherEntity, NSUInteger otherIdx, BOOL *otherStop) {
+        [otherLinkChain.internalEntities enumerateObjectsUsingBlock:^(id<ITLinkNode> const otherEntity, NSUInteger otherIdx, BOOL *otherStop) {
             if (!hasIntersection && [selfEntity isEqual:otherEntity]) {
                 hasIntersection = YES;
                 intersectionRange = NSMakeRange(selfIdx, 1);
@@ -111,7 +111,7 @@
                     return;
                 }
 
-                ITLinkNode *const nextEntity = self.internalEntities[nextIdx];
+                id<ITLinkNode> const nextEntity = self.internalEntities[nextIdx];
                 if ([otherEntity isEqual:nextEntity]) {
                     intersectionRange.length++;
                 } else {
@@ -190,8 +190,8 @@
     }
 
     __block BOOL equal = YES;
-    [self.internalEntities enumerateObjectsUsingBlock:^(ITLinkNode *const selfEntity, NSUInteger idx, BOOL *stop) {
-        ITLinkNode *const otherEntity = otherObj.internalEntities[idx];
+    [self.internalEntities enumerateObjectsUsingBlock:^(id<ITLinkNode> const selfEntity, NSUInteger idx, BOOL *stop) {
+        id<ITLinkNode> const otherEntity = otherObj.internalEntities[idx];
         equal = [selfEntity isEqual:otherEntity];
         if (!equal) {
             *stop = YES;
@@ -204,7 +204,7 @@
 - (NSString *)debugDescription
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"LinkChain (%@): [\n", [super debugDescription]];
-    [self.internalEntities enumerateObjectsUsingBlock:^(ITLinkNode *const obj, NSUInteger idx, BOOL *stop) {
+    [self.internalEntities enumerateObjectsUsingBlock:^(id<ITLinkNode> const obj, NSUInteger idx, BOOL *stop) {
         [description appendFormat:@"\t%@", [obj debugDescription]];
         if (idx + 1 != self.internalEntities.count) {
             [description appendFormat:@"\n\t\t\t|"];
