@@ -10,14 +10,18 @@
 #import "ITLinkNodeProtocol.h"
 
 @class ITLinkChain;
+@class ITNavigationProblemResolver;
+
+typedef NSDictionary<NSString *, id> ITProblemDictionary;
+typedef void (^ITProblemHanderBlock)(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver);
 
 /**
  *  This navigator controller responsible for managing navigation between
  *  modules withing VIPER application architecture pattern. It used to keep track
  *  currently loaded modules, their hierarchy and transitions. It also very
  *  helpful for experiencing Deep Linking approach and allows to embed it
- *  easily. Use ITLinkChain to transform external URLs to internal 
- *  application-based navigation and perform `navigateToNewChain:` method 
+ *  easily. Use ITLinkChain to transform external URLs to internal
+ *  application-based navigation and perform `navigateToNewChain:` method
  *  to go right to the destination screen.
  */
 @interface ITLinkNavigationController : NSObject
@@ -28,7 +32,7 @@
 @property (nonatomic, readonly) id<ITLinkNode> rootEntity;
 
 /**
- *  The latest link that was performed for transition. It always should be 
+ *  The latest link that was performed for transition. It always should be
  *  of ITLinkActionTypeValue type.
  */
 @property (nonatomic, readonly) id<ITLinkNode> activeEntity;
@@ -40,7 +44,7 @@
 @property (nonatomic, readonly) ITLinkChain *navigationChain;
 
 /**
- *  Initialize instance with root entity (if not a link value then it will be 
+ *  Initialize instance with root entity (if not a link value then it will be
  *  flattened)
  *
  *  @param entity root entity
@@ -65,6 +69,8 @@
 
 #pragma mark - Public
 
+- (void)reportProblem:(ITProblemDictionary *)description;
+
 /**
  *  Append link to the navigation chain.
  *  Doesn't perform any action for link or navigation stack
@@ -86,5 +92,7 @@
  *  @param updatedChain chain to navigate
  */
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain;
+
+- (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock;
 
 @end

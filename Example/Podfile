@@ -1,18 +1,30 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'ITLinkRouter_Example', :exclusive => true do
+def common_pods
   pod 'ITLinkRouter', :path => '../'
-  pod 'ITLinkRouter/Core', :path => '../'
+end
 
-  pod 'ViperMcFlurry'
-  pod 'SpaceCommander', :git => 'https://github.com/alesanro/spacecommander.git'
+target 'ITLinkRouter_Example', :exclusive => true do
+    common_pods
+
+    pod 'Typhoon'
+    pod 'RamblerTyphoonUtils'
+
+    pod 'ViperMcFlurry'
+    pod 'SpaceCommander', :git => 'https://github.com/alesanro/spacecommander.git'
+end
+
+target 'ITLinkRouter_Storyboard_Example', :exclusive => true do
+    common_pods
+
+    pod 'ViperMcFlurry'
 end
 
 target 'ITLinkRouter_Tests', :exclusive => true do
-  pod 'ITLinkRouter', :path => '../'
+    common_pods
 
-  pod 'Specta'
-  pod 'Expecta'
-  pod 'OCMock'
+    pod 'Specta'
+    pod 'Expecta'
+    pod 'OCMock'
 end

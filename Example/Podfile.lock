@@ -7,22 +7,31 @@ PODS:
     - ITLinkRouter/Core
   - ITLinkRouter/Core (0.1.1)
   - OCMock (3.2.2)
+  - RamblerTyphoonUtils (1.2.0):
+    - RamblerTyphoonUtils/AssemblyCollector (= 1.2.0)
+    - RamblerTyphoonUtils/AssemblyTesting (= 1.2.0)
+  - RamblerTyphoonUtils/AssemblyCollector (1.2.0)
+  - RamblerTyphoonUtils/AssemblyTesting (1.2.0)
   - SpaceCommander (1.0.0)
   - Specta (1.0.5)
-  - ViperMcFlurry (1.1.6):
-    - ViperMcFlurry/Core (= 1.1.6)
-    - ViperMcFlurry/IntermoduleDataTransfer (= 1.1.6)
-  - ViperMcFlurry/Core (1.1.6)
-  - ViperMcFlurry/IntermoduleDataTransfer (1.1.6):
+  - Typhoon (3.4.5):
+    - Typhoon/no-arc (= 3.4.5)
+  - Typhoon/no-arc (3.4.5)
+  - ViperMcFlurry (1.2.0):
+    - ViperMcFlurry/Core (= 1.2.0)
+    - ViperMcFlurry/IntermoduleDataTransfer (= 1.2.0)
+  - ViperMcFlurry/Core (1.2.0)
+  - ViperMcFlurry/IntermoduleDataTransfer (1.2.0):
     - ViperMcFlurry/Core
 
 DEPENDENCIES:
   - Expecta
   - ITLinkRouter (from `../`)
-  - ITLinkRouter/Core (from `../`)
   - OCMock
+  - RamblerTyphoonUtils
   - SpaceCommander (from `https://github.com/alesanro/spacecommander.git`)
   - Specta
+  - Typhoon
   - ViperMcFlurry
 
 EXTERNAL SOURCES:
@@ -40,8 +49,10 @@ SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   ITLinkRouter: f65879972f5794d73a2fcb054411f362d3afec4d
   OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
+  RamblerTyphoonUtils: 814c02d7a0136a164efaae1133f47db1e4579cd0
   SpaceCommander: 87a04deea22f846402053a600d48d5b06ad79148
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
-  ViperMcFlurry: 4a26c6cc3b0fbe68f93ecbe0398690a880bd09c0
+  Typhoon: 200100687af3233ec5ed019064df3c9ffe350475
+  ViperMcFlurry: dc0aed190c3485fc6c95a50375d2e9812c9adb7e
 
 COCOAPODS: 0.39.0
