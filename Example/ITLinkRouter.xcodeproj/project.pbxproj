@@ -14,11 +14,18 @@
 		56477D031C6DC78C0053A9AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56477D021C6DC78C0053A9AA /* ViewController.m */; };
 		56477D061C6DC78C0053A9AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56477D041C6DC78C0053A9AA /* Main.storyboard */; };
 		56477D081C6DC78C0053A9AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56477D071C6DC78C0053A9AA /* Assets.xcassets */; };
+		564F92A71C71B4F10006B4A9 /* RootModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9619253342A5A38BA899281F /* RootModuleInteractorTests.m */; };
+		564F92A81C71B4F80006B4A9 /* RootModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4FDD0C4A2A0937623990323 /* RootModuleRouterTests.m */; };
+		564F92A91C71B4FA0006B4A9 /* RootModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 417523E5F718E883074FBF6E /* RootModulePresenterTests.m */; };
+		564F92AA1C71B5030006B4A9 /* RootModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD63DFEB0B0F48ED088DC4 /* RootModuleViewControllerTests.m */; };
+		564F92AB1C71B5060006B4A9 /* RootModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0DA410F6251A55C65B011C /* RootModuleAssemblyTests.m */; };
+		564F92AC1C71B5410006B4A9 /* RootModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = D95217A4BCB11E78384915CD /* RootModuleAssembly.m */; };
 		567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352251C5F932E00F65A31 /* ITLinkValueTests.m */; };
 		567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352281C5FA8B800F65A31 /* ITLinkChainTests.m */; };
 		5680D91A1C6A1E80006EB379 /* ITLinkNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5680D9191C6A1E80006EB379 /* ITLinkNodeTests.m */; };
 		56B36F6F1C60B01900D323E0 /* ITLinkNavigationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */; };
 		56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */; };
+		56B3ACF71C71AE4E00493107 /* ITNavigationProblemResolverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -30,16 +37,10 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6A345E2EBE81534AB9B8B890 /* RootModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9619253342A5A38BA899281F /* RootModuleInteractorTests.m */; };
-		726EFFBC6E60ABADEEB604F7 /* RootModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = D95217A4BCB11E78384915CD /* RootModuleAssembly.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		899486571293DF8D81322B9A /* Pods_ITLinkRouter_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C59FE2F27DCFED50D9274541 /* Pods_ITLinkRouter_Example.framework */; };
-		8EFFF01CD8EAEC3E2F65327D /* RootModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4FDD0C4A2A0937623990323 /* RootModuleRouterTests.m */; };
-		97EC177A267C2B3E979C1759 /* RootModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD63DFEB0B0F48ED088DC4 /* RootModuleViewControllerTests.m */; };
 		A6EF1719957D079733CA699F /* RootModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBACC03579931A48966C5A /* RootModuleViewController.m */; };
-		BA16A941D0B0D2A5DCFCCC3A /* RootModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 417523E5F718E883074FBF6E /* RootModulePresenterTests.m */; };
 		C6DE91EC10297E2E86F582C3 /* RootModulePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1E0945AD84926438993853 /* RootModulePresenter.m */; };
-		CD07A7282382D3673B99C4D5 /* RootModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0DA410F6251A55C65B011C /* RootModuleAssemblyTests.m */; };
 		CDFA25E986C6F0B4AF39C81A /* Pods_ITLinkRouter_Storyboard_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B475955F3EC50DC68251B105 /* Pods_ITLinkRouter_Storyboard_Example.framework */; };
 		E761B08C9874803C2278837F /* RootModuleRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5D74BD2F9D450E88AC84A0 /* RootModuleRouter.m */; };
 		EF158DE871A18AB90F66B60E /* Pods_ITLinkRouter_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C4DD3990BBC5D1F6BE8FCAF /* Pods_ITLinkRouter_Tests.framework */; };
@@ -82,6 +83,7 @@
 		56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLinkNavigationControllerTests.m; sourceTree = "<group>"; };
 		56B36F751C60D35500D323E0 /* ITSupportClassStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITSupportClassStructure.h; sourceTree = "<group>"; };
 		56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITSupportClassStructure.m; sourceTree = "<group>"; };
+		56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITNavigationProblemResolverTests.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* ITLinkRouter_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITLinkRouter_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -314,6 +316,7 @@
 				56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */,
 				561F10781C624C8300DC6575 /* ITLinkActionTests.m */,
 				5680D9191C6A1E80006EB379 /* ITLinkNodeTests.m */,
+				56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */,
 				0D03A9318BC9653191971A98 /* RootModule */,
 			);
 			path = Tests;
@@ -704,16 +707,10 @@
 			files = (
 				6003F59E195388D20070C39A /* ITAppDelegate.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
-				726EFFBC6E60ABADEEB604F7 /* RootModuleAssembly.m in Sources */,
 				A6EF1719957D079733CA699F /* RootModuleViewController.m in Sources */,
 				C6DE91EC10297E2E86F582C3 /* RootModulePresenter.m in Sources */,
 				00480107CFB2585F748403D4 /* RootModuleInteractor.m in Sources */,
 				E761B08C9874803C2278837F /* RootModuleRouter.m in Sources */,
-				CD07A7282382D3673B99C4D5 /* RootModuleAssemblyTests.m in Sources */,
-				97EC177A267C2B3E979C1759 /* RootModuleViewControllerTests.m in Sources */,
-				BA16A941D0B0D2A5DCFCCC3A /* RootModulePresenterTests.m in Sources */,
-				6A345E2EBE81534AB9B8B890 /* RootModuleInteractorTests.m in Sources */,
-				8EFFF01CD8EAEC3E2F65327D /* RootModuleRouterTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,8 +721,15 @@
 				567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */,
 				56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */,
 				5680D91A1C6A1E80006EB379 /* ITLinkNodeTests.m in Sources */,
+				564F92AC1C71B5410006B4A9 /* RootModuleAssembly.m in Sources */,
+				564F92A81C71B4F80006B4A9 /* RootModuleRouterTests.m in Sources */,
 				567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */,
+				564F92AB1C71B5060006B4A9 /* RootModuleAssemblyTests.m in Sources */,
+				564F92AA1C71B5030006B4A9 /* RootModuleViewControllerTests.m in Sources */,
 				56B36F6F1C60B01900D323E0 /* ITLinkNavigationControllerTests.m in Sources */,
+				564F92A91C71B4FA0006B4A9 /* RootModulePresenterTests.m in Sources */,
+				56B3ACF71C71AE4E00493107 /* ITNavigationProblemResolverTests.m in Sources */,
+				564F92A71C71B4F10006B4A9 /* RootModuleInteractorTests.m in Sources */,
 				561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
