@@ -118,6 +118,30 @@ describe(@"usage of main methods", ^{
             [resolver markDone];
         }).to.raise(NSInternalInconsistencyException);
     });
+
+    context(@"throw errors when trying to perform a navigation after resolve action was performed", ^{
+        it(@"for continue navigation", ^{
+            [resolver continueNavigation];
+            [resolver resolve];
+            expect(resolver.isResolved).to.beTruthy();
+            expect(resolver.isDone).to.beTruthy();
+            expect(^{
+                [resolver continueNavigation];
+            }).to.raise(NSInternalInconsistencyException);
+        });
+
+        it(@"for navigation to new destination", ^{
+            ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:@"Module"];
+            ITLinkChain *const updatedChain = [[ITLinkChain alloc] initWithEntities:@[node]];
+            [resolver navigateToOtherChain:updatedChain];
+            [resolver resolve];
+            expect(resolver.isResolved).to.beTruthy();
+            expect(resolver.isDone).to.beTruthy();
+            expect(^{
+                [resolver navigateToOtherChain:updatedChain];
+            }).to.raise(NSInternalInconsistencyException);
+        });
+    });
 });
 
 describe(@"copying", ^{
