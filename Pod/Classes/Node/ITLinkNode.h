@@ -22,6 +22,8 @@
 
 - (BOOL)isEqual:(id)object;
 
+- (NSUInteger)hash;
+
 - (NSString *)debugDescription;
 
 @end

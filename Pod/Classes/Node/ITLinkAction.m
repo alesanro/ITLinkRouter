@@ -100,6 +100,11 @@ static NSUInteger ITSelectorNumberOfArguments(SEL selector)
     return YES;
 }
 
+- (NSUInteger)hash
+{
+    return [super hash] ^ [NSStringFromSelector(self.linkSelector) hash];
+}
+
 - (NSString *)debugDescription
 {
     return [NSString stringWithFormat:@"[%@ with module: %@; link: %@, args: {%@}, router: %@]", NSStringFromClass([self class]), self.moduleName, NSStringFromSelector(self.linkSelector), [self.arguments componentsJoinedByString:@"; "], self.router];

@@ -200,6 +200,15 @@
     return equal;
 }
 
+- (NSUInteger)hash
+{
+    NSUInteger hash = 0;
+    for (id<ITLinkNode> entity in self.internalEntities) {
+        hash ^= [entity hash];
+    }
+    return hash;
+}
+
 - (NSString *)debugDescription
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"LinkChain (%@): [\n", [super debugDescription]];

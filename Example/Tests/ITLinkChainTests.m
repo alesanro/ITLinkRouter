@@ -420,6 +420,18 @@ describe(@"value-typed link chain", ^{
         expect([linkChain isEqual:linkChain]).to.beTruthy();
     });
 
+    it(@"hash should be valid for equal objects", ^{
+        ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[entity4, testEntity1]];
+        ITLinkChain *const subtractedChain = [linkChain subtractIntersectedChain:otherChain];
+        expect([otherChain hash]).toNot.equal([subtractedChain hash]);
+        expect(otherChain).toNot.equal(subtractedChain);
+        expect(subtractedChain).toNot.equal(otherChain);
+
+        ITLinkChain *const copiedChain = [otherChain copy];
+        expect([otherChain hash]).to.equal([copiedChain hash]);
+        expect(otherChain).to.equal(copiedChain);
+        expect(copiedChain).to.equal(otherChain);
+    });
 });
 
 describe(@"mixed-typed link chain", ^{

@@ -72,4 +72,9 @@
     return YES;
 }
 
+- (NSUInteger)hash
+{
+    return [super hash];
+}
+
 @end

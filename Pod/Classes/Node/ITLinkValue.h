@@ -18,4 +18,6 @@
 
 - (BOOL)isEqual:(id)object;
 
+- (NSUInteger)hash;
+
 @end

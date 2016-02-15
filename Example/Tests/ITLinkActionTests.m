@@ -123,6 +123,20 @@ describe(@"equality should work", ^{
         expect(linkEntity).toNot.equal(linkValue);
         expect(linkValue).toNot.equal(linkEntity);
     });
+
+    it(@"should be valid for equal objects", ^{
+        linkEntity = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:) arguments:@[@"bob"]];
+        ITLinkNode *const otherLink = [ITLinkNode linkActionWithModuleName:ITModuleNameFromClass([_TestModule class]) link:@selector(testRoute:param1:) arguments:@[@"tom", @"bob"]];
+
+        expect([linkEntity hash]).toNot.equal([otherLink hash]);
+        expect(linkEntity).toNot.equal(otherLink);
+        expect(otherLink).toNot.equal(linkEntity);
+
+        ITLinkNode *const copiedLink = [linkEntity copy];
+        expect([linkEntity hash]).to.equal([copiedLink hash]);
+        expect(linkEntity).to.equal(copiedLink);
+        expect(copiedLink).to.equal(linkEntity);
+    });
 });
 
 describe(@"similarity should work", ^{

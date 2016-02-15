@@ -24,7 +24,7 @@ SpecBegin(ITLinkValueTests);
 
 describe(@"instantiation ", ^{
     it(@"should be proper with valid parameters", ^{
-        ITLinkNode *node = [ITLinkNode linkValueWithModuleName:@"Module"];
+        ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:@"Module"];
         expect(node.moduleName).toNot.beEmpty();
         expect(node.moduleName).to.equal(@"Module");
         expect(node.router).to.beNil();
@@ -32,8 +32,8 @@ describe(@"instantiation ", ^{
     });
 
     it(@"flatten should return an equal instance", ^{
-        ITLinkNode *node = [ITLinkNode linkValueWithModuleName:@"Module"];
-        ITLinkNode *flattenNode = [node flatten];
+        ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:@"Module"];
+        ITLinkNode *const flattenNode = [node flatten];
         expect([flattenNode class]).to.equal([node class]);
         expect(node).to.equal(flattenNode);
     });
@@ -47,7 +47,7 @@ describe(@"instantiation ", ^{
     it(@"should return non-nil module invocation object with router", ^{
         _TestArrayModuleNameBuilder *const builder = [_TestArrayModuleNameBuilder builderWithNames:@[@"RootModule"]];
         _TestModuleRouter *const router = [[_TestModuleRouter alloc] initWithBuildable:builder completion:nil];
-        ITLinkNode *node = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(router.class) router:router];
+        ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:ITModuleNameFromClass(router.class) router:router];
 
         NSInvocation *const forwardInvocation = [node forwardModuleInvocation];
         expect(forwardInvocation).to.beNil();
@@ -58,6 +58,21 @@ describe(@"instantiation ", ^{
         expect(backInvocation.selector).toNot.beNil();
         [backInvocation invoke];
         OCMVerify([router unwind]);
+    });
+});
+
+describe(@"equality and hash", ^{
+    it(@"should be valid for equal objects", ^{
+        ITLinkNode *const node = [ITLinkNode linkValueWithModuleName:@"Module"];
+        ITLinkNode *const otherNode = [ITLinkNode linkValueWithModuleName:@"OtherModule"];
+        expect([node hash]).toNot.equal([otherNode hash]);
+        expect(node).toNot.equal(otherNode);
+        expect(otherNode).toNot.equal(node);
+
+        ITLinkNode *const copiedNode = [node copy];
+        expect([node hash]).to.equal([copiedNode hash]);
+        expect(node).to.equal(copiedNode);
+        expect(copiedNode).to.equal(node);
     });
 });
 

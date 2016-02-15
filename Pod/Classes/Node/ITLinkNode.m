@@ -90,6 +90,11 @@ NSString *ITModuleNameFromClass(Class className)
     return YES;
 }
 
+- (NSUInteger)hash
+{
+    return [self.moduleName hash];
+}
+
 - (NSString *)debugDescription
 {
     return [NSString stringWithFormat:@"[%@ with module: %@, router: %@", NSStringFromClass([self class]), self.moduleName, self.router];
