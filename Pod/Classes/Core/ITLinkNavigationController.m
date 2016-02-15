@@ -74,10 +74,29 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)reportProblem:(ITProblemDictionary *)description
 {
-    assert(self.navigationResolver);
-
-    if (self.problemBlock) {
+    if (self.problemBlock && self.navigationResolver) {
         self.problemBlock(description, self.navigationResolver);
+    } else {
+#ifdef DEBUG
+        NSLog(@"[WARNING] Cannot take into account a reported problem because no handleBlock has been defined.");
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cannot take into account a reported problem because no handleBlock has been defined" userInfo:nil];
+#endif
+    }
+}
+
+- (void)solveProblemWithResolver:(ITNavigationProblemResolver *)resolver
+{
+    NSParameterAssert(resolver);
+
+    if (!resolver.isDone) {
+        self.navigationInProgress = NO;
+        ITLinkChain *const resolvingChain = resolver.resolvingChain;
+        const ITProblemHanderBlock oldHandlerBlock = [self.problemBlock copy];
+        [self _cleanupNavigationData];
+        [resolver markDone];
+        [self navigateToNewChain:resolvingChain andHandleAnyProblem:oldHandlerBlock];
+    } else {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cannot solve problem because it has already been done" userInfo:nil];
     }
 }
 
@@ -125,24 +144,22 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain
 {
-    [self navigateToNewChain:updatedChain
-         andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver){
-             // todo: handle problems by default
-         }];
+    [self navigateToNewChain:updatedChain andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver) {
+// todo: handle problems by default
+#ifdef DEBUG
+        NSLog(@"[WARNING] You haven't set up handler for resolving problems in navigation");
+#endif
+    }];
 }
 
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock
 {
     assert(!self.navigationResolver);
-    self.navigationResolver =
-        [[ITNavigationProblemResolver alloc] initWithNavigationController:self destinationChain:updatedChain];
-    self.problemBlock = handlerBlock;
 
     if (!updatedChain.length) {
         NSLog(@"[WARNING] There is nothing to navigate - destination chain is empty");
         return;
     }
-
     if (self.navigationInProgress) {
         NSLog(@"[ERROR] Cannot proceed new navigation since another navigation action is performing right now");
         return;
@@ -155,13 +172,15 @@ static BOOL ITHasValue(id<ITLinkNode> node)
         return;
     }
 
+    self.navigationResolver = [[ITNavigationProblemResolver alloc] initWithNavigationController:self destinationChain:updatedChain];
+    self.problemBlock = handlerBlock;
+
     ITLinkChain *const backNavigationChain = [self.linkChain subtractIntersectedChain:commonChain];
     ITLinkChain *const forwardNavigationChain = [updatedChain subtractIntersectedChain:commonChain];
     while (forwardNavigationChain.lastEntity && ITHasValue(forwardNavigationChain.lastEntity)) {
         [forwardNavigationChain popEntity];
     }
-    self.navigationBlock =
-        [[self _generateNavigationBlockWithBackChain:backNavigationChain forwardChain:forwardNavigationChain] copy];
+    self.navigationBlock = [[self _generateNavigationBlockWithBackChain:backNavigationChain forwardChain:forwardNavigationChain] copy];
     [self _beginNavigationWithBackChain:backNavigationChain forwardChain:forwardNavigationChain];
 }
 
@@ -170,7 +189,6 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 - (void)_cleanupNavigationData
 {
     self.navigationBlock = nil;
-    [self.navigationResolver resolve];
     self.navigationResolver = nil;
     self.problemBlock = nil;
 }
@@ -186,16 +204,14 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     [nextInvocation invoke];
 }
 
-- (ITSequentialNavigationBlock)_generateNavigationBlockWithBackChain:(ITLinkChain *)backChain
-                                                        forwardChain:(ITLinkChain *)forwardChain
+- (ITSequentialNavigationBlock)_generateNavigationBlockWithBackChain:(ITLinkChain *)backChain forwardChain:(ITLinkChain *)forwardChain
 {
     __weak typeof(self) const weakSelf = self;
     return ^(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode) {
       __strong typeof(weakSelf) const strongSelf = weakSelf;
       if (navigationType == ITLinkNavigationTypeBack) {
           if (backChain.length <= 1) {
-              const BOOL needStartForwardTransition =
-                  forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
+              const BOOL needStartForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
               if (needStartForwardTransition) {
                   [forwardChain.rootEntity setRouter:currentNode.router];
                   [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
@@ -207,8 +223,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
               [[[[backChain popEntity] flatten] backwardModuleInvocation] invoke];
           }
       } else if (navigationType == ITLinkNavigationTypeForward) {
-          const BOOL needContinueForwardTransition =
-              forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
+          const BOOL needContinueForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
           if (needContinueForwardTransition) {
               [forwardChain.rootEntity setRouter:currentNode.router];
               [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];

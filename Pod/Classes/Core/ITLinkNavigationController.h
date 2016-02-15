@@ -69,7 +69,24 @@ typedef void (^ITProblemHanderBlock)(ITProblemDictionary *problemDict, ITNavigat
 
 #pragma mark - Public
 
+/**
+ *  Method is helpful when during navigation you faced with a problem
+ *  (i.e. user hasn't logged in or no permissions are granted to navigate
+ *  to a destination view). Method triggers invocation of problem handler
+ *  passed when navigation was initiated.
+ *
+ *  @param description dictionary to describe encountered problem
+ */
 - (void)reportProblem:(ITProblemDictionary *)description;
+
+/**
+ *  Perform solving of encountered problem with resolver object. Rather then
+ *  create your own resolver object use one from handle block of navigation method
+ *  to specify needed actions and call `resolve` method.
+ *
+ *  @param resolver object that holds solution for some problem
+ */
+- (void)solveProblemWithResolver:(ITNavigationProblemResolver *)resolver;
 
 /**
  *  Append link to the navigation chain.
@@ -93,6 +110,16 @@ typedef void (^ITProblemHanderBlock)(ITProblemDictionary *problemDict, ITNavigat
  */
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain;
 
+/**
+ *  Perform navigation through new navigation chain. To actually navigate that chain
+ *  should contain instersection at the beginning of it.
+ *
+ *  You can also handle all problems encountered during navigation by providing
+ *  block which will allow you to make appropriated decision and resolve problems
+ *
+ *  @param updatedChain chain to navigate
+ *  @param handlerBlock problem handler block; reused during single navigation cycle
+ */
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock;
 
 @end

@@ -329,7 +329,113 @@ describe(@"performing navigation by link chain", ^{
             });
         });
     });
+});
 
+describe(@"reporting a problem", ^{
+    __block ITLinkChain *destinationChain;
+    __block ITLinkNavigationController *navigationControllerInternal;
+    __block _TestModuleRouter *loginRouter;
+
+    beforeEach(^{
+        _TestModuleRouter *const firstRouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"RootModule"]);
+        ITLinkNode *const rootNode = [ITLinkNode linkActionWithModuleName:firstRouter.moduleName link:@selector(navigateToA) arguments:nil router:firstRouter];
+        loginRouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"LoginModule"]);
+        ITLinkNode *const loginNode = [ITLinkNode linkActionWithModuleName:loginRouter.moduleName link:@selector(navigateToA:) arguments:@[@"TestUser1"] router:loginRouter];
+        _TestModuleRouter *const feedARouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"FeedALoginModule"]);
+        ITLinkNode *const feedNode = [ITLinkNode linkValueWithModuleName:feedARouter.moduleName router:feedARouter];
+        destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, loginNode, feedNode]];
+        navigationControllerInternal = OCMPartialMock([[ITLinkNavigationController alloc] initWithChain:destinationChain]);
+        firstRouter.moduleNavigator = navigationControllerInternal;
+    });
+
+    context(@"when performing navigation to a chain", ^{
+        it(@"should invoke handle block with resolver", ^{
+            ITLinkNode *const rootNode = [ITLinkNode linkActionWithModuleName:@"RootModule" link:@selector(navigateToA:) arguments:@[@"Bob"]];
+            ITLinkNode *const nextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC) arguments:nil];
+            ITLinkNode *const lastNode = [ITLinkNode linkValueWithModuleName:@"FeedCLoginModule"];
+            ITLinkChain *const destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, nextNode, lastNode]];
+
+            ITProblemDictionary *const problem = @{@"ITTestCase": @"Test reason"};
+            OCMStub([loginRouter navigateToC]).andDo(^(NSInvocation *invocation) {
+                [navigationControllerInternal reportProblem:problem];
+            });
+
+            __block BOOL handleBlockCalled = NO;
+            __block NSUInteger blockCounter = 0;
+            [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver) {
+                expect(problem).to.equal(problemDict);
+                expect(resolver).toNot.beNil();
+
+                handleBlockCalled = YES;
+                blockCounter++;
+
+                ITLinkNode *const nextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC:) arguments:@[@"tom"]];
+                ITLinkNode *const lastNode = [ITLinkNode linkValueWithModuleName:@"FeedCLoginModule"];
+                ITLinkChain *const destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, nextNode, lastNode]];
+                [resolver navigateToOtherChain:destinationChain];
+                [resolver resolve];
+            }];
+            expect(handleBlockCalled).after(2).to.beTruthy();
+            expect(handleBlockCalled).after(2).to.equal(1);
+        });
+    });
+
+    context(@"when it is not inside the navigation process ", ^{
+        it(@"should do nothing", ^{
+#ifdef DEBUG
+            ITProblemDictionary *const problem = @{@"ITTestCase": @"Test reason"};
+            expect(^{
+                [navigationControllerInternal reportProblem:problem];
+            }).to.raise(NSInternalInconsistencyException);
+#endif
+        });
+    });
+});
+
+describe(@"solving a problem", ^{
+    __block ITLinkChain *destinationChain;
+    __block ITLinkNavigationController *navigationControllerInternal;
+    __block _TestModuleRouter *loginRouter;
+
+    beforeEach(^{
+        _TestModuleRouter *const firstRouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"RootModule"]);
+        ITLinkNode *const rootNode = [ITLinkNode linkActionWithModuleName:firstRouter.moduleName link:@selector(navigateToA) arguments:nil router:firstRouter];
+        loginRouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"LoginModule"]);
+        ITLinkNode *const loginNode = [ITLinkNode linkActionWithModuleName:loginRouter.moduleName link:@selector(navigateToA:) arguments:@[@"TestUser1"] router:loginRouter];
+        _TestModuleRouter *const feedARouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"FeedALoginModule"]);
+        ITLinkNode *const feedNode = [ITLinkNode linkValueWithModuleName:feedARouter.moduleName router:feedARouter];
+        destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, loginNode, feedNode]];
+        navigationControllerInternal = OCMPartialMock([[ITLinkNavigationController alloc] initWithChain:destinationChain]);
+        firstRouter.moduleNavigator = navigationControllerInternal;
+    });
+
+    it(@"with invalid resolver should fail", ^{
+        expect(^{
+            [navigationControllerInternal solveProblemWithResolver:nil];
+        }).to.raise(NSInternalInconsistencyException);
+        expect(^{
+            ITLinkNode *const rootNode = [ITLinkNode linkActionWithModuleName:@"RootModule" link:@selector(navigateToA:) arguments:@[@"Bob"]];
+            ITLinkNode *const nextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC) arguments:nil];
+            ITLinkChain *const destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, nextNode]];
+
+            ITNavigationProblemResolver *resolver = [[ITNavigationProblemResolver alloc] initWithNavigationController:navigationControllerInternal destinationChain:destinationChain];
+            [resolver markDone];
+            [navigationControllerInternal solveProblemWithResolver:resolver];
+        }).to.raise(NSInternalInconsistencyException);
+    });
+
+    it(@"with valid resolver should invoke navigation again", ^{
+        ITLinkNode *const rootNode = [ITLinkNode linkActionWithModuleName:@"RootModule" link:@selector(navigateToA:) arguments:@[@"Bob"]];
+        ITLinkNode *const nextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC) arguments:nil];
+        ITLinkChain *const destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, nextNode]];
+
+        ITNavigationProblemResolver *resolver = [[ITNavigationProblemResolver alloc] initWithNavigationController:navigationControllerInternal destinationChain:destinationChain];
+        OCMExpect([navigationControllerInternal navigateToNewChain:[OCMArg any] andHandleAnyProblem:[OCMArg invokeBlock]]);
+        [navigationControllerInternal solveProblemWithResolver:resolver];
+        OCMVerifyAll((OCMockObject *)navigationControllerInternal);
+
+
+    });
 });
 
 SpecEnd
