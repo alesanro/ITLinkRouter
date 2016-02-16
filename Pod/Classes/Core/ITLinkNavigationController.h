@@ -107,21 +107,15 @@ typedef void (^ITProblemHanderBlock)(ITProblemDictionary *problemDict, ITNavigat
 
 /**
  *  Perform navigation through new navigation chain. To actually navigate that chain
- *  should contain instersection at the beginning of it
- *
- *  @param updatedChain chain to navigate
- */
-- (void)navigateToNewChain:(ITLinkChain *)updatedChain;
-
-/**
- *  Perform navigation through new navigation chain. To actually navigate that chain
  *  should contain instersection at the beginning of it.
  *
  *  You can also handle all problems encountered during navigation by providing
  *  block which will allow you to make appropriated decision and resolve problems
  *
  *  @param updatedChain chain to navigate
- *  @param handlerBlock problem handler block; reused during single navigation cycle
+ *  @param handlerBlock problem handler block; reused during single navigation cycle. 
+ *                      If problem will have been encountered and no handle block was 
+ *                      setup then exception will be thrown
  */
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock;
 

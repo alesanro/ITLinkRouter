@@ -141,16 +141,6 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     }
 }
 
-- (void)navigateToNewChain:(ITLinkChain *)updatedChain
-{
-    [self navigateToNewChain:updatedChain andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver) {
-// todo: handle problems by default
-#ifdef DEBUG
-        NSLog(@"[WARNING] You haven't set up handler for resolving problems in navigation");
-#endif
-    }];
-}
-
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock
 {
     if (!updatedChain.length) {
@@ -219,39 +209,39 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 {
     __weak typeof(self) const weakSelf = self;
     return ^(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode) {
-      __strong typeof(weakSelf) const strongSelf = weakSelf;
-      if (navigationType == ITLinkNavigationTypeBack) {
-          if (backChain.length <= 1) {
-              const BOOL needStartForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
-              if (needStartForwardTransition) {
-                  [forwardChain.rootEntity setRouter:currentNode.router];
-                  [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
-                  return;
-              }
-              [strongSelf _cleanupNavigationData];
-              return;
-          } else {
-              [[[[backChain popEntity] flatten] backwardModuleInvocation] invoke];
-          }
-      } else if (navigationType == ITLinkNavigationTypeForward) {
-          const BOOL needContinueForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
-          if (needContinueForwardTransition) {
-              [forwardChain.rootEntity setRouter:currentNode.router];
-              [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
-              return;
-          } else {
-              [strongSelf _cleanupNavigationData];
-              return;
-          }
-      } else {
-          @throw [NSException exceptionWithName:ITNavigationInvalidNavigationType
-                                         reason:@"Navigation type provided to navigation block has invalid value"
-                                       userInfo:@{
-                                           @"ProvidedTypeKey" : @(navigationType),
-                                           @"PassedLinkKey" : currentNode,
-                                           @"NavigatinContextKey" : strongSelf
-                                       }];
-      }
+        __strong typeof(weakSelf) const strongSelf = weakSelf;
+        if (navigationType == ITLinkNavigationTypeBack) {
+            if (backChain.length <= 1) {
+                const BOOL needStartForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
+                if (needStartForwardTransition) {
+                    [forwardChain.rootEntity setRouter:currentNode.router];
+                    [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
+                    return;
+                }
+                [strongSelf _cleanupNavigationData];
+                return;
+            } else {
+                [[[[backChain popEntity] flatten] backwardModuleInvocation] invoke];
+            }
+        } else if (navigationType == ITLinkNavigationTypeForward) {
+            const BOOL needContinueForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
+            if (needContinueForwardTransition) {
+                [forwardChain.rootEntity setRouter:currentNode.router];
+                [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
+                return;
+            } else {
+                [strongSelf _cleanupNavigationData];
+                return;
+            }
+        } else {
+            @throw [NSException exceptionWithName:ITNavigationInvalidNavigationType
+                                           reason:@"Navigation type provided to navigation block has invalid value"
+                                         userInfo:@{
+                                                    @"ProvidedTypeKey" : @(navigationType),
+                                                    @"PassedLinkKey" : currentNode,
+                                                    @"NavigatinContextKey" : strongSelf
+                                                    }];
+        }
     };
 }
 

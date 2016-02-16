@@ -130,7 +130,7 @@ describe(@"performing navigation by link chain", ^{
             ITLinkChain *const sameChain = [[ITLinkChain alloc] initWithEntities:@[entity1, entity4]];
             [OCMReject(moduleNavigator) popLink];
             [OCMReject(moduleNavigator) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
-            [moduleNavigator navigateToNewChain:sameChain];
+            [moduleNavigator navigateToNewChain:sameChain andHandleAnyProblem:nil];
         });
 
         it(@"destination chain is empty and should do nothing", ^{
@@ -138,12 +138,12 @@ describe(@"performing navigation by link chain", ^{
             ITLinkNavigationController *navigationController = moduleNavigator;
             [OCMReject(navigationController) popLink];
             [OCMReject(navigationController) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
-            [navigationController navigateToNewChain:emptyDestination];
+            [navigationController navigateToNewChain:emptyDestination andHandleAnyProblem:nil];
 
             navigationController = OCMPartialMock([[ITLinkNavigationController alloc] initWithChain:emptyDestination]);
             [OCMReject(navigationController) popLink];
             [OCMReject(navigationController) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
-            [navigationController navigateToNewChain:defaultChain];
+            [navigationController navigateToNewChain:defaultChain andHandleAnyProblem:nil];
         });
 
         it(@"destination chain has no common part (root) and should do nothing", ^{
@@ -151,7 +151,7 @@ describe(@"performing navigation by link chain", ^{
             ITLinkChain *const otherChain = [[ITLinkChain alloc] initWithEntities:@[singleNode]];
             [OCMReject(moduleNavigator) popLink];
             [OCMReject(moduleNavigator) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
-            [moduleNavigator navigateToNewChain:otherChain];
+            [moduleNavigator navigateToNewChain:otherChain andHandleAnyProblem:nil];
         });
     });
 
@@ -180,7 +180,7 @@ describe(@"performing navigation by link chain", ^{
 
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, 0.5);
                 expect(navigationControllerInternal.navigationChain.length).after(0.5).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.lastEntity).after(0.5).to.equal(feedNode);
@@ -194,7 +194,7 @@ describe(@"performing navigation by link chain", ^{
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, 0.5);
                 expect(navigationControllerInternal.navigationChain.length).after(0.5).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.lastEntity).after(0.5).to.equal(mainNode);
@@ -210,7 +210,7 @@ describe(@"performing navigation by link chain", ^{
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, 0.5);
                 expect(navigationControllerInternal.navigationChain.length).after(0.5).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.lastEntity).after(0.5).to.equal(newsNode);
@@ -227,7 +227,7 @@ describe(@"performing navigation by link chain", ^{
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, 0.5);
                 expect(navigationControllerInternal.navigationChain.length).after(0.5).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.lastEntity).after(0.5).to.equal(newsNode);
@@ -256,7 +256,7 @@ describe(@"performing navigation by link chain", ^{
 
                 [OCMReject(navigationControllerInternal) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, .5);
                 expect(navigationControllerInternal.navigationChain.length).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.rootEntity).to.equal(rootNode);
@@ -269,7 +269,7 @@ describe(@"performing navigation by link chain", ^{
                 [OCMReject(navigationControllerInternal) pushLink:[OCMArg any] withResultValue:[OCMArg any]];
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
                 OCMExpect([navigationControllerInternal popLink]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, .5);
                 expect(navigationControllerInternal.navigationChain.length).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.lastEntity).to.equal(rootNode);
@@ -294,7 +294,7 @@ describe(@"performing navigation by link chain", ^{
 
                 [OCMReject(navigationControllerInternal) popLink];
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, 0.5);
                 expect(navigationControllerInternal.navigationChain.length).after(0.5).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.lastEntity).after(0.5).to.equal(nextNode);
@@ -308,7 +308,7 @@ describe(@"performing navigation by link chain", ^{
 
                 [OCMReject(navigationControllerInternal) popLink];
                 OCMExpect([navigationControllerInternal pushLink:[OCMArg any] withResultValue:[OCMArg any]]).andForwardToRealObject();
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 OCMVerifyAllWithDelay((OCMockObject *)navigationControllerInternal, 0.5);
                 expect(navigationControllerInternal.navigationChain.length).after(0.5).to.equal(destinationChain.length);
                 expect(navigationControllerInternal.navigationChain.lastEntity).after(0.5).to.equal(lastNode);
@@ -331,7 +331,7 @@ describe(@"performing navigation by link chain", ^{
                 ITLinkNode *const nextNode = [ITLinkNode linkValueWithModuleName:@"LoginModule"];
                 ITLinkChain *const destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode]];
 
-                [navigationControllerInternal navigateToNewChain:destinationChain];
+                [navigationControllerInternal navigateToNewChain:destinationChain andHandleAnyProblem:nil];
                 expect(navigationControllerInternal.navigationChain.length).after(0.5).to.equal(destinationChain.length + 1);
                 expect(navigationControllerInternal.navigationChain.lastEntity).after(0.5).to.equal(nextNode);
             });
