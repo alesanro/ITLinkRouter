@@ -42,6 +42,16 @@ typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
 @property (nonatomic, readonly, getter=isValid) BOOL valid;
 
 /**
+ *  Indicate if actor done with navigation
+ */
+@property (nonatomic, readonly, getter=isFinished) BOOL finished;
+
+/**
+ *  Indicate if actor in a process of navigation
+ */
+@property (nonatomic, readonly, getter=isStarted) BOOL started;
+
+/**
  *  Delegate object that will be notified about start and finish of navigation
  */
 @property (weak, nonatomic) id<ITNavigationActorDelegate> delegate;
