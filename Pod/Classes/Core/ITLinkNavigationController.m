@@ -15,6 +15,10 @@
 NSString *const ITNavigationProblemTypeKey = @"ITNavigationProblemType";
 NSString *const ITNavigationProblemDescriptionKey = @"ITNavigationProblemDescription";
 
+NSString *const ITNavigationWithChainStartedNotificationName = @"ITNavigationWithChainStartedNotificationName";
+NSString *const ITNavigationWithChainFinishedNotificationName = @"ITNavigationWithChainFinishedNotificationName";
+NSString *const ITNavigationWithChainNotificationSenderKey = @"ITNavigationWithChainNotificationSenderKey";
+
 static BOOL ITHasValue(id<ITLinkNode> node)
 {
     return [node isEqual:[node flatten]];
@@ -53,7 +57,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     return [self initWithChain:[[ITLinkChain alloc] initWithEntities:@[ [entity flatten] ]]];
 }
 
-#pragma Accessors
+#pragma mark - Accessors
 
 - (id<ITLinkNode>)rootEntity
 {
@@ -68,6 +72,14 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 - (ITLinkChain *)navigationChain
 {
     return [self.linkChain copy];
+}
+
+- (NSNotificationCenter *)notificationCenter
+{
+    if (!_notificationCenter) {
+        _notificationCenter = [NSNotificationCenter defaultCenter];
+    }
+    return _notificationCenter;
 }
 
 #pragma mark - Public
@@ -91,8 +103,8 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     if (!resolver.isDone) {
         ITLinkChain *const resolvingChain = resolver.resolvingChain;
         const ITProblemHanderBlock oldHandlerBlock = [self.problemBlock copy];
-        [self _cleanupNavigationData];
         [resolver markDone];
+        [self _cleanupNavigationData];
         [self navigateToNewChain:resolvingChain andHandleAnyProblem:oldHandlerBlock];
     } else {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cannot solve problem because it has already been done" userInfo:nil];
@@ -132,11 +144,15 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock
 {
     if (!updatedChain.length) {
+#ifdef DEBUG
         NSLog(@"[WARNING] There is nothing to navigate - destination chain is empty");
+#endif
         return;
     }
     if (self.navigationInProgress) {
+#ifdef DEBUG
         NSLog(@"[ERROR] Cannot proceed new navigation since another navigation action is performing right now");
+#endif
         if (handlerBlock) {
             ITProblemDictionary *const problem = @{
                 ITNavigationProblemTypeKey : @"ITConcurentNavigation",
@@ -149,18 +165,17 @@ static BOOL ITHasValue(id<ITLinkNode> node)
         return;
     }
 
-    ITLinkChain *const commonChain = [self.linkChain intersectionAtStartWithChain:updatedChain];
-    if (!(commonChain.length || [self.linkChain.rootEntity isSimilar:updatedChain.rootEntity])) {
+    ITNavigationActor *const localNavigationActor = [[ITNavigationActor alloc] initWithSourceChain:self.linkChain destinationChain:updatedChain];
+    if (!localNavigationActor.isValid) {
+#ifdef DEBUG
         NSLog(@"[WARNING] There is no instersection between two chains. Seems like you are trying navigate to already active screen");
+#endif
         return;
     }
 
     self.navigationResolver = [[ITNavigationProblemResolver alloc] initWithNavigationController:self destinationChain:updatedChain];
     self.problemBlock = handlerBlock;
-
-    ITLinkChain *const backNavigationChain = [self.linkChain subtractIntersectedChain:commonChain];
-    ITLinkChain *const forwardNavigationChain = [updatedChain subtractIntersectedChain:commonChain];
-    self.navigationActor = [[ITNavigationActor alloc] initWithBackChain:backNavigationChain forwardChain:forwardNavigationChain];
+    self.navigationActor = localNavigationActor;
     self.navigationActor.delegate = self;
     [self.navigationActor start];
 }
@@ -170,11 +185,17 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 - (void)didStartNavigation:(ITNavigationActor *)navigationActor
 {
     self.navigationInProgress = YES;
+    [self.notificationCenter postNotificationName:ITNavigationWithChainStartedNotificationName object:nil userInfo:@{
+        ITNavigationWithChainNotificationSenderKey : self
+    }];
 }
 
 - (void)didFinishNavigation:(ITNavigationActor *)navigationActor
 {
     [self _cleanupNavigationData];
+    [self.notificationCenter postNotificationName:ITNavigationWithChainFinishedNotificationName object:nil userInfo:@{
+        ITNavigationWithChainNotificationSenderKey : self
+    }];
 }
 
 #pragma mark - Internal

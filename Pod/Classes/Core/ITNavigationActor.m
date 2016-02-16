@@ -15,14 +15,25 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     return [node isEqual:[node flatten]];
 }
 
+@interface ITNavigationActor ()
+
+@property (nonatomic, getter=isStarted) BOOL started;
+@property (nonatomic, getter=isFinished) BOOL finished;
+
+@end
+
 @implementation ITNavigationActor
 
-- (instancetype)initWithBackChain:(ITLinkChain *)backChain forwardChain:(ITLinkChain *)forwardChain
+- (instancetype)initWithSourceChain:(ITLinkChain *)sourceChain destinationChain:(ITLinkChain *)destinationChain
 {
     self = [super init];
     if (self) {
-        _backChain = [backChain copy];
-        _forwardChain = [forwardChain copy];
+        ITLinkChain *const commonChain = [sourceChain intersectionAtStartWithChain:destinationChain];
+        ITLinkChain *const backNavigationChain = [sourceChain subtractIntersectedChain:commonChain];
+        ITLinkChain *const forwardNavigationChain = [destinationChain subtractIntersectedChain:commonChain];
+        _valid = (commonChain.length || [sourceChain.rootEntity isSimilar:destinationChain.rootEntity]);
+        _backChain = backNavigationChain;
+        _forwardChain = forwardNavigationChain;
         while (_forwardChain.lastEntity && ITHasValue(_forwardChain.lastEntity)) {
             [_forwardChain popEntity];
         }
@@ -32,6 +43,19 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)start
 {
+    if (!self.isValid) {
+#ifdef DEBUG
+        NSLog(@"[ERROR] Actor has invalid state and cannot proceed.");
+#endif
+        return;
+    }
+    if (self.isStarted || self.isFinished) {
+#ifdef DEBUG
+        NSLog(@"[WARNING] Cannot start navigation because of it is already started or has finished.");
+#endif
+        return;
+    }
+
     NSInvocation *nextInvocation;
     if (self.backChain.length == 1 && [self.backChain.rootEntity isSimilar:self.forwardChain.rootEntity]) {
         nextInvocation = [[self.forwardChain shiftEntity] forwardModuleInvocation];
@@ -49,6 +73,13 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)next:(ITLinkNavigationType)navigationType withCurrentNode:(id<ITLinkNode>)node
 {
+    if (!self.isStarted || self.isFinished) {
+#ifdef DEBUG
+        NSLog(@"[WARNING] Cannot proceed navigation because of it is already finished or hasn't been started yet.");
+#endif
+        return;
+    }
+
     if (navigationType == ITLinkNavigationTypeBack) {
         const BOOL shouldContinueNavigateBack = self.backChain.length > 1;
         if (shouldContinueNavigateBack) {
@@ -83,6 +114,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)callDelegateDidStartMethod
 {
+    self.started = YES;
     if ([self.delegate respondsToSelector:@selector(didStartNavigation:)]) {
         [self.delegate didStartNavigation:self];
     }
@@ -90,6 +122,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)callDelegateDidFinishMethod
 {
+    self.finished = YES;
     if ([self.delegate respondsToSelector:@selector(didFinishNavigation:)]) {
         [self.delegate didFinishNavigation:self];
     }

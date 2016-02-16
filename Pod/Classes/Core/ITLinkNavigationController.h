@@ -12,6 +12,10 @@
 OBJC_EXPORT NSString *const ITNavigationProblemTypeKey;
 OBJC_EXPORT NSString *const ITNavigationProblemDescriptionKey;
 
+OBJC_EXPORT NSString *const ITNavigationWithChainStartedNotificationName;
+OBJC_EXPORT NSString *const ITNavigationWithChainFinishedNotificationName;
+OBJC_EXPORT NSString *const ITNavigationWithChainNotificationSenderKey;
+
 @class ITLinkChain;
 @class ITNavigationProblemResolver;
 
@@ -28,6 +32,8 @@ typedef void (^ITProblemHanderBlock)(ITProblemDictionary *problemDict, ITNavigat
  *  to go right to the destination screen.
  */
 @interface ITLinkNavigationController : NSObject
+
+@property (strong, nonatomic) NSNotificationCenter *notificationCenter;
 
 /**
  *  First (root) module link

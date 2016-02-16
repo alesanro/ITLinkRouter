@@ -26,18 +26,50 @@ typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
 
 @interface ITNavigationActor : NSObject
 
+/**
+ *  Chain for backward navigation
+ */
 @property (copy, nonatomic, readonly) ITLinkChain *backChain;
 
+/**
+ *  Chain for forward navigation
+ */
 @property (copy, nonatomic, readonly) ITLinkChain *forwardChain;
 
+/**
+ *  Indicate if actor are able to perform navigation
+ */
+@property (nonatomic, readonly, getter=isValid) BOOL valid;
+
+/**
+ *  Delegate object that will be notified about start and finish of navigation
+ */
 @property (weak, nonatomic) id<ITNavigationActorDelegate> delegate;
 
-- (instancetype)initWithBackChain:(ITLinkChain *)backChain forwardChain:(ITLinkChain *)forwardChain;
+/**
+ *  Initialization method for navigation actor
+ *
+ *  @param backChain    back chain
+ *  @param forwardChain forward chain
+ *
+ *  @return instance of ITNavigationActor class
+ */
+- (instancetype)initWithSourceChain:(ITLinkChain *)sourceChain destinationChain:(ITLinkChain *)destinationChain;
 
 #pragma mark -
 
+/**
+ *  Begin navigation. Should always be invoked before any other
+ *  proceedings (i.e next:withCurrentNode and etc.)
+ */
 - (void)start;
 
+/**
+ *  Continues navigation by specifying performed current navigation direction and current node
+ *
+ *  @param navigationType type of performed navigation on the previous step
+ *  @param node           result node from the previous navigation
+ */
 - (void)next:(ITLinkNavigationType)navigationType withCurrentNode:(id<ITLinkNode>)node;
 
 @end
