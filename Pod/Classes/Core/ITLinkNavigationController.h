@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "ITLinkNodeProtocol.h"
 
+OBJC_EXPORT NSString *const ITNavigationProblemTypeKey;
+OBJC_EXPORT NSString *const ITNavigationProblemDescriptionKey;
+
 @class ITLinkChain;
 @class ITNavigationProblemResolver;
 

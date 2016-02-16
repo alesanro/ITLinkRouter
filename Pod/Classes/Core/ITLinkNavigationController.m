@@ -11,7 +11,13 @@
 #import "ITNavigationProblemResolver.h"
 #import "ITConstants.h"
 
-typedef NS_ENUM(NSUInteger, ITLinkNavigationType) { ITLinkNavigationTypeForward, ITLinkNavigationTypeBack };
+NSString *const ITNavigationProblemTypeKey = @"ITNavigationProblemType";
+NSString *const ITNavigationProblemDescriptionKey = @"ITNavigationProblemDescription";
+
+typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
+    ITLinkNavigationTypeForward,
+    ITLinkNavigationTypeBack
+};
 
 typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode);
 
@@ -89,7 +95,6 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     NSParameterAssert(resolver);
 
     if (!resolver.isDone) {
-        self.navigationInProgress = NO;
         ITLinkChain *const resolvingChain = resolver.resolvingChain;
         const ITProblemHanderBlock oldHandlerBlock = [self.problemBlock copy];
         [self _cleanupNavigationData];
@@ -106,7 +111,6 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     NSParameterAssert(valueEntity);
     NSParameterAssert(!ITHasValue(link));
 
-    self.navigationInProgress = YES;
     if (![link isSimilar:self.linkChain.lastEntity]) {
         @throw [NSException exceptionWithName:ITNavigationInvalidLinkSimilarity
                                        reason:@"Last chain element and link should be similar"
@@ -125,21 +129,16 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     if (self.navigationBlock) {
         self.navigationBlock(ITLinkNavigationTypeForward, valueEntity);
     }
-
-    self.navigationInProgress = NO;
 }
 
 - (void)popLink
 {
-    self.navigationInProgress = YES;
     __unused id<ITLinkNode> const popedLinkEntity = [self.linkChain popEntity];
     [self.linkChain appendEntity:[[self.linkChain popEntity] flatten]];
 
     if (self.navigationBlock) {
         self.navigationBlock(ITLinkNavigationTypeBack, self.linkChain.lastEntity);
     }
-
-    self.navigationInProgress = NO;
 }
 
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain
@@ -154,14 +153,21 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock
 {
-    assert(!self.navigationResolver);
-
     if (!updatedChain.length) {
         NSLog(@"[WARNING] There is nothing to navigate - destination chain is empty");
         return;
     }
     if (self.navigationInProgress) {
         NSLog(@"[ERROR] Cannot proceed new navigation since another navigation action is performing right now");
+        if (handlerBlock) {
+            ITProblemDictionary *const problem = @{
+                ITNavigationProblemTypeKey : @"ITConcurentNavigation",
+                ITNavigationProblemDescriptionKey : @"It is not possible to have to instant navigations for single instance of navigation controller"
+            };
+            handlerBlock(problem, nil);
+        } else {
+            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"It is not possible to have to instant navigations for single instance of navigation controller" userInfo:nil];
+        }
         return;
     }
 
@@ -188,6 +194,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
 - (void)_cleanupNavigationData
 {
+    self.navigationInProgress = NO;
     self.navigationBlock = nil;
     self.navigationResolver = nil;
     self.problemBlock = nil;
@@ -201,7 +208,11 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     } else {
         nextInvocation = [[backChain popEntity] backwardModuleInvocation];
     }
-    [nextInvocation invoke];
+
+    if (nextInvocation) {
+        self.navigationInProgress = YES;
+        [nextInvocation invoke];
+    }
 }
 
 - (ITSequentialNavigationBlock)_generateNavigationBlockWithBackChain:(ITLinkChain *)backChain forwardChain:(ITLinkChain *)forwardChain

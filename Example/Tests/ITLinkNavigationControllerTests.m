@@ -446,4 +446,49 @@ describe(@"solving a problem", ^{
     });
 });
 
+describe(@"performing more than one navigation at once", ^{
+    __block ITLinkChain *destinationChain;
+    __block ITLinkNavigationController *navigationControllerInternal;
+    __block _TestModuleRouter *loginRouter;
+
+    beforeEach(^{
+        _TestModuleRouter *const firstRouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"RootModule"]);
+        ITLinkNode *const rootNode = [ITLinkNode linkActionWithModuleName:firstRouter.moduleName link:@selector(navigateToA) arguments:nil router:firstRouter];
+        loginRouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"LoginModule"]);
+        ITLinkNode *const loginNode = [ITLinkNode linkActionWithModuleName:loginRouter.moduleName link:@selector(navigateToA:) arguments:@[@"TestUser1"] router:loginRouter];
+        _TestModuleRouter *const feedARouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"FeedALoginModule"]);
+        ITLinkNode *const feedNode = [ITLinkNode linkValueWithModuleName:feedARouter.moduleName router:feedARouter];
+        destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, loginNode, feedNode]];
+        navigationControllerInternal = OCMPartialMock([[ITLinkNavigationController alloc] initWithChain:destinationChain]);
+        firstRouter.moduleNavigator = navigationControllerInternal;
+    });
+
+    it(@"two concurent navigations should invoke handleBlock except first invocation", ^{
+        ITLinkNode *const frootNode = [ITLinkNode linkActionWithModuleName:@"RootModule" link:@selector(navigateToA:) arguments:@[@"Bob"]];
+        ITLinkNode *const fnextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC) arguments:nil];
+        ITLinkNode *const flastNode = [ITLinkNode linkValueWithModuleName:@"FeedCLoginModule"];
+        ITLinkChain *const firstDestinationChain = [[ITLinkChain alloc] initWithEntities:@[frootNode, fnextNode, flastNode]];
+
+        ITLinkNode *const srootNode = [ITLinkNode linkActionWithModuleName:@"RootModule" link:@selector(navigateToA:) arguments:@[@"Bob"]];
+        ITLinkNode *const snextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC:) arguments:@[@"tom"]];
+        ITLinkChain *const secondDestinationChain = [[ITLinkChain alloc] initWithEntities:@[srootNode, snextNode]];
+
+        [navigationControllerInternal navigateToNewChain:firstDestinationChain andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver) {
+            failure(@"Should not invoke handle problem block for the first navigation");
+
+        }];
+
+        __block BOOL secondProblemBlockInvoked;
+        [navigationControllerInternal navigateToNewChain:secondDestinationChain andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver) {
+            secondProblemBlockInvoked = YES;
+
+            expect(problemDict).notTo.beNil();
+            expect(problemDict.allKeys).to.contain(ITNavigationProblemTypeKey);
+            expect(resolver).to.beNil();
+        }];
+
+        expect(secondProblemBlockInvoked).after(1).to.beTruthy();
+    });
+});
+
 SpecEnd
