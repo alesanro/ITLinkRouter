@@ -450,6 +450,8 @@ describe(@"performing more than one navigation at once", ^{
     __block ITLinkChain *destinationChain;
     __block ITLinkNavigationController *navigationControllerInternal;
     __block _TestModuleRouter *loginRouter;
+    __block ITLinkChain *firstDestinationChain;
+    __block ITLinkChain *secondDestinationChain;
 
     beforeEach(^{
         _TestModuleRouter *const firstRouter = OCMPartialMock([rootRouter childRouterWithModuleName:@"RootModule"]);
@@ -461,21 +463,20 @@ describe(@"performing more than one navigation at once", ^{
         destinationChain = [[ITLinkChain alloc] initWithEntities:@[rootNode, loginNode, feedNode]];
         navigationControllerInternal = OCMPartialMock([[ITLinkNavigationController alloc] initWithChain:destinationChain]);
         firstRouter.moduleNavigator = navigationControllerInternal;
-    });
 
-    it(@"two concurent navigations should invoke handleBlock except first invocation", ^{
         ITLinkNode *const frootNode = [ITLinkNode linkActionWithModuleName:@"RootModule" link:@selector(navigateToA:) arguments:@[@"Bob"]];
         ITLinkNode *const fnextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC) arguments:nil];
         ITLinkNode *const flastNode = [ITLinkNode linkValueWithModuleName:@"FeedCLoginModule"];
-        ITLinkChain *const firstDestinationChain = [[ITLinkChain alloc] initWithEntities:@[frootNode, fnextNode, flastNode]];
+        firstDestinationChain = [[ITLinkChain alloc] initWithEntities:@[frootNode, fnextNode, flastNode]];
 
         ITLinkNode *const srootNode = [ITLinkNode linkActionWithModuleName:@"RootModule" link:@selector(navigateToA:) arguments:@[@"Bob"]];
         ITLinkNode *const snextNode = [ITLinkNode linkActionWithModuleName:@"LoginModule" link:@selector(navigateToC:) arguments:@[@"tom"]];
-        ITLinkChain *const secondDestinationChain = [[ITLinkChain alloc] initWithEntities:@[srootNode, snextNode]];
+        secondDestinationChain = [[ITLinkChain alloc] initWithEntities:@[srootNode, snextNode]];
+    });
 
+    it(@"two concurent navigations should invoke handleBlock except first invocation", ^{
         [navigationControllerInternal navigateToNewChain:firstDestinationChain andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver) {
             failure(@"Should not invoke handle problem block for the first navigation");
-
         }];
 
         __block BOOL secondProblemBlockInvoked;
@@ -487,7 +488,17 @@ describe(@"performing more than one navigation at once", ^{
             expect(resolver).to.beNil();
         }];
 
-        expect(secondProblemBlockInvoked).after(1).to.beTruthy();
+        expect(secondProblemBlockInvoked).after(.5).to.beTruthy();
+    });
+
+    it(@"two concurent navigations should raise exception if no handle block is provided by the failed navigation", ^{
+        [navigationControllerInternal navigateToNewChain:firstDestinationChain andHandleAnyProblem:^(ITProblemDictionary *problemDict, ITNavigationProblemResolver *resolver) {
+            failure(@"Should not invoke handle problem block for the first navigation");
+        }];
+
+        expect(^{
+            [navigationControllerInternal navigateToNewChain:secondDestinationChain andHandleAnyProblem:nil];
+        }).to.raise(NSInternalInconsistencyException);
     });
 });
 
