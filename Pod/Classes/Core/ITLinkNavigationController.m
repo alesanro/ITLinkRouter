@@ -9,27 +9,21 @@
 #import "ITLinkNavigationController.h"
 #import "ITLinkChain.h"
 #import "ITNavigationProblemResolver.h"
+#import "ITNavigationActor.h"
 #import "ITConstants.h"
 
 NSString *const ITNavigationProblemTypeKey = @"ITNavigationProblemType";
 NSString *const ITNavigationProblemDescriptionKey = @"ITNavigationProblemDescription";
-
-typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
-    ITLinkNavigationTypeForward,
-    ITLinkNavigationTypeBack
-};
-
-typedef void (^ITSequentialNavigationBlock)(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode);
 
 static BOOL ITHasValue(id<ITLinkNode> node)
 {
     return [node isEqual:[node flatten]];
 }
 
-@interface ITLinkNavigationController ()
+@interface ITLinkNavigationController () <ITNavigationActorDelegate>
 
 @property (copy, nonatomic) ITLinkChain *linkChain;
-@property (copy, nonatomic) ITSequentialNavigationBlock navigationBlock;
+@property (strong, nonatomic) ITNavigationActor *navigationActor;
 @property (nonatomic) BOOL navigationInProgress;
 @property (strong, nonatomic) ITNavigationProblemResolver *navigationResolver;
 @property (copy, nonatomic) ITProblemHanderBlock problemBlock;
@@ -112,13 +106,11 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     NSParameterAssert(!ITHasValue(link));
 
     if (![link isSimilar:self.linkChain.lastEntity]) {
-        @throw [NSException exceptionWithName:ITNavigationInvalidLinkSimilarity
-                                       reason:@"Last chain element and link should be similar"
-                                     userInfo:@{
-                                         @"CurrentChainKey" : self.linkChain,
-                                         @"PassedLinkKey" : link,
-                                         @"NavigatinContextKey" : self
-                                     }];
+        @throw [NSException exceptionWithName:ITNavigationInvalidLinkSimilarity reason:@"Last chain element and link should be similar" userInfo:@{
+            @"CurrentChainKey" : self.linkChain,
+            @"PassedLinkKey" : link,
+            @"NavigatinContextKey" : self
+        }];
     }
 
     id<ITLinkNode> const valueNode = [self.linkChain popEntity];
@@ -126,9 +118,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     [self.linkChain appendEntity:link];
     [self.linkChain appendEntity:[valueEntity flatten]];
 
-    if (self.navigationBlock) {
-        self.navigationBlock(ITLinkNavigationTypeForward, valueEntity);
-    }
+    [self.navigationActor next:ITLinkNavigationTypeForward withCurrentNode:valueEntity];
 }
 
 - (void)popLink
@@ -136,9 +126,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     __unused id<ITLinkNode> const popedLinkEntity = [self.linkChain popEntity];
     [self.linkChain appendEntity:[[self.linkChain popEntity] flatten]];
 
-    if (self.navigationBlock) {
-        self.navigationBlock(ITLinkNavigationTypeBack, self.linkChain.lastEntity);
-    }
+    [self.navigationActor next:ITLinkNavigationTypeBack withCurrentNode:self.linkChain.lastEntity];
 }
 
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock
@@ -163,8 +151,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
     ITLinkChain *const commonChain = [self.linkChain intersectionAtStartWithChain:updatedChain];
     if (!(commonChain.length || [self.linkChain.rootEntity isSimilar:updatedChain.rootEntity])) {
-        NSLog(@"[WARNING] There is no instersection between two chains. Seems like you are trying navigate to already "
-              @"active screen");
+        NSLog(@"[WARNING] There is no instersection between two chains. Seems like you are trying navigate to already active screen");
         return;
     }
 
@@ -173,11 +160,21 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 
     ITLinkChain *const backNavigationChain = [self.linkChain subtractIntersectedChain:commonChain];
     ITLinkChain *const forwardNavigationChain = [updatedChain subtractIntersectedChain:commonChain];
-    while (forwardNavigationChain.lastEntity && ITHasValue(forwardNavigationChain.lastEntity)) {
-        [forwardNavigationChain popEntity];
-    }
-    self.navigationBlock = [[self _generateNavigationBlockWithBackChain:backNavigationChain forwardChain:forwardNavigationChain] copy];
-    [self _beginNavigationWithBackChain:backNavigationChain forwardChain:forwardNavigationChain];
+    self.navigationActor = [[ITNavigationActor alloc] initWithBackChain:backNavigationChain forwardChain:forwardNavigationChain];
+    self.navigationActor.delegate = self;
+    [self.navigationActor start];
+}
+
+#pragma mark - ITNavigationActorDelegate
+
+- (void)didStartNavigation:(ITNavigationActor *)navigationActor
+{
+    self.navigationInProgress = YES;
+}
+
+- (void)didFinishNavigation:(ITNavigationActor *)navigationActor
+{
+    [self _cleanupNavigationData];
 }
 
 #pragma mark - Internal
@@ -185,64 +182,9 @@ static BOOL ITHasValue(id<ITLinkNode> node)
 - (void)_cleanupNavigationData
 {
     self.navigationInProgress = NO;
-    self.navigationBlock = nil;
+    self.navigationActor = nil;
     self.navigationResolver = nil;
     self.problemBlock = nil;
-}
-
-- (void)_beginNavigationWithBackChain:(ITLinkChain *)backChain forwardChain:(ITLinkChain *)forwardChain
-{
-    NSInvocation *nextInvocation;
-    if (backChain.length == 1 && [backChain.rootEntity isSimilar:forwardChain.rootEntity]) {
-        nextInvocation = [[forwardChain shiftEntity] forwardModuleInvocation];
-    } else {
-        nextInvocation = [[backChain popEntity] backwardModuleInvocation];
-    }
-
-    if (nextInvocation) {
-        self.navigationInProgress = YES;
-        [nextInvocation invoke];
-    }
-}
-
-- (ITSequentialNavigationBlock)_generateNavigationBlockWithBackChain:(ITLinkChain *)backChain forwardChain:(ITLinkChain *)forwardChain
-{
-    __weak typeof(self) const weakSelf = self;
-    return ^(ITLinkNavigationType navigationType, id<ITLinkNode> currentNode) {
-        __strong typeof(weakSelf) const strongSelf = weakSelf;
-        if (navigationType == ITLinkNavigationTypeBack) {
-            if (backChain.length <= 1) {
-                const BOOL needStartForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
-                if (needStartForwardTransition) {
-                    [forwardChain.rootEntity setRouter:currentNode.router];
-                    [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
-                    return;
-                }
-                [strongSelf _cleanupNavigationData];
-                return;
-            } else {
-                [[[[backChain popEntity] flatten] backwardModuleInvocation] invoke];
-            }
-        } else if (navigationType == ITLinkNavigationTypeForward) {
-            const BOOL needContinueForwardTransition = forwardChain.length && [forwardChain.rootEntity isSimilar:currentNode];
-            if (needContinueForwardTransition) {
-                [forwardChain.rootEntity setRouter:currentNode.router];
-                [[[forwardChain shiftEntity] forwardModuleInvocation] invoke];
-                return;
-            } else {
-                [strongSelf _cleanupNavigationData];
-                return;
-            }
-        } else {
-            @throw [NSException exceptionWithName:ITNavigationInvalidNavigationType
-                                           reason:@"Navigation type provided to navigation block has invalid value"
-                                         userInfo:@{
-                                                    @"ProvidedTypeKey" : @(navigationType),
-                                                    @"PassedLinkKey" : currentNode,
-                                                    @"NavigatinContextKey" : strongSelf
-                                                    }];
-        }
-    };
 }
 
 @end

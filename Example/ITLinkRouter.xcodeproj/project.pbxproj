@@ -26,6 +26,7 @@
 		56B36F6F1C60B01900D323E0 /* ITLinkNavigationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */; };
 		56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */; };
 		56B3ACF71C71AE4E00493107 /* ITNavigationProblemResolverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */; };
+		56D638E41C732E32000F0F24 /* ITNavigationActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D638E31C732E32000F0F24 /* ITNavigationActorTests.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -84,6 +85,7 @@
 		56B36F751C60D35500D323E0 /* ITSupportClassStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITSupportClassStructure.h; sourceTree = "<group>"; };
 		56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITSupportClassStructure.m; sourceTree = "<group>"; };
 		56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITNavigationProblemResolverTests.m; sourceTree = "<group>"; };
+		56D638E31C732E32000F0F24 /* ITNavigationActorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITNavigationActorTests.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* ITLinkRouter_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITLinkRouter_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -313,9 +315,10 @@
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				567352251C5F932E00F65A31 /* ITLinkValueTests.m */,
 				567352281C5FA8B800F65A31 /* ITLinkChainTests.m */,
-				56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */,
 				561F10781C624C8300DC6575 /* ITLinkActionTests.m */,
 				5680D9191C6A1E80006EB379 /* ITLinkNodeTests.m */,
+				56B36F6E1C60B01900D323E0 /* ITLinkNavigationControllerTests.m */,
+				56D638E31C732E32000F0F24 /* ITNavigationActorTests.m */,
 				56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */,
 				0D03A9318BC9653191971A98 /* RootModule */,
 			);
@@ -730,6 +733,7 @@
 				564F92A91C71B4FA0006B4A9 /* RootModulePresenterTests.m in Sources */,
 				56B3ACF71C71AE4E00493107 /* ITNavigationProblemResolverTests.m in Sources */,
 				564F92A71C71B4F10006B4A9 /* RootModuleInteractorTests.m in Sources */,
+				56D638E41C732E32000F0F24 /* ITNavigationActorTests.m in Sources */,
 				561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
