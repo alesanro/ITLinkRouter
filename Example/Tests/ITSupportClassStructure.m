@@ -71,7 +71,9 @@
     if (module) {
         ITLinkNode *const actionNode = [ITLinkNode linkActionWithModuleName:self.moduleName link:_cmd arguments:@[ param1 ] router:self];
         ITLinkNode *const nextNode = [ITLinkNode linkValueWithModuleName:module.moduleName router:module];
-        [self.moduleNavigator pushLink:actionNode withResultValue:nextNode];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.moduleNavigator pushLink:actionNode withResultValue:nextNode];
+        });
     } else {
         @throw [NSException exceptionWithName:@"ITInvalidmoduleNavigator" reason:@"Couldn't navigate to moduleA cause it is uninitialized" userInfo:nil];
     }
@@ -83,7 +85,9 @@
     if (module) {
         ITLinkNode *const actionNode = [ITLinkNode linkActionWithModuleName:self.moduleName link:_cmd arguments:@[ param1 ] router:self];
         ITLinkNode *const nextNode = [ITLinkNode linkValueWithModuleName:module.moduleName router:module];
-        [self.moduleNavigator pushLink:actionNode withResultValue:nextNode];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.moduleNavigator pushLink:actionNode withResultValue:nextNode];
+        });
     } else {
         @throw [NSException exceptionWithName:@"ITInvalidmoduleNavigator" reason:@"Couldn't navigate to moduleB cause it is uninitialized" userInfo:nil];
     }
@@ -95,7 +99,9 @@
     if (module) {
         ITLinkNode *const actionNode = [ITLinkNode linkActionWithModuleName:self.moduleName link:_cmd arguments:@[ param1 ] router:self];
         ITLinkNode *const nextNode = [ITLinkNode linkValueWithModuleName:module.moduleName router:module];
-        [self.moduleNavigator pushLink:actionNode withResultValue:nextNode];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.moduleNavigator pushLink:actionNode withResultValue:nextNode];
+        });
     } else {
         @throw [NSException exceptionWithName:@"ITInvalidmoduleNavigator" reason:@"Couldn't navigate to moduleC cause it is uninitialized" userInfo:nil];
     }
