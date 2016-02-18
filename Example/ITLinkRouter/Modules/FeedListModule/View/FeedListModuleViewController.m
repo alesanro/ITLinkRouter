@@ -10,6 +10,12 @@
 
 #import "FeedListModuleViewOutput.h"
 
+@interface FeedListModuleViewController ()
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
+@end
+
 @implementation FeedListModuleViewController
 
 #pragma mark - Методы жизненного цикла
