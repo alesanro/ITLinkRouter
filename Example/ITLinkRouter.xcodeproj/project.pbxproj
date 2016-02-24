@@ -9,28 +9,25 @@
 /* Begin PBXBuildFile section */
 		00480107CFB2585F748403D4 /* RootModuleInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B037BD98CAD4F9257CE3ED /* RootModuleInteractor.m */; };
 		0C7BF1BE46700A7158535116 /* FeedDetailsModuleRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE6CE1375916131E01730EB /* FeedDetailsModuleRouter.m */; };
-		0D04108F959C836A1B8E8D77 /* FeedDetailsModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 048188F36C222BE5D9553E02 /* FeedDetailsModuleRouterTests.m */; };
-		0D2D67A523E083EDD95764E8 /* UserProfileModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 863F6A93E67BE72F01B80B48 /* UserProfileModuleViewControllerTests.m */; };
-		0DDE5AAF8FDA900FD30006D5 /* LoginModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA7330E480399DB31962BD7 /* LoginModuleInteractorTests.m */; };
-		0E172E519597AA829DD3FE2E /* FeedListModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 132855E899C7D3C3078D3C49 /* FeedListModulePresenterTests.m */; };
 		12DF6B02ACE9B799A382A3C1 /* LoginModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C2BEDEAF74208C7A7144CE /* LoginModuleViewController.m */; };
 		144A2CF6C2313796055B04BB /* FeedListModuleInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E9456BB73CFAC9515CA8CB /* FeedListModuleInteractor.m */; };
-		150D8A9FE00A1F4F108E95B9 /* MenuModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B01B4FB3359C051DA6E129E /* MenuModuleAssemblyTests.m */; };
 		1725C75AF656D4C344340166 /* FeedDetailsModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C80FBF9C7CC5B5B6C235FD34 /* FeedDetailsModuleViewController.m */; };
 		1CE9DE35878D3342569DB0B7 /* MenuModulePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA84903C369A4F01A1CCCD2 /* MenuModulePresenter.m */; };
 		1FAFD56968B85A78B8741A9F /* FeedDetailsModulePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9734F155BB6AD790B8BE4C94 /* FeedDetailsModulePresenter.m */; };
-		2D406382C57603FBA1BB62D8 /* LoginModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A8FF81846574295C272972 /* LoginModuleAssemblyTests.m */; };
-		3266E653C7F8940CE4B8E8A7 /* MenuModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CC7EE6F4744CE227836839 /* MenuModuleViewControllerTests.m */; };
 		37B7FEDBECA557BDDBA36529 /* UserProfileModuleRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFA8C5CA2AAD42D8040FF46 /* UserProfileModuleRouter.m */; };
-		3A4FCC66FBCF2F837A895D4D /* FeedListModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A0CACDA659B975C39110C6 /* FeedListModuleViewControllerTests.m */; };
 		4158161A3960460A7F7075A2 /* LoginModulePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5285DA45EE2A3A436CD5817E /* LoginModulePresenter.m */; };
-		416EBFC4957C44318E9E1F43 /* MenuModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC629F130B2DC5A3AA58EC1F /* MenuModuleInteractorTests.m */; };
 		4190E331CF6F0D0197765198 /* UserProfileModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58E6C87D21802CF1E5253 /* UserProfileModuleViewController.m */; };
 		41FFB450D368C1253E83E8BB /* LoginModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908C4BB2F62031D8F2F97E9 /* LoginModuleAssembly.m */; };
 		423F8B53DE434E6176520C26 /* MenuModuleInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 02EC9E0EEC762F6D84EDFAB4 /* MenuModuleInteractor.m */; };
-		4AC7524C46C8D207E6886B40 /* LoginModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43128A0B035720A008167B85 /* LoginModuleRouterTests.m */; };
-		4F9B3E90976AD3C4D29AC6A1 /* UserProfileModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5220A483024C4FE9BE75E4C /* UserProfileModuleAssemblyTests.m */; };
 		561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 561F10781C624C8300DC6575 /* ITLinkActionTests.m */; };
+		562DBC221C7DEEB8002FDFC2 /* FeedDetailsModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA0978AEDE5B00405576DA1 /* FeedDetailsModulePresenterTests.m */; };
+		562DBC231C7DEEBE002FDFC2 /* FeedDetailsModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9289C09EF679BC283C4579F2 /* FeedDetailsModuleViewControllerTests.m */; };
+		562DBC241C7DEEC2002FDFC2 /* FeedDetailsModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 048188F36C222BE5D9553E02 /* FeedDetailsModuleRouterTests.m */; };
+		562DBC251C7DEEC5002FDFC2 /* FeedDetailsModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9685E2CEC361A9BF8DF36BCB /* FeedDetailsModuleInteractorTests.m */; };
+		562DBC261C7DEECE002FDFC2 /* UserProfileModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 863F6A93E67BE72F01B80B48 /* UserProfileModuleViewControllerTests.m */; };
+		562DBC281C7DEED6002FDFC2 /* UserProfileModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3652F3856598E5A0B614E223 /* UserProfileModuleRouterTests.m */; };
+		562DBC291C7DEEDD002FDFC2 /* UserProfileModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 723F315F97C7E60744EAD5CD /* UserProfileModuleInteractorTests.m */; };
+		562DBC2A1C7DEEE1002FDFC2 /* UserProfileModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A6225C1C093846C6C4234B /* UserProfileModulePresenterTests.m */; };
 		56477CFD1C6DC78C0053A9AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 56477CFC1C6DC78C0053A9AA /* main.m */; };
 		56477D001C6DC78C0053A9AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56477CFF1C6DC78C0053A9AA /* AppDelegate.m */; };
 		56477D031C6DC78C0053A9AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56477D021C6DC78C0053A9AA /* ViewController.m */; };
@@ -40,7 +37,6 @@
 		564F92A81C71B4F80006B4A9 /* RootModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4FDD0C4A2A0937623990323 /* RootModuleRouterTests.m */; };
 		564F92A91C71B4FA0006B4A9 /* RootModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 417523E5F718E883074FBF6E /* RootModulePresenterTests.m */; };
 		564F92AA1C71B5030006B4A9 /* RootModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD63DFEB0B0F48ED088DC4 /* RootModuleViewControllerTests.m */; };
-		564F92AB1C71B5060006B4A9 /* RootModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0DA410F6251A55C65B011C /* RootModuleAssemblyTests.m */; };
 		564F92AC1C71B5410006B4A9 /* RootModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = D95217A4BCB11E78384915CD /* RootModuleAssembly.m */; };
 		567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352251C5F932E00F65A31 /* ITLinkValueTests.m */; };
 		567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 567352281C5FA8B800F65A31 /* ITLinkChainTests.m */; };
@@ -49,7 +45,19 @@
 		56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */; };
 		56B3ACF71C71AE4E00493107 /* ITNavigationProblemResolverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */; };
 		56D638E41C732E32000F0F24 /* ITNavigationActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D638E31C732E32000F0F24 /* ITNavigationActorTests.m */; };
-		5C7891A0B8565E0D4ECEBDAC /* LoginModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C94E8920211FF4632A5CADE /* LoginModuleViewControllerTests.m */; };
+		56FE751D1C75B7D300B11A39 /* ITUserProfileObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FE751C1C75B7D300B11A39 /* ITUserProfileObject.m */; };
+		56FE751E1C75BB8900B11A39 /* LoginModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C94E8920211FF4632A5CADE /* LoginModuleViewControllerTests.m */; };
+		56FE751F1C75BBA400B11A39 /* LoginModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43128A0B035720A008167B85 /* LoginModuleRouterTests.m */; };
+		56FE75201C75BBAB00B11A39 /* LoginModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA7330E480399DB31962BD7 /* LoginModuleInteractorTests.m */; };
+		56FE75211C75BBB300B11A39 /* LoginModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8A9D7705F60FDA3A9A492D /* LoginModulePresenterTests.m */; };
+		56FE75231C75BBE100B11A39 /* MenuModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CC7EE6F4744CE227836839 /* MenuModuleViewControllerTests.m */; };
+		56FE75241C75BBFF00B11A39 /* MenuModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC629F130B2DC5A3AA58EC1F /* MenuModuleInteractorTests.m */; };
+		56FE75251C75BC0500B11A39 /* MenuModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA837054C305972F88B540 /* MenuModuleRouterTests.m */; };
+		56FE75261C75BC0A00B11A39 /* MenuModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA25161BF843025B132D6F7 /* MenuModulePresenterTests.m */; };
+		56FE75281C75BC2600B11A39 /* FeedListModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A0CACDA659B975C39110C6 /* FeedListModuleViewControllerTests.m */; };
+		56FE75291C75BC2B00B11A39 /* FeedListModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 132855E899C7D3C3078D3C49 /* FeedListModulePresenterTests.m */; };
+		56FE752A1C75BC3000B11A39 /* FeedListModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5F6558CB85C4D13C9FDEF4 /* FeedListModuleInteractorTests.m */; };
+		56FE752B1C75BC3500B11A39 /* FeedListModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FF31653BADE41597181E8 /* FeedListModuleRouterTests.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -63,36 +71,23 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		60D938FF5ACF3C5655CA9506 /* LoginModuleInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B32E556903CA12A6A7AF705 /* LoginModuleInteractor.m */; };
 		61D37F7DE6FDA253703BAB74 /* FeedListModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = C240F3B3F191A9A977C8401F /* FeedListModuleAssembly.m */; };
-		636058A988DEB88363D508ED /* MenuModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA25161BF843025B132D6F7 /* MenuModulePresenterTests.m */; };
-		642372CB3BBB6E96E9CC2E03 /* FeedDetailsModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA0978AEDE5B00405576DA1 /* FeedDetailsModulePresenterTests.m */; };
 		697A29A7DFF04F65EA389424 /* FeedListModuleRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E93F22A6B7A4E01952C674E /* FeedListModuleRouter.m */; };
-		6F57F649F4A5B3FDF59A0F14 /* UserProfileModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3652F3856598E5A0B614E223 /* UserProfileModuleRouterTests.m */; };
-		70BFA15DE10B81DC3D7485C2 /* FeedListModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5F6558CB85C4D13C9FDEF4 /* FeedListModuleInteractorTests.m */; };
-		7106584D8CA9D9CB8BBE96AF /* FeedListModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FF31653BADE41597181E8 /* FeedListModuleRouterTests.m */; };
 		75DB44C7CF73F7DA36E85565 /* MenuModuleRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 66CC6F5665AAEFB7A13278AA /* MenuModuleRouter.m */; };
 		779410AB2FD0DB7D32E74A18 /* LoginModuleRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A25E9EE6AB93E0F2B72B50 /* LoginModuleRouter.m */; };
-		7AD9E1E34D6AC2FD72661441 /* FeedDetailsModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F366609C714F7351947BB96 /* FeedDetailsModuleAssemblyTests.m */; };
 		7B051E5AAB586DEDB3DDD6D0 /* UserProfileModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = E694761D52BED9F2AD172034 /* UserProfileModuleAssembly.m */; };
 		8627857D5991CBD457E41F92 /* FeedListModulePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6927334B60EEA8CA1588D3EA /* FeedListModulePresenter.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		899486571293DF8D81322B9A /* Pods_ITLinkRouter_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C59FE2F27DCFED50D9274541 /* Pods_ITLinkRouter_Example.framework */; };
 		A6EF1719957D079733CA699F /* RootModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBACC03579931A48966C5A /* RootModuleViewController.m */; };
-		BA23230CDCD783B461302494 /* LoginModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8A9D7705F60FDA3A9A492D /* LoginModulePresenterTests.m */; };
 		BA5771D8E9207A49C6ECC1F2 /* UserProfileModulePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E78416530BF9ACF9B1AEA89A /* UserProfileModulePresenter.m */; };
-		C174A5B6387834743853A33E /* MenuModuleRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA837054C305972F88B540 /* MenuModuleRouterTests.m */; };
 		C6DE91EC10297E2E86F582C3 /* RootModulePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1E0945AD84926438993853 /* RootModulePresenter.m */; };
-		C9732F52E96DA7D682BA5CD9 /* UserProfileModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 723F315F97C7E60744EAD5CD /* UserProfileModuleInteractorTests.m */; };
 		CDFA25E986C6F0B4AF39C81A /* Pods_ITLinkRouter_Storyboard_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B475955F3EC50DC68251B105 /* Pods_ITLinkRouter_Storyboard_Example.framework */; };
 		D16612336D7E6F7A04071E16 /* FeedDetailsModuleInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 35461138BBF26D2B2888029D /* FeedDetailsModuleInteractor.m */; };
-		D487E87C238A2CD1486EB017 /* FeedDetailsModuleInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9685E2CEC361A9BF8DF36BCB /* FeedDetailsModuleInteractorTests.m */; };
-		D82AD7BF8018335918C79194 /* UserProfileModulePresenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A6225C1C093846C6C4234B /* UserProfileModulePresenterTests.m */; };
 		DDC542A490F34C0BA287EEE6 /* FeedListModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858783C91861375FDE063D29 /* FeedListModuleViewController.m */; };
-		E40326D17A8A37392A08C1AA /* FeedDetailsModuleViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9289C09EF679BC283C4579F2 /* FeedDetailsModuleViewControllerTests.m */; };
 		E761B08C9874803C2278837F /* RootModuleRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5D74BD2F9D450E88AC84A0 /* RootModuleRouter.m */; };
 		E77E49BE910452CFBFED96BC /* FeedDetailsModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB5995445DAB762891AB70F /* FeedDetailsModuleAssembly.m */; };
 		E7D59B663377DE40E98F0C19 /* UserProfileModuleInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF051249B7B8EA9AE5D6559 /* UserProfileModuleInteractor.m */; };
 		E83CC0E3371419EFEF2D6C30 /* MenuModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9944FF7107ECBC20F2E2A5BB /* MenuModuleViewController.m */; };
-		E926483520B4B8E895190E3A /* FeedListModuleAssemblyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 846192B48C04D88B737B3657 /* FeedListModuleAssemblyTests.m */; };
 		EF158DE871A18AB90F66B60E /* Pods_ITLinkRouter_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C4DD3990BBC5D1F6BE8FCAF /* Pods_ITLinkRouter_Tests.framework */; };
 		FE59D42FF503EF6DE4707990 /* MenuModuleAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BDB09A04D8E12C7097E49 /* MenuModuleAssembly.m */; };
 /* End PBXBuildFile section */
@@ -119,7 +114,6 @@
 		1778044D0071998883E3DBE9 /* LoginModuleInteractorOutput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = LoginModuleInteractorOutput.h; sourceTree = "<group>"; };
 		1958F44FF1C018FEF45C2B12 /* FeedDetailsModuleViewInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FeedDetailsModuleViewInput.h; sourceTree = "<group>"; };
 		1E93F22A6B7A4E01952C674E /* FeedListModuleRouter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FeedListModuleRouter.m; sourceTree = "<group>"; };
-		1F366609C714F7351947BB96 /* FeedDetailsModuleAssemblyTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FeedDetailsModuleAssemblyTests.m; sourceTree = "<group>"; };
 		1FBA59ABA7FEAEC150523E63 /* RootModuleViewInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RootModuleViewInput.h; sourceTree = "<group>"; };
 		1FEBACC03579931A48966C5A /* RootModuleViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RootModuleViewController.m; sourceTree = "<group>"; };
 		24CB7E155B6A19EA2FB1F697 /* FeedDetailsModuleViewOutput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FeedDetailsModuleViewOutput.h; sourceTree = "<group>"; };
@@ -167,6 +161,8 @@
 		56B36F761C60D35500D323E0 /* ITSupportClassStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITSupportClassStructure.m; sourceTree = "<group>"; };
 		56B3ACF61C71AE4E00493107 /* ITNavigationProblemResolverTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITNavigationProblemResolverTests.m; sourceTree = "<group>"; };
 		56D638E31C732E32000F0F24 /* ITNavigationActorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITNavigationActorTests.m; sourceTree = "<group>"; };
+		56FE751B1C75B7D300B11A39 /* ITUserProfileObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITUserProfileObject.h; sourceTree = "<group>"; };
+		56FE751C1C75B7D300B11A39 /* ITUserProfileObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITUserProfileObject.m; sourceTree = "<group>"; };
 		5B4FF31653BADE41597181E8 /* FeedListModuleRouterTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FeedListModuleRouterTests.m; sourceTree = "<group>"; };
 		5DD47C66CC6719CB5C9925AB /* FeedDetailsModuleRouterInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FeedDetailsModuleRouterInput.h; sourceTree = "<group>"; };
 		5FB9F85BCD2E247296DF5997 /* UserProfileModuleRouterInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = UserProfileModuleRouterInput.h; sourceTree = "<group>"; };
@@ -191,7 +187,6 @@
 		66D00ACDA2CA138AB675BC23 /* RootModuleAssembly.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RootModuleAssembly.h; sourceTree = "<group>"; };
 		6701F0B644B3BB8CF0485B7E /* RootModuleRouterInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RootModuleRouterInput.h; sourceTree = "<group>"; };
 		6927334B60EEA8CA1588D3EA /* FeedListModulePresenter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FeedListModulePresenter.m; sourceTree = "<group>"; };
-		6B01B4FB3359C051DA6E129E /* MenuModuleAssemblyTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MenuModuleAssemblyTests.m; sourceTree = "<group>"; };
 		6C4DD3990BBC5D1F6BE8FCAF /* Pods_ITLinkRouter_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ITLinkRouter_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FDE240BB9181242C725E876 /* FeedListModuleInteractor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FeedListModuleInteractor.h; sourceTree = "<group>"; };
 		722A5F0F19FE5658554D2CAE /* RootModuleAssembly_Testable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RootModuleAssembly_Testable.h; sourceTree = "<group>"; };
@@ -207,7 +202,6 @@
 		7FD84971DDC0AECC1B07A6E9 /* RootModulePresenter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RootModulePresenter.h; sourceTree = "<group>"; };
 		805A5CACBABDD8FED6EF8B5D /* FeedDetailsModuleModuleInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FeedDetailsModuleModuleInput.h; sourceTree = "<group>"; };
 		80AE799AEA357E8C2FF53F24 /* LoginModuleInteractorInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = LoginModuleInteractorInput.h; sourceTree = "<group>"; };
-		846192B48C04D88B737B3657 /* FeedListModuleAssemblyTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FeedListModuleAssemblyTests.m; sourceTree = "<group>"; };
 		84DC1D2FDC6FDA8925A83ED2 /* LoginModuleAssembly_Testable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = LoginModuleAssembly_Testable.h; sourceTree = "<group>"; };
 		858783C91861375FDE063D29 /* FeedListModuleViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FeedListModuleViewController.m; sourceTree = "<group>"; };
 		863F6A93E67BE72F01B80B48 /* UserProfileModuleViewControllerTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = UserProfileModuleViewControllerTests.m; sourceTree = "<group>"; };
@@ -248,11 +242,8 @@
 		B55FBE30E085EB1E7236A486 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B7CAB18DD21DBE4C5958A7C4 /* ITLinkRouter.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ITLinkRouter.podspec; path = ../ITLinkRouter.podspec; sourceTree = "<group>"; };
 		B8A75738FD54C787E1367E32 /* LoginModuleModuleInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = LoginModuleModuleInput.h; sourceTree = "<group>"; };
-		BA0DA410F6251A55C65B011C /* RootModuleAssemblyTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RootModuleAssemblyTests.m; sourceTree = "<group>"; };
 		BD260C4C320285304D048178 /* Pods-ITLinkRouter_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ITLinkRouter_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ITLinkRouter_Example/Pods-ITLinkRouter_Example.release.xcconfig"; sourceTree = "<group>"; };
 		C240F3B3F191A9A977C8401F /* FeedListModuleAssembly.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FeedListModuleAssembly.m; sourceTree = "<group>"; };
-		C4A8FF81846574295C272972 /* LoginModuleAssemblyTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = LoginModuleAssemblyTests.m; sourceTree = "<group>"; };
-		C5220A483024C4FE9BE75E4C /* UserProfileModuleAssemblyTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = UserProfileModuleAssemblyTests.m; sourceTree = "<group>"; };
 		C59FE2F27DCFED50D9274541 /* Pods_ITLinkRouter_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ITLinkRouter_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7B037BD98CAD4F9257CE3ED /* RootModuleInteractor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RootModuleInteractor.m; sourceTree = "<group>"; };
 		C7BFAF30A460AB517D1DE0BE /* FeedListModuleAssembly.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FeedListModuleAssembly.h; sourceTree = "<group>"; };
@@ -385,7 +376,6 @@
 		179D518F4F61CCA8A83F2A2B /* Assembly */ = {
 			isa = PBXGroup;
 			children = (
-				6B01B4FB3359C051DA6E129E /* MenuModuleAssemblyTests.m */,
 				7E2733722303EFA271D7ED4C /* MenuModuleAssembly_Testable.h */,
 			);
 			path = Assembly;
@@ -516,7 +506,6 @@
 		4E81B834B59308F1B91B902A /* Assembly */ = {
 			isa = PBXGroup;
 			children = (
-				1F366609C714F7351947BB96 /* FeedDetailsModuleAssemblyTests.m */,
 				9AD3E110E7A1650D37DA6456 /* FeedDetailsModuleAssembly_Testable.h */,
 			);
 			path = Assembly;
@@ -556,6 +545,15 @@
 				56477CFC1C6DC78C0053A9AA /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		56FE751A1C75B7C100B11A39 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56FE751B1C75B7D300B11A39 /* ITUserProfileObject.h */,
+				56FE751C1C75B7D300B11A39 /* ITUserProfileObject.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		5B71A6F34ACC95FE525FD39E /* Interactor */ = {
@@ -609,6 +607,7 @@
 		6003F593195388D20070C39A /* ITLinkRouter_HandNavigation_Example */ = {
 			isa = PBXGroup;
 			children = (
+				56FE751A1C75B7C100B11A39 /* Models */,
 				6003F59C195388D20070C39A /* ITAppDelegate.h */,
 				6003F59D195388D20070C39A /* ITAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -677,7 +676,6 @@
 		6DA9856938C7093C27055CB2 /* Assembly */ = {
 			isa = PBXGroup;
 			children = (
-				846192B48C04D88B737B3657 /* FeedListModuleAssemblyTests.m */,
 				2D6B70DC2CBCBFB70517B5C3 /* FeedListModuleAssembly_Testable.h */,
 			);
 			path = Assembly;
@@ -883,7 +881,6 @@
 		9CFFF6518EFEA0997A27C2FF /* Assembly */ = {
 			isa = PBXGroup;
 			children = (
-				BA0DA410F6251A55C65B011C /* RootModuleAssemblyTests.m */,
 				722A5F0F19FE5658554D2CAE /* RootModuleAssembly_Testable.h */,
 			);
 			path = Assembly;
@@ -927,7 +924,6 @@
 		AB1D3B584DCC3DEC6D0914FF /* Assembly */ = {
 			isa = PBXGroup;
 			children = (
-				C5220A483024C4FE9BE75E4C /* UserProfileModuleAssemblyTests.m */,
 				872C083714BAEF55F0042771 /* UserProfileModuleAssembly_Testable.h */,
 			);
 			path = Assembly;
@@ -1061,7 +1057,6 @@
 		CC75E150F9BF33A5082727FE /* Assembly */ = {
 			isa = PBXGroup;
 			children = (
-				C4A8FF81846574295C272972 /* LoginModuleAssemblyTests.m */,
 				84DC1D2FDC6FDA8925A83ED2 /* LoginModuleAssembly_Testable.h */,
 			);
 			path = Assembly;
@@ -1469,51 +1464,27 @@
 				4158161A3960460A7F7075A2 /* LoginModulePresenter.m in Sources */,
 				60D938FF5ACF3C5655CA9506 /* LoginModuleInteractor.m in Sources */,
 				779410AB2FD0DB7D32E74A18 /* LoginModuleRouter.m in Sources */,
-				2D406382C57603FBA1BB62D8 /* LoginModuleAssemblyTests.m in Sources */,
-				5C7891A0B8565E0D4ECEBDAC /* LoginModuleViewControllerTests.m in Sources */,
-				BA23230CDCD783B461302494 /* LoginModulePresenterTests.m in Sources */,
-				0DDE5AAF8FDA900FD30006D5 /* LoginModuleInteractorTests.m in Sources */,
-				4AC7524C46C8D207E6886B40 /* LoginModuleRouterTests.m in Sources */,
 				FE59D42FF503EF6DE4707990 /* MenuModuleAssembly.m in Sources */,
 				E83CC0E3371419EFEF2D6C30 /* MenuModuleViewController.m in Sources */,
 				1CE9DE35878D3342569DB0B7 /* MenuModulePresenter.m in Sources */,
 				423F8B53DE434E6176520C26 /* MenuModuleInteractor.m in Sources */,
 				75DB44C7CF73F7DA36E85565 /* MenuModuleRouter.m in Sources */,
-				150D8A9FE00A1F4F108E95B9 /* MenuModuleAssemblyTests.m in Sources */,
-				3266E653C7F8940CE4B8E8A7 /* MenuModuleViewControllerTests.m in Sources */,
-				636058A988DEB88363D508ED /* MenuModulePresenterTests.m in Sources */,
-				416EBFC4957C44318E9E1F43 /* MenuModuleInteractorTests.m in Sources */,
-				C174A5B6387834743853A33E /* MenuModuleRouterTests.m in Sources */,
 				61D37F7DE6FDA253703BAB74 /* FeedListModuleAssembly.m in Sources */,
 				DDC542A490F34C0BA287EEE6 /* FeedListModuleViewController.m in Sources */,
+				56FE751D1C75B7D300B11A39 /* ITUserProfileObject.m in Sources */,
 				8627857D5991CBD457E41F92 /* FeedListModulePresenter.m in Sources */,
 				144A2CF6C2313796055B04BB /* FeedListModuleInteractor.m in Sources */,
 				697A29A7DFF04F65EA389424 /* FeedListModuleRouter.m in Sources */,
-				E926483520B4B8E895190E3A /* FeedListModuleAssemblyTests.m in Sources */,
-				3A4FCC66FBCF2F837A895D4D /* FeedListModuleViewControllerTests.m in Sources */,
-				0E172E519597AA829DD3FE2E /* FeedListModulePresenterTests.m in Sources */,
-				70BFA15DE10B81DC3D7485C2 /* FeedListModuleInteractorTests.m in Sources */,
-				7106584D8CA9D9CB8BBE96AF /* FeedListModuleRouterTests.m in Sources */,
 				E77E49BE910452CFBFED96BC /* FeedDetailsModuleAssembly.m in Sources */,
 				1725C75AF656D4C344340166 /* FeedDetailsModuleViewController.m in Sources */,
 				1FAFD56968B85A78B8741A9F /* FeedDetailsModulePresenter.m in Sources */,
 				D16612336D7E6F7A04071E16 /* FeedDetailsModuleInteractor.m in Sources */,
 				0C7BF1BE46700A7158535116 /* FeedDetailsModuleRouter.m in Sources */,
-				7AD9E1E34D6AC2FD72661441 /* FeedDetailsModuleAssemblyTests.m in Sources */,
-				E40326D17A8A37392A08C1AA /* FeedDetailsModuleViewControllerTests.m in Sources */,
-				642372CB3BBB6E96E9CC2E03 /* FeedDetailsModulePresenterTests.m in Sources */,
-				D487E87C238A2CD1486EB017 /* FeedDetailsModuleInteractorTests.m in Sources */,
-				0D04108F959C836A1B8E8D77 /* FeedDetailsModuleRouterTests.m in Sources */,
 				7B051E5AAB586DEDB3DDD6D0 /* UserProfileModuleAssembly.m in Sources */,
 				4190E331CF6F0D0197765198 /* UserProfileModuleViewController.m in Sources */,
 				BA5771D8E9207A49C6ECC1F2 /* UserProfileModulePresenter.m in Sources */,
 				E7D59B663377DE40E98F0C19 /* UserProfileModuleInteractor.m in Sources */,
 				37B7FEDBECA557BDDBA36529 /* UserProfileModuleRouter.m in Sources */,
-				4F9B3E90976AD3C4D29AC6A1 /* UserProfileModuleAssemblyTests.m in Sources */,
-				0D2D67A523E083EDD95764E8 /* UserProfileModuleViewControllerTests.m in Sources */,
-				D82AD7BF8018335918C79194 /* UserProfileModulePresenterTests.m in Sources */,
-				C9732F52E96DA7D682BA5CD9 /* UserProfileModuleInteractorTests.m in Sources */,
-				6F57F649F4A5B3FDF59A0F14 /* UserProfileModuleRouterTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1521,17 +1492,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56FE752B1C75BC3500B11A39 /* FeedListModuleRouterTests.m in Sources */,
 				567352291C5FA8B800F65A31 /* ITLinkChainTests.m in Sources */,
+				56FE75241C75BBFF00B11A39 /* MenuModuleInteractorTests.m in Sources */,
 				56B36F771C60D35500D323E0 /* ITSupportClassStructure.m in Sources */,
+				562DBC251C7DEEC5002FDFC2 /* FeedDetailsModuleInteractorTests.m in Sources */,
+				562DBC291C7DEEDD002FDFC2 /* UserProfileModuleInteractorTests.m in Sources */,
+				562DBC231C7DEEBE002FDFC2 /* FeedDetailsModuleViewControllerTests.m in Sources */,
+				562DBC241C7DEEC2002FDFC2 /* FeedDetailsModuleRouterTests.m in Sources */,
 				5680D91A1C6A1E80006EB379 /* ITLinkNodeTests.m in Sources */,
+				56FE75291C75BC2B00B11A39 /* FeedListModulePresenterTests.m in Sources */,
 				564F92AC1C71B5410006B4A9 /* RootModuleAssembly.m in Sources */,
+				56FE75201C75BBAB00B11A39 /* LoginModuleInteractorTests.m in Sources */,
 				564F92A81C71B4F80006B4A9 /* RootModuleRouterTests.m in Sources */,
 				567352261C5F932E00F65A31 /* ITLinkValueTests.m in Sources */,
-				564F92AB1C71B5060006B4A9 /* RootModuleAssemblyTests.m in Sources */,
+				56FE751F1C75BBA400B11A39 /* LoginModuleRouterTests.m in Sources */,
+				56FE75211C75BBB300B11A39 /* LoginModulePresenterTests.m in Sources */,
+				562DBC281C7DEED6002FDFC2 /* UserProfileModuleRouterTests.m in Sources */,
+				56FE75281C75BC2600B11A39 /* FeedListModuleViewControllerTests.m in Sources */,
+				56FE752A1C75BC3000B11A39 /* FeedListModuleInteractorTests.m in Sources */,
+				562DBC261C7DEECE002FDFC2 /* UserProfileModuleViewControllerTests.m in Sources */,
 				564F92AA1C71B5030006B4A9 /* RootModuleViewControllerTests.m in Sources */,
+				56FE75231C75BBE100B11A39 /* MenuModuleViewControllerTests.m in Sources */,
 				56B36F6F1C60B01900D323E0 /* ITLinkNavigationControllerTests.m in Sources */,
 				564F92A91C71B4FA0006B4A9 /* RootModulePresenterTests.m in Sources */,
+				56FE751E1C75BB8900B11A39 /* LoginModuleViewControllerTests.m in Sources */,
+				562DBC221C7DEEB8002FDFC2 /* FeedDetailsModulePresenterTests.m in Sources */,
+				562DBC2A1C7DEEE1002FDFC2 /* UserProfileModulePresenterTests.m in Sources */,
+				56FE75251C75BC0500B11A39 /* MenuModuleRouterTests.m in Sources */,
 				56B3ACF71C71AE4E00493107 /* ITNavigationProblemResolverTests.m in Sources */,
+				56FE75261C75BC0A00B11A39 /* MenuModulePresenterTests.m in Sources */,
 				564F92A71C71B4F10006B4A9 /* RootModuleInteractorTests.m in Sources */,
 				56D638E41C732E32000F0F24 /* ITNavigationActorTests.m in Sources */,
 				561F10791C624C8300DC6575 /* ITLinkActionTests.m in Sources */,
@@ -1646,7 +1636,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1679,7 +1669,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

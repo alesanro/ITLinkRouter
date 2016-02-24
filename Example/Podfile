@@ -7,7 +7,7 @@ end
 
 def rambler_pods
     pod 'Typhoon'
-    pod 'RamblerTyphoonUtils'
+    pod 'RamblerTyphoonUtils/AssemblyCollector'
     pod 'ViperMcFlurry'
 end
 

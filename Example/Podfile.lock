@@ -7,11 +7,7 @@ PODS:
     - ITLinkRouter/Core
   - ITLinkRouter/Core (0.1.1)
   - OCMock (3.2.2)
-  - RamblerTyphoonUtils (1.2.0):
-    - RamblerTyphoonUtils/AssemblyCollector (= 1.2.0)
-    - RamblerTyphoonUtils/AssemblyTesting (= 1.2.0)
   - RamblerTyphoonUtils/AssemblyCollector (1.2.0)
-  - RamblerTyphoonUtils/AssemblyTesting (1.2.0)
   - SpaceCommander (1.0.0)
   - Specta (1.0.5)
   - Typhoon (3.4.5):
@@ -28,7 +24,7 @@ DEPENDENCIES:
   - Expecta
   - ITLinkRouter (from `../`)
   - OCMock
-  - RamblerTyphoonUtils
+  - RamblerTyphoonUtils/AssemblyCollector
   - SpaceCommander (from `https://github.com/alesanro/spacecommander.git`)
   - Specta
   - Typhoon

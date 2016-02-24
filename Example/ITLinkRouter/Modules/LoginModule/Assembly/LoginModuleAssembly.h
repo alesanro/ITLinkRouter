@@ -7,7 +7,7 @@
 //
 
 #import <Typhoon/Typhoon.h>
-#import <RamblerTyphoonUtils/AssemblyCollector.h>
+#import "AssemblyCollector.h"
 
 /**
  @author Alex Rudyak
