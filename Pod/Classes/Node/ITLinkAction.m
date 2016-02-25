@@ -61,6 +61,7 @@ static NSUInteger ITSelectorNumberOfArguments(SEL selector)
         // !!!: +2 because of the first argument is reserved for a target, the second is for a selector.
         [invocation setArgument:(__bridge void *)(arg) atIndex:idx + 2];
     }];
+    [invocation retainArguments];
     return invocation;
 }
 

@@ -46,6 +46,7 @@
     NSInvocation *const invocation = [NSInvocation invocationWithMethodSignature:signature];
     [invocation setTarget:self.router];
     [invocation setSelector:backLinkSelector];
+    [invocation retainArguments];
     return invocation;
 }
 
