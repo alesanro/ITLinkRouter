@@ -19,8 +19,7 @@
 @implementation ITNavigationProblemResolver
 @dynamic currentChain;
 
-- (instancetype)initWithNavigationController:(ITLinkNavigationController *)navigationController
-                            destinationChain:(ITLinkChain *)destinationChain
+- (instancetype)initWithNavigationController:(ITLinkNavigationController *)navigationController destinationChain:(ITLinkChain *)destinationChain
 {
     self = [super init];
     if (self) {
@@ -81,9 +80,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    ITNavigationProblemResolver *const copyInstance =
-        [[ITNavigationProblemResolver alloc] initWithNavigationController:self.navigationController
-                                                         destinationChain:[self.destinationChain copy]];
+    ITNavigationProblemResolver *const copyInstance = [[ITNavigationProblemResolver alloc] initWithNavigationController:self.navigationController destinationChain:[self.destinationChain copy]];
     copyInstance->_resolvingChain = [self.resolvingChain copy];
     return copyInstance;
 }

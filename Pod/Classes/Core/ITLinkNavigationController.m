@@ -130,7 +130,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     [self.linkChain appendEntity:link];
     [self.linkChain appendEntity:[valueEntity flatten]];
 
-    [self.navigationActor next:ITLinkNavigationTypeForward withCurrentNode:valueEntity];
+    [self.navigationActor runNextWithCurrentDirection:ITLinkNavigationTypeForward andNode:valueEntity];
 }
 
 - (void)popLink
@@ -138,7 +138,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     __unused id<ITLinkNode> const popedLinkEntity = [self.linkChain popEntity];
     [self.linkChain appendEntity:[[self.linkChain popEntity] flatten]];
 
-    [self.navigationActor next:ITLinkNavigationTypeBack withCurrentNode:self.linkChain.lastEntity];
+    [self.navigationActor runNextWithCurrentDirection:ITLinkNavigationTypeBack andNode:self.linkChain.lastEntity];
 }
 
 - (void)navigateToNewChain:(ITLinkChain *)updatedChain andHandleAnyProblem:(ITProblemHanderBlock)handlerBlock

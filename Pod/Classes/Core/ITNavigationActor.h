@@ -70,7 +70,7 @@ typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
 
 /**
  *  Begin navigation. Should always be invoked before any other
- *  proceedings (i.e next:withCurrentNode and etc.)
+ *  proceedings (i.e runNextWithCurrentDirection:withCurrentNode and etc.)
  */
 - (void)start;
 
@@ -80,6 +80,6 @@ typedef NS_ENUM(NSUInteger, ITLinkNavigationType) {
  *  @param navigationType type of performed navigation on the previous step
  *  @param node           result node from the previous navigation
  */
-- (void)next:(ITLinkNavigationType)navigationType withCurrentNode:(id<ITLinkNode>)node;
+- (void)runNextWithCurrentDirection:(ITLinkNavigationType)navigationType andNode:(id<ITLinkNode>)node;
 
 @end

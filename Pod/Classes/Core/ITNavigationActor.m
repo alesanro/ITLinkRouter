@@ -71,7 +71,7 @@ static BOOL ITHasValue(id<ITLinkNode> node)
     }
 }
 
-- (void)next:(ITLinkNavigationType)navigationType withCurrentNode:(id<ITLinkNode>)node
+- (void)runNextWithCurrentDirection:(ITLinkNavigationType)navigationType andNode:(id<ITLinkNode>)node
 {
     if (!self.isStarted || self.isFinished) {
 #ifdef DEBUG
